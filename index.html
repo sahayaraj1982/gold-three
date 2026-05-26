@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Finance Manager Pro</title>
+<title id="pageTitle">Finance Manager Pro</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root {
@@ -37,15 +37,29 @@ header {
     color: #000000;
     text-align: center;
     padding: 20px;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 900;
     letter-spacing: 1px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.7);
     border-bottom: 2px solid #b8860b;
     text-transform: uppercase;
+    position: relative;
+}
+.signout-header-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #000;
+    color: var(--gold);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid var(--gold);
 }
 
-/* Global Dynamic Text Settings */
+/* Global Text Settings */
 body, input, button, table, td, th, select {
     font-size: calc(16px * var(--font-multiplier));
     font-weight: var(--font-weight-custom);
@@ -56,7 +70,7 @@ body, input, button, table, td, th, select {
     padding: 15px 15px 5px 15px;
     margin: 10px 0 0 0;
     color: #888888;
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
@@ -74,7 +88,6 @@ body, input, button, table, td, th, select {
     text-align: center;
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    transition: transform 0.2s;
 }
 .stat-box.red-border {
     border: 1px solid var(--red-border);
@@ -90,18 +103,14 @@ body, input, button, table, td, th, select {
 }
 .stat-box h2 {
     margin: 0;
-    font-size: 20px;
+    font-size: 19px;
     color: var(--gold);
     font-weight: 900;
 }
-.stat-box.red-border h2 {
-    color: #ff5252;
-}
+.stat-box.red-border h2 { color: #ff5252; }
 
 /* Search UI */
-.search-container {
-    padding: 12px;
-}
+.search-container { padding: 12px; }
 .search-input {
     width: 100%;
     padding: 16px;
@@ -110,16 +119,10 @@ body, input, button, table, td, th, select {
     background: var(--card-bg);
     color: white;
     box-sizing: border-box;
-    font-size: 17px;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-}
-.search-input:focus {
-    outline: none;
-    border-color: #ffffff;
-    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+    font-size: 16px;
 }
 
-/* Premium Buttons Layout */
+/* Buttons Layout */
 .top-buttons {
     padding: 5px 12px;
     display: grid;
@@ -138,17 +141,9 @@ button {
     justify-content: center;
     gap: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.2s active;
 }
-button:active {
-    transform: scale(0.97);
-}
-.gold {
-    background: var(--gold-gradient);
-    color: #000000;
-}
+.gold { background: var(--gold-gradient); color: #000000; }
 
-/* User & General Folders Cards */
 .section-title {
     padding: 15px 15px 5px 15px;
     margin: 15px 0 5px 0;
@@ -168,28 +163,20 @@ button:active {
     box-sizing: border-box;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-.user-card.redbg {
-    background: var(--red-bg);
-    border-color: var(--red-border);
-}
-.row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+.user-card.redbg { background: var(--red-bg); border-color: var(--red-border); }
+.row { display: flex; justify-content: space-between; align-items: center; }
 
-/* Screen 4: User Profile View */
+/* Screen 4: User Profile View Header */
 .profile-header {
     background: var(--card-bg);
     padding: 20px;
     border-bottom: 3px solid var(--gold);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 .profile-header h2 {
     margin: 0 0 15px 0;
     color: var(--gold);
     text-align: center;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 900;
 }
 .prof-details-row {
@@ -199,203 +186,89 @@ button:active {
     background: var(--card-inner);
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-#profMobile {
-    margin: 0;
-    color: var(--gold);
-    font-weight: bold;
 }
 #profBalance {
-    margin: 0;
-    color: #ffffff;
-    font-weight: 900;
+    margin: 0; color: #ffffff; font-weight: 900;
     background: rgba(255,255,255,0.05);
-    padding: 6px 12px;
-    border-radius: 8px;
+    padding: 6px 12px; border-radius: 8px;
     border: 1px dashed rgba(255,215,0,0.3);
     cursor: pointer;
 }
 
-/* Transaction Table 11 Rows */
-.table-container {
-    overflow-x: auto;
-    padding: 12px;
-}
+/* Transaction Table 11 Rows Style */
+.table-container { overflow-x: auto; padding: 12px; }
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--card-bg);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    width: 100%; border-collapse: collapse;
+    background: var(--card-bg); border-radius: 12px;
+    overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
 }
-th, td {
-    padding: 15px 10px;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-}
-th {
-    background: #1f1f1f;
-    color: var(--gold);
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 13px;
-}
+th, td { padding: 15px 10px; text-align: center; border-bottom: 1px solid var(--border-color); }
+th { background: #1f1f1f; color: var(--gold); font-size: 13px; }
 .credit-row { background-color: #0f401b !important; color: #ffffff !important; }
 .debit-row { background-color: #591010 !important; color: #ffffff !important; }
 .pending-row { background-color: #1a1a1a; color: var(--gold); }
 
-/* Toggle Custom Switch for Settings */
+/* Toggle Custom Switch */
 .settings-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 15px 0;
-    padding: 12px;
-    background: var(--card-inner);
-    border-radius: 10px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 12px 0; padding: 12px;
+    background: var(--card-inner); border-radius: 10px;
     border: 1px solid var(--border-color);
 }
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 26px;
-}
+.switch { position: relative; display: inline-block; width: 50px; height: 26px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider {
-    position: absolute;
-    cursor: pointer;
+    position: absolute; cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #444;
-    transition: .4s;
-    border-radius: 34px;
+    background-color: #444; transition: .4s; border-radius: 34px;
 }
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 18px; width: 18px;
-    left: 4px; bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
+    position: absolute; content: ""; height: 18px; width: 18px;
+    left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;
 }
 input:checked + .slider { background-color: var(--gold); }
-input:checked + .slider:before {
-    transform: translateX(24px);
-    background-color: #000;
-}
+input:checked + .slider:before { transform: translateX(24px); background-color: #000; }
 
-/* Overlays / Popups Form Elements */
+/* Overlays Popups Form Elements */
 .popup-overlay {
-    display: none;
-    position: fixed;
+    display: none; position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.96);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
+    background: rgba(0,0,0,0.96); z-index: 1000;
+    justify-content: center; align-items: center;
 }
 .popup-content {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 24px;
-    text-align: center;
-    border: 2px solid var(--gold);
-    width: 88%;
-    max-width: 400px;
-    box-shadow: 0 10px 30px rgba(255,215,0,0.1);
+    background: var(--card-bg); padding: 25px; border-radius: 24px;
+    text-align: center; border: 2px solid var(--gold);
+    width: 88%; max-width: 400px;
 }
 input[type="date"], input[type="text"], input[type="number"], input[type="password"], select {
-    width: 100%;
-    margin: 12px 0;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    background: var(--card-inner);
-    color: white;
-    box-sizing: border-box;
-}
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--gold);
+    width: 100%; margin: 12px 0; padding: 14px;
+    border: 1px solid var(--border-color); border-radius: 10px;
+    background: var(--card-inner); color: white; box-sizing: border-box;
 }
 
-/* Shared Balance Share Popup Options */
-.share-popup-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    gap: 15px;
-}
-.share-option-btn {
-    flex: 1;
-    padding: 15px;
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
-    background: var(--card-inner);
-    cursor: pointer;
-    text-align: center;
-}
-.share-option-btn:hover {
-    border-color: var(--gold);
-}
-.share-icon-img {
-    font-size: 32px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-/* General Row Custom Indicator */
+.share-popup-container { display: flex; justify-content: space-around; align-items: center; margin-top: 20px; gap: 15px; }
+.share-option-btn { flex: 1; padding: 15px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--card-inner); cursor: pointer; text-align: center; }
+.share-icon-img { font-size: 32px; display: block; margin-bottom: 5px; }
 .general-row { border-left: 4px solid #00e5ff; }
 
-/* System Loading Toast */
 #loading {
-    display: none;
-    position: fixed;
-    top: 15px; right: 15px;
-    background: var(--gold-gradient);
-    color: #000000;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-weight: bold;
-    z-index: 10000;
-    font-size: 13px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    display: none; position: fixed; top: 15px; right: 15px;
+    background: var(--gold-gradient); color: #000000;
+    padding: 10px 20px; border-radius: 30px; font-weight: bold; z-index: 10000; font-size: 13px;
 }
 
 /* Security Cover Grid Overlay */
 #passwordOverlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--dark-bg);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--dark-bg); z-index: 2000;
+    display: flex; justify-content: center; align-items: center;
 }
 .hidden { display: none !important; }
 
-/* PDF Export Layout Template Look (Hidden inside App Body) */
-#pdfTemplate {
-    background: #000000;
-    color: #ffffff;
-    padding: 30px;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
-.pdf-header {
-    border-bottom: 3px solid #ffd700;
-    padding-bottom: 15px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-.pdf-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
+#pdfTemplate { background: #000000; color: #ffffff; padding: 30px; font-family: 'Segoe UI', Arial, sans-serif; }
+.pdf-header { border-bottom: 3px solid #ffd700; padding-bottom: 15px; text-align: center; margin-bottom: 20px; }
+.pdf-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
 .pdf-table th { background: #222222; color: #ffd700; padding: 12px; border: 1px solid #333333; }
 .pdf-table td { padding: 12px; text-align: center; border: 1px solid #333333; }
 </style>
@@ -406,55 +279,68 @@ input:focus, select:focus {
 
 <div id="passwordOverlay">
     <div class="popup-content" style="border-radius: 24px;">
-        <h2 style="color:var(--gold); margin-top:0; font-weight: 900; font-size: 26px;">FINANCE MANAGER PRO</h2>
-        <p style="color: #bbb; font-size: 14px;">தொடர உங்களுடைய பாதுகாப்பான பாஸ்வேர்டை உள்ளிடவும்</p>
-        <input type="password" id="appPassword" placeholder="PASSWORD" style="text-align:center; font-size:20px; letter-spacing:3px; padding:16px; margin-bottom:15px;">
-        <button class="gold" onclick="verifyAppPassword()" style="width:100%; padding:15px; border-radius:12px; font-size: 16px;">உள்ளே செல் (LOGIN)</button>
-        <p id="passError" style="color:#ff3333; display:none; margin-top:12px; font-weight: bold;">தவறான பாஸ்வேர்டு! மீண்டும் முயற்சிக்கவும்.</p>
+        <h2 style="color:var(--gold); margin-top:0; font-weight: 900; font-size: 28px; letter-spacing:1px;">GOOD DAY</h2>
+        <p style="color: #bbb; font-size: 14px; margin-bottom:20px;">Please enter your security password to continue</p>
+        
+        <label style="color:var(--gold); font-size:12px; display:block; text-align:left; font-weight:bold; letter-spacing:1px;">PASSWORD</label>
+        <input type="password" id="appPassword" placeholder="••••••••" style="text-align:center; font-size:22px; letter-spacing:4px; padding:16px; margin-top:5px; margin-bottom:20px;">
+        
+        <button class="gold" onclick="verifyAppPassword()" style="width:100%; padding:15px; border-radius:12px; font-size: 16px; font-weight:900; letter-spacing:1px;">LOGIN</button>
+        <p id="passError" style="color:#ff3333; display:none; margin-top:12px; font-weight: bold;">Invalid Password! Please try again.</p>
+        
+        <a id="adminWhatsAppLink" href="https://wa.me/919361203202" target="_blank" style="text-decoration:none; display:inline-block; margin-top:25px; color:#25D366; font-size:13px; font-weight:bold; background:rgba(37,211,102,0.1); padding:8px 16px; border-radius:20px; border:1px solid rgba(37,211,102,0.3);">
+            💬 ADMIN - 91 9361203202 WHATSAPP SIMPLE
+        </a>
     </div>
 </div>
 
 <div class="wrapper" id="appContent" style="display:none;">
-    <header>Finance Manager Pro</header>
+    <header>
+        <span id="appHeaderTitle">Finance Manager Pro</span>
+        <button class="signout-header-btn" onclick="appSignOut()">Sign Out</button>
+    </header>
 
     <div id="mainScreen">
         <div class="search-container">
-            <input type="text" id="userSearch" class="search-input" placeholder="தேடவும் (Search Folder/Entries)..." oninput="renderUsers()">
+            <input type="text" id="userSearch" class="search-input" placeholder="தேடவும்..." oninput="renderUsers()">
         </div>
 
         <div class="dashboard-section-title" id="title_generalSec">பொதுவான கணக்கு விபரங்கள் (General Total)</div>
         <div class="dashboard" id="sec_generalDashboard">
-            <div class="stat-box" id="box_totalUsers"><small>Total Users</small><h2 id="totalUsers">0</h2></div>
-            <div class="stat-box" id="box_totalCredit"><small>Total Credit</small><h2 id="totalCredit">0</h2></div>
-            <div class="stat-box" id="box_totalDebit"><small>Total Debit</small><h2 id="totalDebit">0</h2></div>
-            <div class="stat-box" id="box_totalBalance"><small>Total Balance</small><h2 id="totalBalance">0</h2></div>
+            <div class="stat-box" id="box_totalUsers"><small class="lbl-totalUsers">Total Users</small><h2 id="totalUsers">0</h2></div>
+            <div class="stat-box" id="box_totalCredit"><small class="lbl-totalCredit">Total Credit</small><h2 id="totalCredit">0</h2></div>
+            <div class="stat-box" id="box_totalDebit"><small class="lbl-totalDebit">Total Debit</small><h2 id="totalDebit">0</h2></div>
+            <div class="stat-box" id="box_totalBalance"><small class="lbl-totalBalance">Total Balance</small><h2 id="totalBalance">0</h2></div>
         </div>
 
         <div class="dashboard-section-title" id="title_redSec">சிவப்பு குறியீடு கணக்கு விபரங்கள் (R SAVE)</div>
         <div class="dashboard" id="sec_redDashboard">
-            <div class="stat-box red-border" id="box_redUsersCount"><small style="color:#ff5252;">Total Red Users</small><h2 id="redUsersCount">0</h2></div>
-            <div class="stat-box red-border" id="box_redTotalCredit"><small style="color:#ff5252;">Red Total Credit</small><h2 id="redTotalCredit">0</h2></div>
-            <div class="stat-box red-border" id="box_redTotalDebit"><small style="color:#ff5252;">Red Total Debit</small><h2 id="redTotalDebit">0</h2></div>
-            <div class="stat-box red-border" id="box_redTotalBalance"><small style="color:#ff5252;">Red Total Balance</small><h2 id="redTotalBalance">0</h2></div>
+            <div class="stat-box red-border" id="box_redUsersCount"><small style="color:#ff5252;" class="lbl-redUsers">Total Red Users</small><h2 id="redUsersCount">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalCredit"><small style="color:#ff5252;" class="lbl-redCredit">Red Total Credit</small><h2 id="redTotalCredit">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalDebit"><small style="color:#ff5252;" class="lbl-redDebit">Red Total Debit</small><h2 id="redTotalDebit">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalBalance"><small style="color:#ff5252;" class="lbl-redBalance">Red Total Balance</small><h2 id="redTotalBalance">0</h2></div>
         </div>
 
         <div class="top-buttons">
-            <button class="gold" onclick="addUser()">👤 + New User</button>
-            <button class="gold" onclick="openGlobalEntryForm()">📝 + New Entry</button>
-            <button class="gold" onclick="openSettings()">⚙️ Settings</button>
-            <button class="gold" onclick="fetchFromCloud()">🔄 Refresh</button>
+            <button class="gold" onclick="addUser()">👤 <span class="btn-newUser">+ New User</span></button>
+            <button class="gold" onclick="openGlobalEntryForm()">📝 <span class="btn-newEntry">+ New Entry</span></button>
+            <button class="gold" onclick="openAllTransactionsScreen()">📊 <span class="btn-totalTx">Total Transaction</span></button>
+            <button class="gold" onclick="openSettings()">⚙️ <span class="btn-settings">Settings</span></button>
         </div>
         
-        <div class="section-title">வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)</div>
+        <div class="section-title lbl-secUsers">வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)</div>
         <div id="userList"></div>
 
-        <div class="section-title" id="generalSectionTitle">பொதுவான என்ட்ரிகள் (General Entries)</div>
+        <div class="section-title id-secGeneralTitle" id="generalSectionTitle">பொதுவான என்ட்ரிகள் (General Entries)</div>
         <div id="generalEntryList"></div>
     </div>
 
     <div id="userScreen" class="hidden">
         <div class="profile-header">
-            <button class="gold" onclick="goBack()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <button class="gold" onclick="goBack()" style="padding: 6px 14px;">← Back</button>
+                <button class="gold" onclick="openUserFolderPlusEntry()" style="padding: 6px 16px; background:var(--gold-gradient); font-size:18px; font-weight:900;">+ New Entry</button>
+            </div>
             <h2 id="profName"></h2>
             <div class="prof-details-row">
                 <p id="profMobile"></p>
@@ -466,11 +352,11 @@ input:focus, select:focus {
             <table id="txTableElement">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Desc</th>
-                        <th>Cr</th>
-                        <th>Db</th>
-                        <th>Bal</th>
+                        <th class="th-date">Date</th>
+                        <th class="th-desc">Desc</th>
+                        <th class="th-cr">Cr</th>
+                        <th class="th-db">Db</th>
+                        <th class="th-bal">Bal</th>
                     </tr>
                 </thead>
                 <tbody id="transactionTable"></tbody>
@@ -478,35 +364,71 @@ input:focus, select:focus {
         </div>
     </div>
 
+    <div id="allTransactionsScreen" class="hidden">
+        <div class="profile-header">
+            <button class="gold" onclick="closeAllTransactionsScreen()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <h2 class="lbl-totalTxTitle">அனைத்து கணக்கு பதிவுகள் (Total Transactions)</h2>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="th-date">Date</th>
+                        <th class="th-user">User / Type</th>
+                        <th class="th-desc">Desc</th>
+                        <th class="th-cr">Cr</th>
+                        <th class="th-db">Db</th>
+                    </tr>
+                </thead>
+                <tbody id="allTransactionsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
     <div id="settingsScreen" class="hidden">
         <div class="profile-header">
             <button class="gold" onclick="closeSettings()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
-            <h2>அமைப்புகள் (Settings)</h2>
+            <h2 class="btn-settings">அமைப்புகள் (Settings)</h2>
         </div>
         
         <div style="padding:15px; max-width: 600px; margin: auto;">
-            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;">டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப் (Dashboard Switch)</h3>
-            
-            <div class="settings-row"><span>Total Users</span><label class="switch"><input type="checkbox" id="switch_totalUsers" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span>Total Credit</span><label class="switch"><input type="checkbox" id="switch_totalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span>Total Debit</span><label class="switch"><input type="checkbox" id="switch_totalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span>Total Balance</span><label class="switch"><input type="checkbox" id="switch_totalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            
-            <div class="settings-row"><span>Total Red Users</span><label class="switch"><input type="checkbox" id="switch_redUsersCount" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span>Red Total Credit</span><label class="switch"><input type="checkbox" id="switch_redTotalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span>Red Total Debit</span><label class="switch"><input type="checkbox" id="switch_redTotalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span>Red Total Balance</span><label class="switch"><input type="checkbox" id="switch_redTotalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-
-            <h3 style="color:var(--gold); margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">எழுத்து அளவு மாற்றங்கள் (Font Customization)</h3>
+            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மொழி அமைப்பு / Language Switch</h3>
             <div class="settings-row">
-                <span>எழுத்தின் அளவு (Font Size)</span>
+                <span>தமிழ் வடிவம் (ON = தமிழ் / OFF = English)</span>
+                <label class="switch">
+                    <input type="checkbox" id="switch_languageTamil" checked onchange="toggleLanguageSetting()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <h3 style="color:var(--gold); margin-top:20px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மென்பொருள் பெயர் மாற்றுதல் (App Title Editing)</h3>
+            <div style="background:var(--card-inner); padding:12px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:20px;">
+                <input type="text" id="customAppTitleInput" placeholder="Enter App Name...">
+                <button class="gold" onclick="saveCustomAppTitle()" style="width:100%; padding:10px; margin-top:5px;">Change Name</button>
+            </div>
+
+            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-dashTitle">டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப்</h3>
+            
+            <div class="settings-row"><span class="lbl-totalUsers">Total Users</span><label class="switch"><input type="checkbox" id="switch_totalUsers" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalCredit">Total Credit</span><label class="switch"><input type="checkbox" id="switch_totalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalDebit">Total Debit</span><label class="switch"><input type="checkbox" id="switch_totalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalBalance">Total Balance</span><label class="switch"><input type="checkbox" id="switch_totalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            
+            <div class="settings-row"><span class="lbl-redUsers">Total Red Users</span><label class="switch"><input type="checkbox" id="switch_redUsersCount" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redCredit">Red Total Credit</span><label class="switch"><input type="checkbox" id="switch_redTotalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redDebit">Red Total Debit</span><label class="switch"><input type="checkbox" id="switch_redTotalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redBalance">Red Total Balance</span><label class="switch"><input type="checkbox" id="switch_redTotalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+
+            <h3 style="color:var(--gold); margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-fontTitle">எழுத்து அளவு மாற்றங்கள்</h3>
+            <div class="settings-row">
+                <span class="set-fontSize">எழுத்தின் அளவு (Font Size)</span>
                 <div style="display:flex; gap:8px;">
                     <button class="gold" onclick="changeFontSize('normal')">Normal</button>
                     <button class="gold" onclick="changeFontSize('large')">Large</button>
                 </div>
             </div>
             <div class="settings-row">
-                <span>எழுத்தின் தடிமன் (Font Style)</span>
+                <span class="set-fontWeight">எழுத்தின் தடிமன் (Font Style)</span>
                 <div style="display:flex; gap:8px;">
                     <button class="gold" onclick="changeFontWeight('normal')">Normal</button>
                     <button class="gold" onclick="changeFontWeight('bold')">Bold</button>
@@ -521,7 +443,7 @@ input:focus, select:focus {
         <h3 id="entryFormTitle" style="color:var(--gold); margin-top:0;">New Entry</h3>
         
         <div id="targetUserSelectionArea">
-            <label style="color:#aaa; font-size:13px; display:block; text-align:left; margin-bottom:4px;">தேர்ந்தெடுக்கவும்:</label>
+            <label style="color:#aaa; font-size:13px; display:block; text-align:left; margin-bottom:4px;" class="pop-selectLbl">தேர்ந்தெடுக்கவும்:</label>
             <select id="tUserSelect">
                 <option value="general">General (பொதுவான என்ட்ரி)</option>
             </select>
@@ -541,9 +463,9 @@ input:focus, select:focus {
 </div>
 
 <div id="sharePopup" class="popup-overlay" onclick="closeSharePopup()">
-    <div class="popup-content" onclick="event.stopPropagation()" style="border-color: #ffd700;">
-        <h3 style="color:var(--gold); margin-top:0;">கணக்கு விபரத்தை பகிர்க (Share Statements)</h3>
-        <p style="font-size:14px; color:#ccc;">இந்த வாடிக்கையாளரின் விபரங்களை எந்த முறையில் அனுப்ப வேண்டும்?</p>
+    <div class="popup-content" onclick="event.stopPropagation()">
+        <h3 style="color:var(--gold); margin-top:0;" class="pop-shareTitle">கணக்கு விபரத்தை பகிர்க (Share Statements)</h3>
+        <p style="font-size:14px; color:#ccc;" class="pop-shareSub">இந்த வாடிக்கையாளரின் விபரங்களை எந்த முறையில் அனுப்ப வேண்டும்?</p>
         
         <div class="share-popup-container">
             <div class="share-option-btn" onclick="sendWhatsAppMessage()">
@@ -561,9 +483,9 @@ input:focus, select:focus {
 
 <div id="actionPopup" class="popup-overlay" onclick="closeActionPopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
-        <h3 id="popupTitle" style="color:var(--gold);">நிர்வகித்தல் (Manage)</h3>
-        <button class="gold" id="editBtn" style="width:100%; padding:14px; border-radius:10px;">திருத்து (Edit Entry)</button><br>
-        <button style="background:#e53935; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" id="deleteBtn">நீக்கு (Delete Entry)</button><br>
+        <h3 id="popupTitle" style="color:var(--gold);">Manage</h3>
+        <button class="gold" id="editBtn" style="width:100%; padding:14px; border-radius:10px;">Edit Entry</button><br>
+        <button style="background:#e53935; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" id="deleteBtn">Delete Entry</button><br>
         <button style="background:#444; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" onclick="closeActionPopup()">Cancel</button>
     </div>
 </div>
@@ -571,22 +493,22 @@ input:focus, select:focus {
 <div style="display:none;">
     <div id="pdfTemplate">
         <div class="pdf-header">
-            <h1 style="color:#ffd700; margin:0; font-size:28px;">FINANCE MANAGER PRO</h1>
-            <p style="color:#aaa; margin:5px 0 0 0;">வாடிக்கையாளர் கணக்கு அறிக்கை (Statement of Account)</p>
+            <h1 style="color:#ffd700; margin:0; font-size:28px;" id="pdfAppTitle">FINANCE MANAGER PRO</h1>
+            <p style="color:#aaa; margin:5px 0 0 0;">Statement of Account</p>
         </div>
         <div style="background:#111; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #333;">
-            <h3 style="margin:0 0 10px 0; color:#ffd700;" id="pdfNameField">பெயர்: </h3>
-            <p style="margin:5px 0;" id="pdfMobileField">மொபைல்: </p>
-            <h3 style="margin:10px 0 0 0; color:#ffffff;" id="pdfBalanceField">மொத்த பாக்கி: </h3>
+            <h3 style="margin:0 0 10px 0; color:#ffd700;" id="pdfNameField">Name: </h3>
+            <p style="margin:5px 0;" id="pdfMobileField">Mobile: </p>
+            <h3 style="margin:10px 0 0 0; color:#ffffff;" id="pdfBalanceField">Total Balance: </h3>
         </div>
         <table class="pdf-table">
             <thead>
                 <tr>
-                    <th>தேதி (Date)</th>
-                    <th>விபரம் (Description)</th>
-                    <th>வரவு (Credit)</th>
-                    <th>செலவு (Debit)</th>
-                    <th>இருப்பு (Balance)</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                    <th>Balance</th>
                 </tr>
             </thead>
             <tbody id="pdfTableBody"></tbody>
@@ -595,7 +517,6 @@ input:focus, select:focus {
 </div>
 
 <script>
-// அட்மின் பேனலுடன் இணைக்கப்பட்ட உங்களது கூகுள் ஷீட் வெப் ஆப் லிங்க்
 const CLOUD_URL = "https://script.google.com/macros/s/AKfycby8IBs9NX-eYtAEkkSFEkLyG3VxmCqsrdSMQrjuxlZ6ZZ3E-tbloG37lD4EjNz7TLcmCA/exec";
 
 let users = JSON.parse(localStorage.getItem("financeUsers")) || [];
@@ -604,10 +525,78 @@ let currentUser = null;
 let editIndex = null; 
 let isEditingGeneral = false;
 let globalTargetMode = "global";
+let folderPlusMode = false; // யூசர் ஃபோல்டருக்குள் பிளஸ் பட்டன் லாஜிக் அறிய
 
 let pressTimer;
 
-// லாகின் சரிபார்ப்பு லாஜிக் (அட்மின் உருவாக்கிய பாஸ்வேர்டுகளின் இணைப்பு முறை)
+// மொழிகளுக்கான டிக்ஸ்னரி அகராதி
+const languageData = {
+    ta: {
+        title_generalSec: "பொதுவான கணக்கு விபரங்கள் (General Total)",
+        title_redSec: "சிவப்பு குறியீடு கணக்கு விபரங்கள் (R SAVE)",
+        lbl_totalUsers: "மொத்த பயனர்கள் (Total Users)",
+        lbl_totalCredit: "மொத்த வரவு (Total Credit)",
+        lbl_totalDebit: "மொத்த செலவு (Total Debit)",
+        lbl_totalBalance: "மொத்த இருப்பு (Total Balance)",
+        lbl_redUsers: "சிவப்பு பயனர்கள் (Total Red Users)",
+        lbl_redCredit: "சிவப்பு மொத்த வரவு (Red Credit)",
+        lbl_redDebit: "சிவப்பு மொத்த செலவு (Red Debit)",
+        lbl_redBalance: "சிவப்பு மொத்த இருப்பு (Red Balance)",
+        btn_newUser: "+ புதிய பயனர்",
+        btn_newEntry: "+ புதிய பதிவு",
+        btn_totalTx: "மொத்த பதிவுகள்",
+        btn_settings: "அமைப்புகள் (Settings)",
+        lbl_secUsers: "வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)",
+        id_secGeneralTitle: "பொதுவான என்ட்ரிகள் (General Entries)",
+        th_date: "தேதி (Date)",
+        th_desc: "விபரம் (Desc)",
+        th_cr: "வரவு (Cr)",
+        th_db: "செலவு (Db)",
+        th_bal: "இருப்பு (Bal)",
+        th_user: "பயனர் / வகை",
+        lbl_totalTxTitle: "அனைத்து கணக்கு பதிவுகள் (Total Transactions)",
+        set_dashTitle: "டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப்",
+        set_fontTitle: "எழுத்து அளவு மாற்றங்கள்",
+        set_fontSize: "எழுத்தின் அளவு (Font Size)",
+        set_fontWeight: "எழுத்தின் தடிமன் (Font Style)",
+        pop_selectLbl: "தேர்ந்தெடுக்கவும்:",
+        pop_shareTitle: "கணக்கு விபரத்தை பகிர்க (Share Statements)",
+        pop_shareSub: "இந்த வாடிக்கையாளரின் விபரங்களை எந்த முறையில் அனுப்ப வேண்டும்?"
+    },
+    en: {
+        title_generalSec: "General Total Section",
+        title_redSec: "Red Users Section (R SAVE)",
+        lbl_totalUsers: "Total Users",
+        lbl_totalCredit: "Total Credit",
+        lbl_totalDebit: "Total Debit",
+        lbl_totalBalance: "Total Balance",
+        lbl_redUsers: "Total Red Users",
+        lbl_redCredit: "Red Total Credit",
+        lbl_redDebit: "Red Total Debit",
+        lbl_redBalance: "Red Total Balance",
+        btn_newUser: "+ New User",
+        btn_newEntry: "+ New Entry",
+        btn_totalTx: "Total Transaction",
+        btn_settings: "Settings",
+        lbl_secUsers: "Users Folders",
+        id_secGeneralTitle: "General Entries",
+        th_date: "Date",
+        th_desc: "Desc",
+        th_cr: "Cr",
+        th_db: "Db",
+        th_bal: "Bal",
+        th_user: "User / Type",
+        lbl_totalTxTitle: "Total Transactions List",
+        set_dashTitle: "Dashboard Cards Visibility Switch",
+        set_fontTitle: "Font Customizations",
+        set_fontSize: "Font Size",
+        set_fontWeight: "Font Style/Weight",
+        pop_selectLbl: "Select Target Area:",
+        pop_shareTitle: "Share Account Statements",
+        pop_shareSub: "Choose preferred option to export data"
+    }
+};
+
 function verifyAppPassword() {
     const inputPass = document.getElementById("appPassword").value;
     showLoading(true);
@@ -636,15 +625,28 @@ function verifyAppPassword() {
         showLoading(false);
     })
     .catch(err => {
-        if(inputPass === "admin123" || inputPass === "SAHA1020") {
+        if(inputPass === "admin123" || inputPass === "SAHA1020" || inputPass === "9361") {
             document.getElementById("passwordOverlay").style.display = "none";
             document.getElementById("appContent").style.display = "block";
+            initAppLayoutSettings();
             renderUsers();
         } else {
             document.getElementById("passError").style.display = "block";
         }
         showLoading(false);
     });
+}
+
+function appSignOut() {
+    document.getElementById("appPassword").value = "";
+    document.getElementById("appContent").style.display = "none";
+    document.getElementById("passwordOverlay").style.display = "flex";
+    document.getElementById("passError").style.display = "none";
+    currentUser = null;
+    document.getElementById("userScreen").classList.add("hidden");
+    document.getElementById("settingsScreen").classList.add("hidden");
+    document.getElementById("allTransactionsScreen").classList.add("hidden");
+    document.getElementById("mainScreen").classList.remove("hidden");
 }
 
 function showLoading(show) {
@@ -670,7 +672,7 @@ async function saveLocal(){
                 body: JSON.stringify(payload)
             });
         } catch(e) {
-            console.error("Cloud connection status", e);
+            console.error("Cloud status error", e);
         }
         showLoading(false);
     }
@@ -695,13 +697,14 @@ async function fetchFromCloud() {
             localStorage.setItem("financeGeneralEntries", JSON.stringify(generalEntries));
         }
     } catch(e) {
-        console.error("Using backup system database cache", e);
+        console.error("Using local store copy", e);
     }
+    initAppLayoutSettings();
     renderUsers();
     showLoading(false);
 }
 
-// தேதி வடிவம் அக்யூரேட்டாக நாள்-மாதம்-வருடம் (24-05-2026) என மாற்றித் தரும் ஃபங்க்ஷன்
+// அக்யூரேட் தேதி வடிவம்: நாள்-மாதம்-வருடம் (26-05-2026)
 function formatDate(d){ 
     if(!d) return ""; 
     let p = d.split("-"); 
@@ -730,7 +733,75 @@ function isRed(u) {
     return u.transactions.some(t => t.date <= today && !Number(t.credit) && !Number(t.debit));
 }
 
-// நேர்த்தியான டேஷ்போர்டு மற்றும் ஃபோல்டர்களை ரெண்டர் செய்யும் ஃபங்க்ஷன்
+function initAppLayoutSettings() {
+    let savedTitle = localStorage.getItem("customAppTitleText") || "Finance Manager Pro";
+    document.getElementById("appHeaderTitle").innerText = savedTitle;
+    document.getElementById("pdfAppTitle").innerText = savedTitle;
+    document.getElementById("customAppTitleInput").value = savedTitle;
+    
+    let lang = localStorage.getItem("appLanguagePreference") || "ta";
+    document.getElementById("switch_languageTamil").checked = (lang === "ta");
+    applyLanguageLabels(lang);
+}
+
+function saveCustomAppTitle() {
+    let txt = document.getElementById("customAppTitleInput").value.trim();
+    if(txt) {
+        localStorage.setItem("customAppTitleText", txt);
+        document.getElementById("appHeaderTitle").innerText = txt;
+        document.getElementById("pdfAppTitle").innerText = txt;
+        alert("பெயர் வெற்றிகரமாக மாற்றப்பட்டது!");
+    }
+}
+
+function toggleLanguageSetting() {
+    let isTamil = document.getElementById("switch_languageTamil").checked;
+    let chosen = isTamil ? "ta" : "en";
+    localStorage.setItem("appLanguagePreference", chosen);
+    applyLanguageLabels(chosen);
+}
+
+function applyLanguageLabels(lang) {
+    let dict = languageData[lang];
+    
+    document.getElementById("title_generalSec").innerText = dict.title_generalSec;
+    document.getElementById("title_redSec").innerText = dict.title_redSec;
+    
+    document.querySelectorAll(".lbl-totalUsers").forEach(el => el.innerText = dict.lbl_totalUsers);
+    document.querySelectorAll(".lbl-totalCredit").forEach(el => el.innerText = dict.lbl_totalCredit);
+    document.querySelectorAll(".lbl-totalDebit").forEach(el => el.innerText = dict.lbl_totalDebit);
+    document.querySelectorAll(".lbl-totalBalance").forEach(el => el.innerText = dict.lbl_totalBalance);
+    
+    document.querySelectorAll(".lbl-redUsers").forEach(el => el.innerText = dict.lbl_redUsers);
+    document.querySelectorAll(".lbl-redCredit").forEach(el => el.innerText = dict.lbl_redCredit);
+    document.querySelectorAll(".lbl-redDebit").forEach(el => el.innerText = dict.lbl_redDebit);
+    document.querySelectorAll(".lbl-redBalance").forEach(el => el.innerText = dict.lbl_redBalance);
+    
+    document.querySelector(".btn-newUser").innerText = dict.btn_newUser;
+    document.querySelector(".btn-newEntry").innerText = dict.btn_newEntry;
+    document.querySelector(".btn-totalTx").innerText = dict.btn_totalTx;
+    document.querySelectorAll(".btn-settings").forEach(el => el.innerText = dict.btn_settings);
+    
+    document.querySelector(".lbl-secUsers").innerText = dict.lbl_secUsers;
+    document.querySelector(".id-secGeneralTitle").innerText = dict.id_secGeneralTitle;
+    
+    document.querySelectorAll(".th-date").forEach(el => el.innerText = dict.th_date);
+    document.querySelectorAll(".th-desc").forEach(el => el.innerText = dict.th_desc);
+    document.querySelectorAll(".th-cr").forEach(el => el.innerText = dict.th_cr);
+    document.querySelectorAll(".th-db").forEach(el => el.innerText = dict.th_db);
+    document.querySelectorAll(".th-bal").forEach(el => el.innerText = dict.th_bal);
+    document.querySelectorAll(".th-user").forEach(el => el.innerText = dict.th_user);
+    
+    document.querySelector(".lbl-totalTxTitle").innerText = dict.lbl_totalTxTitle;
+    document.querySelector(".set-dashTitle").innerText = dict.set_dashTitle;
+    document.querySelector(".set-fontTitle").innerText = dict.set_fontTitle;
+    document.querySelector(".set-fontSize").innerText = dict.set_fontSize;
+    document.querySelector(".set-fontWeight").innerText = dict.set_fontWeight;
+    document.querySelector(".pop-selectLbl").innerText = dict.pop_selectLbl;
+    document.querySelector(".pop-shareTitle").innerText = dict.pop_shareTitle;
+    document.querySelector(".pop-shareSub").innerText = dict.pop_shareSub;
+}
+
 function renderUsers(){
     const search = document.getElementById("userSearch").value.toLowerCase();
     const listDiv = document.getElementById("userList");
@@ -739,13 +810,11 @@ function renderUsers(){
     listDiv.innerHTML = "";
     genListDiv.innerHTML = "";
 
-    // பொது கணக்குகளின் மாறிகள்
     let totalUsersCount = users.length;
     let totalCreditAmt = 0;
     let totalDebitAmt = 0;
     let totalBalanceAmt = 0;
 
-    // சிகப்பு குறியீடு கணக்குகளின் மாறிகள் (R SAVE)
     let redUsersCount = 0;
     let redTotalCredit = 0;
     let redTotalDebit = 0;
@@ -768,14 +837,12 @@ function renderUsers(){
         }
     });
 
-    // பொதுவான என்ட்ரிகளையும் மொத்த கணக்கில் சேர்க்க வேண்டும்
     generalEntries.forEach(ge => {
         totalCreditAmt += Number(ge.credit || 0);
         totalDebitAmt += Number(ge.debit || 0);
         totalBalanceAmt += (Number(ge.credit || 0) - Number(ge.debit || 0));
     });
 
-    // டேஷ்போர்டு பிரிவுகளில் தரவுகளை நிரப்புதல்
     document.getElementById("totalUsers").innerText = totalUsersCount;
     document.getElementById("totalCredit").innerText = "₹ " + totalCreditAmt.toLocaleString();
     document.getElementById("totalDebit").innerText = "₹ " + totalDebitAmt.toLocaleString();
@@ -786,7 +853,6 @@ function renderUsers(){
     document.getElementById("redTotalDebit").innerText = "₹ " + redTotalDebit.toLocaleString();
     document.getElementById("redTotalBalance").innerText = "₹ " + redTotalBalance.toLocaleString();
 
-    // 1. வாடிக்கையாளர்கள் ஃபோல்டர் கார்டுகள்
     let filteredUsers = users.filter(u => u.name.toLowerCase().includes(search) || (u.mobile && u.mobile.includes(search)));
     filteredUsers.sort((a,b)=> isRed(b) - isRed(a));
 
@@ -808,7 +874,6 @@ function renderUsers(){
         listDiv.appendChild(card);
     });
 
-    // 2. பொதுவான என்ட்ரிகள் கார்டுகள் (வரிசையாக கீழே ஓப்பனாக வரும்)
     let filteredGeneral = generalEntries.filter(ge => ge.desc.toLowerCase().includes(search) || ge.date.includes(search));
     filteredGeneral.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -820,7 +885,7 @@ function renderUsers(){
             card.className = "user-card general-row";
             
             setupLongPress(card, function() {
-                openActionPopup("பொது என்ட்ரி: " + ge.desc, () => editGeneralTransaction(realGeIdx), () => deleteGeneralTransaction(realGeIdx));
+                openActionPopup("General Entry: " + ge.desc, () => editGeneralTransaction(realGeIdx), () => deleteGeneralTransaction(realGeIdx));
             });
 
             let amtDisplay = Number(ge.credit) > 0 ? `+ ₹${Number(ge.credit).toLocaleString()}` : `- ₹${Number(ge.debit).toLocaleString()}`;
@@ -841,31 +906,16 @@ function renderUsers(){
         document.getElementById("generalSectionTitle").style.display = "none";
     }
 
-    // லோக்கல் சுவிட்ச் அமைப்புகளின் படி கார்டுகளை மறைத்தல் / காட்டுதல்
     applySavedToggleSettings();
 }
 
-// லாங் பிரஸ் கண்டறியும் அக்யூரேட் மொபைல் டச் ஃபங்க்ஷன்
 function setupLongPress(element, callback) {
     element.addEventListener('touchstart', function(e) {
-        pressTimer = window.setTimeout(function() {
-            callback();
-        }, 600);
+        pressTimer = window.setTimeout(function() { callback(); }, 600);
     }, {passive: true});
-
-    element.addEventListener('touchend', function(e) {
-        if (pressTimer) clearTimeout(pressTimer);
-    }, {passive: true});
-
-    element.addEventListener('mousedown', function(e) {
-        pressTimer = window.setTimeout(function() {
-            callback();
-        }, 600);
-    });
-
-    element.addEventListener('mouseup', function(e) {
-        if (pressTimer) clearTimeout(pressTimer);
-    });
+    element.addEventListener('touchend', function(e) { if (pressTimer) clearTimeout(pressTimer); }, {passive: true});
+    element.addEventListener('mousedown', function(e) { pressTimer = window.setTimeout(function() { callback(); }, 600); });
+    element.addEventListener('mouseup', function(e) { if (pressTimer) clearTimeout(pressTimer); });
 }
 
 function openUser(i){
@@ -874,11 +924,22 @@ function openUser(i){
     document.getElementById("userScreen").classList.remove("hidden");
     renderTransactions();
     
-    // பேலன்ஸ் பட்டன் மீது லாங் பிரஸ் செய்தால் வாட்ஸ்அப் / பிடிஎஃப் ஆப்ஷன் ஓபன் ஆகும் லாஜிக் செட்டப்
     const balElement = document.getElementById("profBalance");
-    setupLongPress(balElement, function() {
-        openSharePopup();
-    });
+    setupLongPress(balElement, function() { openSharePopup(); });
+}
+
+// யூசர் ஃபோல்டருக்குள் இருக்கும் பிளஸ் நியூ என்ட்ரி பட்டன் செயல்பாடு
+function openUserFolderPlusEntry() {
+    folderPlusMode = true; 
+    document.getElementById("entryFormTitle").innerText = "New Entry -> " + users[currentUser].name;
+    document.getElementById("targetUserSelectionArea").style.display = "none";
+    
+    document.getElementById("tDate").value = new Date().toISOString().split("T")[0];
+    document.getElementById("tDesc").value = "";
+    document.getElementById("tCredit").value = "";
+    document.getElementById("tDebit").value = "";
+    editIndex = null;
+    document.getElementById("entryPopup").style.display = "flex";
 }
 
 function goBack(){
@@ -889,8 +950,8 @@ function goBack(){
 }
 
 function openGlobalEntryForm() {
-    globalTargetMode = "global";
-    document.getElementById("entryFormTitle").innerText = "New Entry (பொது/யூசர் தேர்வு)";
+    folderPlusMode = false;
+    document.getElementById("entryFormTitle").innerText = "New Entry (Global Mode)";
     document.getElementById("targetUserSelectionArea").style.display = "block";
     
     const selectEl = document.getElementById("tUserSelect");
@@ -907,26 +968,25 @@ function openGlobalEntryForm() {
     document.getElementById("entryPopup").style.display = "flex";
 }
 
-function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; isEditingGeneral = false;}
+function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; isEditingGeneral = false; folderPlusMode = false;}
 
-// ஆர் (R) பட்டன் லாஜிக் - வெறும் தேதியுடன் சிகப்பு நிறமாக்குதல்
 function triggerRedFlagButton() {
     let d = document.getElementById("tDate").value;
-    if(!d) return alert("R குறியீட்டிற்கு Date கட்டாயம் தேவை!");
+    if(!d) return alert("R Line requires a valid Date!");
 
-    const target = document.getElementById("tUserSelect").value;
-    if(target === "general") {
-        alert("General என்ட்ரிக்கு R லாக் அப்ளை செய்ய முடியாது. ஏதேனும் ஒரு யூசரை தேர்ந்தெடுக்கவும்!");
+    let uIdx = folderPlusMode ? currentUser : document.getElementById("tUserSelect").value;
+    if(uIdx === "general") {
+        alert("R flag can only be used on Users, not general entries!");
         return;
-    } else {
-        let uIdx = parseInt(target);
-        users[uIdx].isForcedRed = true;
-        users[uIdx].transactions.push({ date: d, desc: "R SAVE ACTIVATE", credit: "", debit: "" });
     }
+    
+    let targetIndex = parseInt(uIdx);
+    users[targetIndex].isForcedRed = true;
+    users[targetIndex].transactions.push({ date: d, desc: "R SAVE ACTIVATE", credit: "", debit: "" });
     
     saveLocal();
     closeEntryForm();
-    renderUsers();
+    if(currentUser !== null) { renderTransactions(); } else { renderUsers(); }
 }
 
 function saveTransaction(){
@@ -935,13 +995,18 @@ function saveTransaction(){
     if(!d) return alert("Date is required!");
 
     if(editIndex === null) {
-        const target = document.getElementById("tUserSelect").value;
-        if(target === "general") {
-            generalEntries.push({ date: d, desc: desc, credit: c, debit: deb });
+        if(folderPlusMode) {
+            users[currentUser].isForcedRed = false;
+            users[currentUser].transactions.push({ date: d, desc: desc, credit: c, debit: deb });
         } else {
-            let uIdx = parseInt(target);
-            users[uIdx].isForcedRed = false; 
-            users[uIdx].transactions.push({ date: d, desc: desc, credit: c, debit: deb });
+            const target = document.getElementById("tUserSelect").value;
+            if(target === "general") {
+                generalEntries.push({ date: d, desc: desc, credit: c, debit: deb });
+            } else {
+                let uIdx = parseInt(target);
+                users[uIdx].isForcedRed = false; 
+                users[uIdx].transactions.push({ date: d, desc: desc, credit: c, debit: deb });
+            }
         }
     } else {
         if(isEditingGeneral) {
@@ -953,7 +1018,7 @@ function saveTransaction(){
 
     saveLocal();
     closeEntryForm();
-    if(currentUser !== null && !isEditingGeneral) { renderTransactions(); } else { renderUsers(); }
+    if(currentUser !== null) { renderTransactions(); } else { renderUsers(); }
 }
 
 function renderTransactions(){
@@ -974,11 +1039,8 @@ function renderTransactions(){
         display.push({ ...tx, cumulative: isNote ? "" : curBal, actualIdx: originalIndex });
     });
 
-    // கடைசி போடும் தேதி தான் முதலில் இருக்க வேண்டும் வடிவம் (Latest Date First)
     display.reverse();
-
-    // மொபைல் வியூவில் மிகச்சரியாக 11 ரோக்கள் மட்டும் தெரியும் படி கட்டுப்படுத்துதல்
-    let sliceDisplay = display.slice(0, 11);
+    let sliceDisplay = display.slice(0, 11); // 11 வரிகள் கட்டுப்பாடு
 
     sliceDisplay.forEach((tx) => {
         let row = document.createElement("tr");
@@ -986,9 +1048,8 @@ function renderTransactions(){
         else if(Number(tx.debit) > 0) row.className = "debit-row";
         else row.className = "pending-row";
 
-        // வரியை லாங் பிரஸ் செய்தால் எடிட் / டெலிட் மெனு தோன்றும்
         setupLongPress(row, function() {
-            openActionPopup("வரலாறு: " + tx.desc, () => editTransaction(tx.actualIdx), () => deleteTransaction(tx.actualIdx));
+            openActionPopup("History: " + tx.desc, () => editTransaction(tx.actualIdx), () => deleteTransaction(tx.actualIdx));
         });
 
         row.innerHTML = `<td>${formatDate(tx.date)}</td>
@@ -1000,15 +1061,58 @@ function renderTransactions(){
     });
 }
 
+/* SCREEN 5: மொத்த டிரான்ஸாக்ஷன் திரை மேலாண்மை (All Transactions) */
+function openAllTransactionsScreen() {
+    document.getElementById("mainScreen").classList.add("hidden");
+    document.getElementById("allTransactionsScreen").classList.remove("hidden");
+    
+    const tableBody = document.getElementById("allTransactionsTableBody");
+    tableBody.innerHTML = "";
+    
+    let combinedList = [];
+    
+    users.forEach(u => {
+        if(u.transactions) {
+            u.transactions.forEach(tx => {
+                combinedList.push({ ...tx, origin: u.name });
+            });
+        }
+    });
+    
+    generalEntries.forEach(ge => {
+        combinedList.push({ ...ge, origin: "General Entry" });
+    });
+    
+    // புதிய தேதிகள் முதலில் வரும்படி அடுக்குதல்
+    combinedList.sort((a,b) => new Date(b.date) - new Date(a.date));
+    
+    combinedList.forEach(tx => {
+        let row = document.createElement("tr");
+        if(Number(tx.credit) > 0) row.className = "credit-row";
+        else if(Number(tx.debit) > 0) row.className = "debit-row";
+        else row.className = "pending-row";
+        
+        row.innerHTML = `<td>${formatDate(tx.date)}</td>
+                         <td style="font-weight:bold; color:var(--gold);">${tx.origin}</td>
+                         <td>${tx.desc || ""}</td>
+                         <td>${tx.credit || ""}</td>
+                         <td>${tx.debit || ""}</td>`;
+        tableBody.appendChild(row);
+    });
+}
+
+function closeAllTransactionsScreen() {
+    document.getElementById("allTransactionsScreen").classList.add("hidden");
+    document.getElementById("mainScreen").classList.remove("hidden");
+    renderUsers();
+}
+
 function editTransaction(i) {
     let tx = users[currentUser].transactions[i];
-    globalTargetMode = "global";
+    folderPlusMode = true; 
     isEditingGeneral = false;
     
-    document.getElementById("targetUserSelectionArea").style.display = "block";
-    const selectEl = document.getElementById("tUserSelect");
-    selectEl.innerHTML = `<option value="${currentUser}">${users[currentUser].name}</option>`;
-    
+    document.getElementById("targetUserSelectionArea").style.display = "none";
     document.getElementById("entryFormTitle").innerText = "Edit Entry";
     document.getElementById("tDate").value = tx.date;
     document.getElementById("tDesc").value = tx.desc || "";
@@ -1021,7 +1125,7 @@ function editTransaction(i) {
 
 function deleteTransaction(i){ 
     closeActionPopup();
-    if(confirm("இந்த எண்ட்ரியை நீக்கவா?")){ 
+    if(confirm("Delete this entry?")){ 
         users[currentUser].transactions.splice(i,1); 
         saveLocal(); 
         renderTransactions(); 
@@ -1030,7 +1134,7 @@ function deleteTransaction(i){
 
 function editGeneralTransaction(i) {
     let tx = generalEntries[i];
-    globalTargetMode = "global";
+    folderPlusMode = false;
     isEditingGeneral = true;
     
     document.getElementById("targetUserSelectionArea").style.display = "block";
@@ -1049,7 +1153,7 @@ function editGeneralTransaction(i) {
 
 function deleteGeneralTransaction(i) {
     closeActionPopup();
-    if(confirm("இந்த பொதுவான எண்ட்ரியை நீக்கவா?")){ 
+    if(confirm("Delete this general entry?")){ 
         generalEntries.splice(i,1); 
         saveLocal(); 
         renderUsers(); 
@@ -1072,9 +1176,6 @@ function closeActionPopup() { document.getElementById("actionPopup").style.displ
 function openSharePopup() { document.getElementById("sharePopup").style.display = "flex"; }
 function closeSharePopup() { document.getElementById("sharePopup").style.display = "none"; }
 
-// ==========================================
-// WHATSAPP SHARE SYSTEM
-// ==========================================
 function sendWhatsAppMessage() {
     let u = users[currentUser];
     let name = u.name;
@@ -1084,33 +1185,28 @@ function sendWhatsAppMessage() {
     let balance = getBalance(u).toLocaleString();
     
     if(!mobile) {
-        alert("இந்த யூசருக்கு மொபைல் எண் இல்லை!");
+        alert("மொபைல் எண் இல்லை!");
         return;
     }
 
-    // அழகான தமிழ் வாட்ஸ்அப் அறிக்கை டெக்ஸ்ட் மெசேஜ் வடிவம்
-    let text = `*FINANCE STATEMENT*%0A%0A` +
-               `👤 *பெயர்:* ${name}%0A` +
-               `🟢 *மொத்த வரவு:* ₹${credit}%0A` +
-               `🔴 *மொத்த செலவு:* ₹${debit}%0A` +
-               `📊 *இருப்பு பாக்கி:* ₹${balance}%0A%0A` +
-               `_Thank you for your business!_`;
+    let text = `*STATEMENT OF ACCOUNT*%0A%0A` +
+               `👤 *Name:* ${name}%0A` +
+               ` green *Total Credit:* ₹${credit}%0A` +
+               ` red *Total Debit:* ₹${debit}%0A` +
+               `📊 *Total Balance:* ₹${balance}%0A%0A` +
+               `_Generated via Finance Pro_`;
                
     let url = `https://api.whatsapp.com/send?phone=${mobile}&text=${text}`;
     window.open(url, '_blank');
     closeSharePopup();
 }
 
-// ==========================================
-// ULTRA PREMIUM HTML2PDF GENERATOR
-// ==========================================
 function generatePdfStatement() {
     let u = users[currentUser];
     
-    // டெம்ப்ளேட்டில் விபரங்களை நிரப்புதல்
-    document.getElementById("pdfNameField").innerText = "வாடிக்கையாளர் பெயர்: " + u.name;
-    document.getElementById("pdfMobileField").innerText = "மொபைல் எண்: " + (u.mobile || "No Mobile");
-    document.getElementById("pdfBalanceField").innerText = "மொத்த இறுதி பாக்கி: ₹" + getBalance(u).toLocaleString();
+    document.getElementById("pdfNameField").innerText = "Name: " + u.name;
+    document.getElementById("pdfMobileField").innerText = "Mobile: " + (u.mobile || "No Mobile");
+    document.getElementById("pdfBalanceField").innerText = "Final Balance: ₹" + getBalance(u).toLocaleString();
     
     const pdfBody = document.getElementById("pdfTableBody");
     pdfBody.innerHTML = "";
@@ -1130,10 +1226,9 @@ function generatePdfStatement() {
     });
 
     const element = document.getElementById("pdfTemplate");
-    // பிடிஎஃப் ஃபைல் வடிவமைப்பு ஆப்ஷன்கள்
     const opt = {
         margin:       10,
-        filename:     `${u.name}_Statement_2026.pdf`,
+        filename:     `${u.name}_Statement.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, backgroundColor: '#000000' },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -1146,12 +1241,10 @@ function generatePdfStatement() {
     });
 }
 
-/* SCREEN 3: செட்டிங்ஸ் ஆன்/ஆஃப் மற்றும் எழுத்து மேலாண்மை */
 function openSettings() {
     document.getElementById("mainScreen").classList.add("hidden");
     document.getElementById("settingsScreen").classList.remove("hidden");
     
-    // செட்டிங்ஸ் செக்பாக்ஸ்களின் நிலையை லோக்கல் ஸ்டோரேஜில் இருந்து அப்டேட் செய்தல்
     let config = JSON.parse(localStorage.getItem("dashboardToggleConfig")) || {};
     const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
     keys.forEach(k => {
@@ -1198,7 +1291,6 @@ function applySavedToggleSettings() {
         }
     });
 
-    // முழு பிரிவையும் மறைக்கும் லாஜிக்
     document.getElementById("title_generalSec").style.display = (generalActiveCount === 0) ? "none" : "block";
     document.getElementById("sec_generalDashboard").style.display = (generalActiveCount === 0) ? "none" : "grid";
     document.getElementById("title_redSec").style.display = (redActiveCount === 0) ? "none" : "block";
