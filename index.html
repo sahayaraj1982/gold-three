@@ -8,15 +8,17 @@
 <style>
 :root {
     --gold: #ffd700;
-    --gold-gradient: linear-gradient(145deg, #ffd700, #b8860b);
-    --dark-bg: #0a0a0a;
-    --card-bg: #141414;
-    --card-inner: #1e1e1e;
-    --border-color: #2a2a2a;
+    --gold-gradient: linear-gradient(145deg, #ffffff, #e6e6e6);
+    --btn-gradient: linear-gradient(145deg, #ffd700, #d4af37);
+    --dark-bg: #f5f6fa; /* இறுக்கம் இல்லாத எளிய வெளிறிய பின்னணி */
+    --card-bg: #ffffff; /* வெள்ளை நிற கார்டுகள் */
+    --card-inner: #f1f2f6;
+    --border-color: #dcdde1;
+    --text-color: #2f3640;
     
-    /* புதிய துடிப்பான பிரீமியம் நிறங்கள் - உங்கள் ஸ்கிரிப்ட் முறைப்படி */
-    --premium-green: #2ecc71;
-    --premium-red: #e74c3c;
+    /* துடிப்பான பச்சை மற்றும் சிவப்பு நிறங்கள் */
+    --premium-green: #239b56; 
+    --premium-red: #c0392b;
     
     --font-multiplier: 1;
     --font-weight-custom: normal;
@@ -25,7 +27,7 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--dark-bg);
-    color: #ffffff;
+    color: var(--text-color);
     -webkit-user-select: none;
     user-select: none;
     overflow-x: hidden;
@@ -36,16 +38,14 @@ body {
     padding-bottom: 80px;
 }
 header {
-    background: var(--gold-gradient);
-    color: #000000;
+    background: linear-gradient(145deg, #2c3e50, #1a252f);
+    color: #ffffff;
     text-align: center;
     padding: 20px;
     font-size: 24px;
     font-weight: 900;
     letter-spacing: 1px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
-    border-bottom: 2px solid #b8860b;
-    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     position: relative;
 }
 .signout-header-btn {
@@ -53,14 +53,15 @@ header {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    background: #000;
-    color: var(--gold);
+    background: var(--premium-red);
+    color: white;
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 12px;
     font-weight: bold;
-    border: 1px solid var(--gold);
+    border: none;
     cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
 
 body, input, button, table, td, th, select {
@@ -71,7 +72,7 @@ body, input, button, table, td, th, select {
 .dashboard-section-title {
     padding: 15px 15px 5px 15px;
     margin: 10px 0 0 0;
-    color: #888888;
+    color: #7f8c8d;
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -89,14 +90,14 @@ body, input, button, table, td, th, select {
     border-radius: 12px;
     text-align: center;
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
 }
 .stat-box.red-border {
-    border: 1px solid var(--premium-red);
-    background: rgba(231, 76, 60, 0.1);
+    border: 2px solid var(--premium-red);
+    background: rgba(192, 57, 43, 0.05);
 }
 .stat-box small {
-    color: #999999;
+    color: #7f8c8d;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: bold;
@@ -106,7 +107,7 @@ body, input, button, table, td, th, select {
 .stat-box h2 {
     margin: 0;
     font-size: 19px;
-    color: var(--gold);
+    color: var(--premium-green);
     font-weight: 900;
 }
 .stat-box.red-border h2 { color: var(--premium-red); }
@@ -116,39 +117,62 @@ body, input, button, table, td, th, select {
     width: 100%;
     padding: 16px;
     border-radius: 12px;
-    border: 1px solid var(--gold);
+    border: 2px solid var(--border-color);
     background: var(--card-bg);
-    color: white;
+    color: var(--text-color);
     box-sizing: border-box;
     font-size: 16px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.top-buttons {
-    padding: 5px 12px;
+/* 3D பட்டன் கிரிட் - ஒரே சீரான அளவுடன் */
+.icon-grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 12px;
 }
-button {
-    padding: 14px 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+.btn-3d {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    color: #2c3e50;
+    padding: 15px 10px;
+    font-size: 14px;
     font-weight: bold;
+    border-radius: 14px;
+    border: 1px solid #d1d1d1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+    box-shadow: 0 6px 0 #bcbcbc, 0 8px 15px rgba(0,0,0,0.1);
+    transition: all 0.1s ease;
+    height: 95px;
+    box-sizing: border-box;
 }
-.gold { background: var(--gold-gradient); color: #000000; }
+.btn-3d:active {
+    box-shadow: 0 2px 0 #bcbcbc, 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(4px);
+}
+.btn-3d .icon-3d {
+    font-size: 28px;
+}
+.btn-delete-all {
+    background: linear-gradient(145deg, #ff6b6b, #e64c4c);
+    color: white;
+    border: 1px solid #d63031;
+    box-shadow: 0 6px 0 #b32d2d, 0 8px 15px rgba(0,0,0,0.1);
+}
+.btn-delete-all:active {
+    box-shadow: 0 2px 0 #b32d2d, 0 4px 8px rgba(0,0,0,0.1);
+}
 
 .section-title {
     padding: 15px 15px 5px 15px;
     margin: 15px 0 5px 0;
-    color: var(--gold);
-    border-bottom: 1px solid var(--border-color);
+    color: #2c3e50;
+    border-bottom: 2px solid var(--border-color);
     font-size: 18px;
     font-weight: bold;
 }
@@ -161,20 +185,20 @@ button {
     cursor: pointer;
     border: 1px solid var(--border-color);
     box-sizing: border-box;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
-/* அலர்ட் சிவப்பு பின்னணி */
-.user-card.redbg { background: rgba(231, 76, 60, 0.25); border-color: var(--premium-red); }
+.user-card.general-row { border-left: 5px solid #3498db; }
+.user-card.redbg { background: rgba(192, 57, 43, 0.15); border-color: var(--premium-red); }
 .row { display: flex; justify-content: space-between; align-items: center; }
 
 .profile-header {
     background: var(--card-bg);
     padding: 20px;
-    border-bottom: 3px solid var(--gold);
+    border-bottom: 3px solid #2c3e50;
 }
 .profile-header h2 {
     margin: 0 0 15px 0;
-    color: var(--gold);
+    color: #2c3e50;
     text-align: center;
     font-size: 24px;
     font-weight: 900;
@@ -188,10 +212,10 @@ button {
     border-radius: 12px;
 }
 #profBalance {
-    margin: 0; color: #ffffff; font-weight: 900;
-    background: rgba(255,255,255,0.05);
+    margin: 0; color: #2c3e50; font-weight: 900;
+    background: rgba(0,0,0,0.05);
     padding: 6px 12px; border-radius: 8px;
-    border: 1px dashed rgba(255,215,0,0.3);
+    border: 1px dashed #2c3e50;
     cursor: pointer;
 }
 
@@ -199,20 +223,20 @@ button {
 table {
     width: 100%; border-collapse: collapse;
     background: var(--card-bg); border-radius: 12px;
-    overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 th, td { padding: 15px 10px; text-align: center; border-bottom: 1px solid var(--border-color); }
-th { background: #1f1f1f; color: var(--gold); font-size: 13px; }
+th { background: #2c3e50; color: white; font-size: 13px; }
 
-/* துல்லியமான புதிய பச்சை மற்றும் சிவப்பு ரோ நிறங்கள் */
-.credit-row { background-color: var(--premium-green) !important; color: #000000 !important; font-weight: bold; }
+/* படம் 1-ல் உள்ளது போன்ற பிரீமியம் பச்சை மற்றும் சிவப்பு நிற ரோக்கள் */
+.credit-row { background-color: var(--premium-green) !important; color: #ffffff !important; font-weight: bold; }
 .debit-row { background-color: var(--premium-red) !important; color: #ffffff !important; font-weight: bold; }
-.pending-row { background-color: #332200; color: var(--gold); font-weight: bold; }
+.pending-row { background-color: #f1c40f; color: #000000; font-weight: bold; }
 
 .settings-row {
     display: flex; justify-content: space-between; align-items: center;
     margin: 12px 0; padding: 12px;
-    background: var(--card-inner); border-radius: 10px;
+    background: var(--card-bg); border-radius: 10px;
     border: 1px solid var(--border-color);
 }
 .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
@@ -220,60 +244,60 @@ th { background: #1f1f1f; color: var(--gold); font-size: 13px; }
 .slider {
     position: absolute; cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #444; transition: .4s; border-radius: 34px;
+    background-color: #ccc; transition: .4s; border-radius: 34px;
 }
 .slider:before {
     position: absolute; content: ""; height: 18px; width: 18px;
     left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;
 }
-input:checked + .slider { background-color: var(--gold); }
-input:checked + .slider:before { transform: translateX(24px); background-color: #000; }
+input:checked + .slider { background-color: var(--premium-green); }
+input:checked + .slider:before { transform: translateX(24px); }
 
-/* சிம்பிள் லாங்குவேஜ் பட்டன்கள் */
 .lang-btn-group { display: flex; gap: 10px; margin: 10px 0; }
-.lang-btn { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: #222; color: white; font-weight: bold; }
-.lang-btn.active { background: var(--gold-gradient); color: black; border-color: var(--gold); }
+.lang-btn { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: #fff; color: #2c3e50; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #ccc; }
+.lang-btn.active { background: #2c3e50; color: white; box-shadow: 0 4px 0 #1a252f; }
 
 .popup-overlay {
     display: none; position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.96); z-index: 1000;
+    background: rgba(0,0,0,0.6); z-index: 1000;
     justify-content: center; align-items: center;
 }
 .popup-content {
     background: var(--card-bg); padding: 25px; border-radius: 24px;
-    text-align: center; border: 2px solid var(--gold);
+    text-align: center; border: 1px solid var(--border-color);
     width: 88%; max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 input[type="date"], input[type="text"], input[type="number"], input[type="password"], select {
     width: 100%; margin: 12px 0; padding: 14px;
-    border: 1px solid var(--border-color); border-radius: 10px;
-    background: var(--card-inner); color: white; box-sizing: border-box;
+    border: 2px solid var(--border-color); border-radius: 10px;
+    background: #fff; color: var(--text-color); box-sizing: border-box;
 }
 
 .share-popup-container { display: flex; justify-content: space-around; align-items: center; margin-top: 20px; gap: 15px; }
 .share-option-btn { flex: 1; padding: 15px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--card-inner); cursor: pointer; text-align: center; }
 .share-icon-img { font-size: 32px; display: block; margin-bottom: 5px; }
-.general-row { border-left: 4px solid #00e5ff; }
 
 #loading {
     display: none; position: fixed; top: 15px; right: 15px;
-    background: var(--gold-gradient); color: #000000;
+    background: #2c3e50; color: #ffffff;
     padding: 10px 20px; border-radius: 30px; font-weight: bold; z-index: 10000; font-size: 13px;
 }
 
+/* லாகின் ஸ்கிரீன் வடிவமைப்பு - விரல் தொடும் படத்துடன் */
 #passwordOverlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--dark-bg); z-index: 2000;
+    background: #f5f6fa; z-index: 2000;
     display: flex; justify-content: center; align-items: center;
 }
 .hidden { display: none !important; }
 
-#pdfTemplate { background: #000000; color: #ffffff; padding: 30px; font-family: 'Segoe UI', Arial, sans-serif; }
-.pdf-header { border-bottom: 3px solid #ffd700; padding-bottom: 15px; text-align: center; margin-bottom: 20px; }
+#pdfTemplate { background: #ffffff; color: #000000; padding: 30px; font-family: 'Segoe UI', Arial, sans-serif; }
+.pdf-header { border-bottom: 3px solid #2c3e50; padding-bottom: 15px; text-align: center; margin-bottom: 20px; }
 .pdf-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-.pdf-table th { background: #222222; color: #ffd700; padding: 12px; border: 1px solid #333333; }
-.pdf-table td { padding: 12px; text-align: center; border: 1px solid #333333; }
+.pdf-table th { background: #2c3e50; color: white; padding: 12px; border: 1px solid #ddd; }
+.pdf-table td { padding: 12px; text-align: center; border: 1px solid #ddd; }
 </style>
 </head>
 <body>
@@ -281,18 +305,22 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 <div id="loading">டேட்டா SAVE...</div>
 
 <div id="passwordOverlay">
-    <div class="popup-content" style="border-radius: 24px;">
-        <h2 style="color:var(--gold); margin-top:0; font-weight: 900; font-size: 28px; letter-spacing:1px;">GOOD DAY</h2>
-        <p style="color: #bbb; font-size: 14px; margin-bottom:20px;">Please enter your security password to continue</p>
+    <div class="popup-content" style="border: 2px solid #2c3e50; background: #ffffff;">
+        <h2 style="color:#2c3e50; margin-top:0; font-weight: 900; font-size: 28px; letter-spacing:1px;">GOOD DAY</h2>
+        <p style="color: #7f8c8d; font-size: 14px; margin-bottom:20px;">Please enter your security password to continue</p>
         
-        <label style="color:var(--gold); font-size:12px; display:block; text-align:left; font-weight:bold; letter-spacing:1px;">PASSWORD</label>
+        <label style="color:#2c3e50; font-size:12px; display:block; text-align:left; font-weight:bold; letter-spacing:1px;">PASSWORD</label>
         <input type="password" id="appPassword" placeholder="••••••••" style="text-align:center; font-size:22px; letter-spacing:4px; padding:16px; margin-top:5px; margin-bottom:20px;">
         
-        <button class="gold" onclick="verifyAppPassword()" style="width:100%; padding:15px; border-radius:12px; font-size: 16px; font-weight:900; letter-spacing:1px;">LOGIN</button>
-        <p id="passError" style="color:#ff3333; display:none; margin-top:12px; font-weight: bold;">Invalid Password! Please try again.</p>
+        <button class="btn-3d" onclick="verifyAppPassword()" style="width:100%; height: auto; background:linear-gradient(145deg, #ffd700, #d4af37); color:#000; font-size: 18px; font-weight:900; box-shadow: 0 5px 0 #b8860b;">
+            LOGIN 🫵
+        </button>
+        <p id="passError" style="color:var(--premium-red); display:none; margin-top:12px; font-weight: bold;">Invalid Password! Please try again.</p>
         
-        <a id="adminWhatsAppLink" href="https://wa.me/919361203202" target="_blank" style="text-decoration:none; display:inline-block; margin-top:25px; color:#25D366; font-size:13px; font-weight:bold; background:rgba(37,211,102,0.1); padding:8px 16px; border-radius:20px; border:1px solid rgba(37,211,102,0.3);">
-            💬 ADMIN - 91 - 9361203202 WHATSAPP SIMPLE
+        <a id="adminWhatsAppLink" href="https://wa.me/919361203202" target="_blank" style="text-decoration:none; display:block; margin-top:30px; padding:10px;">
+            <div style="font-size: 50px; margin-bottom: 5px;">💬</div>
+            <span style="color:#25D366; font-size:14px; font-weight:bold; display:block;">ADMIN - 91 - 9361203202 WHATSAPP SIMPLE</span>
+            <div style="font-size: 30px; margin-top: 5px; animation: bounce 1s infinite;">👉 🫵</div>
         </a>
     </div>
 </div>
@@ -324,15 +352,21 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
             <div class="stat-box red-border" id="box_redTotalBalance"><small class="lbl-redBalance">Red Total Balance</small><h2 id="redTotalBalance">0</h2></div>
         </div>
 
-        <div class="top-buttons">
-            <button class="gold" onclick="addUser()">👤 <span class="btn-newUser">+ New User</span></button>
-            <button class="gold" onclick="openGlobalEntryForm()">📝 <span class="btn-newEntry">+ New Entry</span></button>
-            <button class="gold" onclick="openUserListScreen()">📋 <span class="btn-userList">User List</span></button>
-            <button class="gold" onclick="openAllTransactionsScreen()">📊 <span class="btn-totalTx">Total Transaction</span></button>
+        <div class="icon-grid-container">
+            <div class="btn-3d" onclick="addUser()"><span class="icon-3d">👤</span><span class="btn-newUser">+ New User</span></div>
+            <div class="btn-3d" onclick="openGlobalEntryForm()"><span class="icon-3d">📝</span><span class="btn-newEntry">+ New Entry</span></div>
+            <div class="btn-3d" onclick="openUserListScreen()"><span class="icon-3d">📋</span><span class="btn-userList">User List</span></div>
+            <div class="btn-3d" onclick="openAllTransactionsScreen()"><span class="icon-3d">📊</span><span class="btn-totalTx">Total Tx</span></div>
+            <div class="btn-3d" onclick="exportData()"><span class="icon-3d">📤</span><span>EXPORT</span></div>
+            <div class="btn-3d" onclick="triggerImport()"><span class="icon-3d">📥</span><span>IMPORT</span></div>
         </div>
-        <div class="top-buttons" style="grid-template-columns: 1fr;">
-            <button class="gold" onclick="openSettings()">⚙️ <span class="btn-settings">Settings</span></button>
+        
+        <div class="icon-grid-container" style="grid-template-columns: repeat(2, 1fr); margin-top: -10px;">
+            <div class="btn-3d" onclick="openSettings()"><span class="icon-3d">⚙️</span><span class="btn-settings">Settings</span></div>
+            <div class="btn-3d btn-delete-all" onclick="autoBackupAndClearAll()"><span class="icon-3d">🗑️</span><span>ALL DELETE</span></div>
         </div>
+        
+        <input type="file" id="importFileInput" style="display:none;" accept=".json" onchange="importData(event)">
         
         <div class="section-title id-secGeneralTitle" id="generalSectionTitle">பொதுவான என்ட்ரிகள் (General Entries)</div>
         <div id="generalEntryList"></div>
@@ -340,7 +374,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
     <div id="userListScreen" class="hidden">
         <div class="profile-header">
-            <button class="gold" onclick="closeUserListScreen()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <button class="btn-3d" onclick="closeUserListScreen()" style="float:left; height:auto; padding: 6px 14px; margin-top: -5px; box-shadow:0 2px 0 #ccc;">← Back</button>
             <h2 class="btn-userList">வாடிக்கையாளர்கள் பட்டியல் (User List)</h2>
         </div>
         <div class="search-container">
@@ -353,8 +387,8 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
     <div id="userScreen" class="hidden">
         <div class="profile-header">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <button class="gold" onclick="goBack()" style="padding: 6px 14px;">← Back</button>
-                <button class="gold" onclick="openUserFolderPlusEntry()" style="padding: 6px 16px; font-size:18px; font-weight:900;">+ New Entry</button>
+                <button class="btn-3d" onclick="goBack()" style="height:auto; padding: 6px 14px; box-shadow:0 2px 0 #ccc;">← Back</button>
+                <button class="btn-3d" onclick="openUserFolderPlusEntry()" style="height:auto; padding: 8px 16px; background:var(--btn-gradient); box-shadow:0 3px 0 #b8860b;">+ New Entry</button>
             </div>
             <h2 id="profName"></h2>
             <div class="prof-details-row">
@@ -381,7 +415,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
     <div id="allTransactionsScreen" class="hidden">
         <div class="profile-header">
-            <button class="gold" onclick="closeAllTransactionsScreen()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <button class="btn-3d" onclick="closeAllTransactionsScreen()" style="float:left; height:auto; padding: 6px 14px; margin-top: -5px; box-shadow:0 2px 0 #ccc;">← Back</button>
             <h2 class="lbl-totalTxTitle">அனைத்து கணக்கு பதிவுகள் (Total Transactions)</h2>
         </div>
         <div class="table-container">
@@ -402,24 +436,24 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
     <div id="settingsScreen" class="hidden">
         <div class="profile-header">
-            <button class="gold" onclick="closeSettings()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <button class="btn-3d" onclick="closeSettings()" style="float:left; height:auto; padding: 6px 14px; margin-top: -5px; box-shadow:0 2px 0 #ccc;">← Back</button>
             <h2 class="btn-settings">அமைப்புகள் (Settings)</h2>
         </div>
         
         <div style="padding:15px; max-width: 600px; margin: auto;">
-            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;">Language / மொழி</h3>
+            <h3 style="color:#2c3e50; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">Language / மொழி</h3>
             <div class="lang-btn-group">
                 <button id="langBtnEn" class="lang-btn" onclick="setLanguage('en')">English</button>
                 <button id="langBtnTa" class="lang-btn" onclick="setLanguage('ta')">தமிழ்</button>
             </div>
 
-            <h3 style="color:var(--gold); margin-top:20px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மென்பொருள் பெயர் (App Title)</h3>
-            <div style="background:var(--card-inner); padding:12px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:20px;">
+            <h3 style="color:#2c3e50; margin-top:20px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மென்பொருள் பெயர் (App Title)</h3>
+            <div style="background:var(--card-bg); padding:12px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:20px;">
                 <input type="text" id="customAppTitleInput" placeholder="Enter App Name...">
-                <button class="gold" onclick="saveCustomAppTitle()" style="width:100%; padding:10px; margin-top:5px;">Change Name</button>
+                <button class="btn-3d" onclick="saveCustomAppTitle()" style="width:100%; height:auto; padding:10px; margin-top:5px; box-shadow:0 3px 0 #ccc;">Change Name</button>
             </div>
 
-            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-dashTitle">டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப்</h3>
+            <h3 style="color:#2c3e50; margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-dashTitle">டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப்</h3>
             
             <div class="settings-row"><span class="lbl-totalUsers">Total Users</span><label class="switch"><input type="checkbox" id="switch_totalUsers" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
             <div class="settings-row"><span class="lbl-totalCredit">Total Credit</span><label class="switch"><input type="checkbox" id="switch_totalCredit" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
@@ -431,12 +465,12 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
             <div class="settings-row"><span class="lbl-redDebit">Red Total Debit</span><label class="switch"><input type="checkbox" id="switch_redTotalDebit" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
             <div class="settings-row"><span class="lbl-redBalance">Red Total Balance</span><label class="switch"><input type="checkbox" id="switch_redTotalBalance" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
 
-            <h3 style="color:var(--gold); margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-fontTitle">எழுத்து அளவு</h3>
+            <h3 style="color:#2c3e50; margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-fontTitle">எழுத்து அளவு</h3>
             <div class="settings-row">
                 <span class="set-fontSize">Font Size</span>
                 <div style="display:flex; gap:8px;">
-                    <button class="gold" onclick="changeFontSize('normal')">Normal</button>
-                    <button class="gold" onclick="changeFontSize('large')">Large</button>
+                    <button class="btn-3d" onclick="changeFontSize('normal')" style="height:auto; padding:10px 20px; box-shadow:0 3px 0 #ccc;">Normal</button>
+                    <button class="btn-3d" onclick="changeFontSize('large')" style="height:auto; padding:10px 20px; box-shadow:0 3px 0 #ccc;">Large</button>
                 </div>
             </div>
         </div>
@@ -445,10 +479,10 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
 <div id="entryPopup" class="popup-overlay">
     <div class="popup-content">
-        <h3 id="entryFormTitle" style="color:var(--gold); margin-top:0;">New Entry</h3>
+        <h3 id="entryFormTitle" style="color:#2c3e50; margin-top:0;">New Entry</h3>
         
         <div id="targetUserSelectionArea">
-            <label style="color:#aaa; font-size:13px; display:block; text-align:left; margin-bottom:4px;" class="pop-selectLbl">தேர்ந்தெடுக்கவும்:</label>
+            <label style="color:#7f8c8d; font-size:13px; display:block; text-align:left; margin-bottom:4px;" class="pop-selectLbl">தேர்ந்தெடுக்கவும்:</label>
             <select id="tUserSelect">
                 <option value="general">General (பொதுவான என்ட்ரி)</option>
             </select>
@@ -460,49 +494,49 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
         <input type="number" id="tDebit" placeholder="Debit">
         
         <div style="display:flex; gap:8px; margin-top:15px;">
-            <button class="gold" onclick="saveTransaction()" style="width:100%;">Save</button>
-            <button style="background:#444; color:white; width:100%;" onclick="closeEntryForm()">Close</button>
+            <button class="btn-3d" onclick="saveTransaction()" style="width:100%; height:auto; background:var(--premium-green); color:white; box-shadow:0 4px 0 #1b6d3e;">Save</button>
+            <button class="btn-3d" style="background:#7f8c8d; color:white; width:100%; height:auto; box-shadow:0 4px 0 #59626a;" onclick="closeEntryForm()">Close</button>
         </div>
     </div>
 </div>
 
 <div id="sharePopup" class="popup-overlay" onclick="closeSharePopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
-        <h3 style="color:var(--gold); margin-top:0;" class="pop-shareTitle">Share Statement</h3>
+        <h3 style="color:#2c3e50; margin-top:0;" class="pop-shareTitle">Share Statement</h3>
         <div class="share-popup-container">
             <div class="share-option-btn" onclick="sendWhatsAppMessage()">
                 <span class="share-icon-img">💬</span>
-                <b style="color:#25D366;">WhatsApp</b>
+                <b style="color:var(--premium-green);">WhatsApp</b>
             </div>
             <div class="share-option-btn" onclick="generatePdfStatement()">
                 <span class="share-icon-img">📄</span>
-                <b style="color:#ff3333;">PDF</b>
+                <b style="color:var(--premium-red);">PDF</b>
             </div>
         </div>
-        <button style="background:#444; color:white; width:100%; margin-top:20px; padding:12px;" onclick="closeSharePopup()">Cancel</button>
+        <button class="btn-3d" style="background:#7f8c8d; color:white; width:100%; height:auto; margin-top:20px; box-shadow:0 4px 0 #59626a;" onclick="closeSharePopup()">Cancel</button>
     </div>
 </div>
 
 <div id="actionPopup" class="popup-overlay" onclick="closeActionPopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
-        <h3 id="popupTitle" style="color:var(--gold);">Manage</h3>
-        <button class="gold" id="editBtn" style="width:100%; padding:14px; border-radius:10px;">Edit Entry</button><br>
-        <button style="background:#e53935; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" id="deleteBtn">Delete Entry</button><br>
-        <button style="background:#c0392b; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px; display:none;" id="deleteUserBtn">❌ Delete Complete User Folder</button><br>
-        <button style="background:#444; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" onclick="closeActionPopup()">Cancel</button>
+        <h3 id="popupTitle" style="color:#2c3e50;">Manage</h3>
+        <button class="btn-3d" id="editBtn" style="width:100%; height:auto; padding:14px; box-shadow:0 4px 0 #ccc;">Edit Entry</button><br>
+        <button class="btn-3d" style="background:var(--premium-red); color:white; width:100%; height:auto; padding:14px; box-shadow:0 4px 0 #84251b;" id="deleteBtn">Delete Entry</button><br>
+        <button class="btn-3d" style="background:var(--premium-red); color:white; width:100%; height:auto; padding:14px; box-shadow:0 4px 0 #84251b; display:none;" id="deleteUserBtn">❌ Delete Complete User Folder</button><br>
+        <button class="btn-3d" style="background:#7f8c8d; color:white; width:100%; height:auto; padding:14px; box-shadow:0 4px 0 #59626a;" onclick="closeActionPopup()">Cancel</button>
     </div>
 </div>
 
 <div style="display:none;">
     <div id="pdfTemplate">
         <div class="pdf-header">
-            <h1 style="color:#ffd700; margin:0; font-size:28px;" id="pdfAppTitle">FINANCE MANAGER PRO</h1>
-            <p style="color:#aaa; margin:5px 0 0 0;">Statement of Account</p>
+            <h1 style="color:#2c3e50; margin:0; font-size:28px;" id="pdfAppTitle">FINANCE MANAGER PRO</h1>
+            <p style="color:#7f8c8d; margin:5px 0 0 0;">Statement of Account</p>
         </div>
-        <div style="background:#111; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #333;">
-            <h3 style="margin:0 0 10px 0; color:#ffd700;" id="pdfNameField">Name: </h3>
+        <div style="background:#f1f2f6; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #ddd;">
+            <h3 style="margin:0 0 10px 0; color:#2c3e50;" id="pdfNameField">Name: </h3>
             <p style="margin:5px 0;" id="pdfMobileField">Mobile: </p>
-            <h3 style="margin:10px 0 0 0; color:#ffffff;" id="pdfBalanceField">Total Balance: </h3>
+            <h3 style="margin:10px 0 0 0; color:var(--premium-green);" id="pdfBalanceField">Total Balance: </h3>
         </div>
         <table class="pdf-table">
             <thead>
@@ -702,7 +736,6 @@ function getBalance(u){
     return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
 }
 
-// ஆட்டோ ரெட் மார்க்கிங் லாஜிக்: தேதி வந்து வரவு/செலவு இல்லாத போது சிகப்பாக மாறும்
 function isRed(u) {
     if (!u.transactions || u.transactions.length === 0) return false;
     let todayStr = new Date().toISOString().split("T")[0];
@@ -796,7 +829,6 @@ function applyLanguageLabels(lang) {
     document.querySelector(".pop-shareTitle").innerText = dict.pop_shareTitle;
 }
 
-// SCREEN 2: மெயின் டேஷ்போர்டு என்ட்ரிகள் மட்டும் லோடு செய்யும்
 function renderDashboardOnly() {
     const search = document.getElementById("userSearch").value.toLowerCase();
     const genListDiv = document.getElementById("generalEntryList");
@@ -852,7 +884,7 @@ function renderDashboardOnly() {
 
             card.innerHTML = `
                 <div class="row">
-                    <div><b style="font-size:17px;">${ge.desc}</b><br><small style="color:#aaa;">${formatDate(ge.date)}</small></div>
+                    <div><b style="font-size:17px;">${ge.desc}</b><br><small style="color:#7f8c8d;">${formatDate(ge.date)}</small></div>
                     <div style="font-weight:bold; font-size:17px; ${colorStyle}">${amtDisplay}</div>
                 </div>`;
             genListDiv.appendChild(card);
@@ -863,7 +895,6 @@ function renderDashboardOnly() {
     applySavedToggleSettings();
 }
 
-// SCREEN 6: USER LIST தனி திரை லோடு செய்யும் வசதி
 function renderUserListOnly() {
     const search = document.getElementById("userListSearch").value.toLowerCase();
     const listDiv = document.getElementById("explicitUserList");
@@ -879,7 +910,6 @@ function renderUserListOnly() {
         
         card.onclick = () => openUser(realIdx);
         
-        // யூசர் ஃபோல்டரையே முழுமையாக நீக்க லாங் பிரஸ் செய்யும் வசதி
         setupLongPress(card, function() {
             openActionPopup("User Folder: " + u.name, null, null, true, () => deleteUserFolderCompletely(realIdx));
         });
@@ -887,10 +917,10 @@ function renderUserListOnly() {
         card.innerHTML = `
             <div class="row">
                 <div>
-                    <b style="font-size:18px; color:#ffffff;">${u.name}</b><br>
-                    <small style="font-size:13px; color:#bbb;">${u.mobile || 'No Mobile'}</small>
+                    <b style="font-size:18px; color:#2c3e50;">${u.name}</b><br>
+                    <small style="font-size:13px; color:#7f8c8d;">${u.mobile || 'No Mobile'}</small>
                 </div>
-                <div style="font-weight:bold; font-size:18px; color:var(--gold);">₹ ${getBalance(u).toLocaleString()}</div>
+                <div style="font-weight:bold; font-size:18px; color:var(--premium-green);">₹ ${getBalance(u).toLocaleString()}</div>
             </div>`;
         listDiv.appendChild(card);
     });
@@ -1060,7 +1090,7 @@ function openAllTransactionsScreen() {
         else row.className = "pending-row";
         
         row.innerHTML = `<td>${formatDate(tx.date)}</td>
-                         <td style="font-weight:bold; color:var(--gold);">${tx.origin}</td>
+                         <td style="font-weight:bold; color:#2c3e50;">${tx.origin}</td>
                          <td>${tx.desc || ""}</td>
                          <td>${tx.credit || ""}</td>
                          <td>${tx.debit || ""}</td>`;
@@ -1169,9 +1199,81 @@ function generatePdfStatement() {
     });
 
     showLoading(true);
-    html2pdf().set({ margin: 10, filename: `${u.name}_Statement.pdf`, html2canvas: { scale: 2, backgroundColor: '#000000' }, jsPDF: { format: 'a4', orientation: 'portrait' } }).from(document.getElementById("pdfTemplate")).save().then(() => {
+    html2pdf().set({ margin: 10, filename: `${u.name}_Statement.pdf`, html2canvas: { scale: 2, backgroundColor: '#ffffff' }, jsPDF: { format: 'a4', orientation: 'portrait' } }).from(document.getElementById("pdfTemplate")).save().then(() => {
         showLoading(false); closeSharePopup();
     });
+}
+
+// 📤 DATA EXPORT FUNCTION
+function exportData() {
+    let backupData = {
+        users: users,
+        generalEntries: generalEntries,
+        appTitle: localStorage.getItem("customAppTitleText") || "Finance Manager Pro",
+        language: localStorage.getItem("appLanguagePreference") || "ta"
+    };
+    
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData));
+    let downloadAnchor = document.createElement('a');
+    let dateStr = new Date().toISOString().split('T')[0];
+    
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `Finance_Backup_${dateStr}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+}
+
+// 📥 DATA IMPORT FUNCTIONS
+function triggerImport() {
+    document.getElementById("importFileInput").click();
+}
+
+function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            if (importedData.users || importedData.generalEntries) {
+                if (confirm("புதிய டேட்டாவை இம்போர்ட் செய்யவா? இது தற்போது உள்ள டேட்டாவை மாற்றிவிடும்!")) {
+                    if (importedData.users) users = importedData.users;
+                    if (importedData.generalEntries) generalEntries = importedData.generalEntries;
+                    if (importedData.appTitle) localStorage.setItem("customAppTitleText", importedData.appTitle);
+                    if (importedData.language) localStorage.setItem("appLanguagePreference", importedData.language);
+                    
+                    saveLocal();
+                    initAppLayoutSettings();
+                    renderDashboardOnly();
+                    alert("டேட்டா வெற்றிகரமாக இம்போர்ட் செய்யப்பட்டது!");
+                }
+            } else {
+                alert("தவறான கோப்பு வடிவம் (Invalid Backup File)!");
+            }
+        } catch (err) {
+            alert("கோப்பை படிப்பதில் பிழை ஏற்பட்டது!");
+        }
+    };
+    reader.readAsText(file);
+}
+
+// 🗑️ ஆட்டோ பேக்கப் செய்துவிட்டு அனைத்தையும் நீக்கும் வசதி (ALL DELETE LOGIC)
+function autoBackupAndClearAll() {
+    if (confirm("🚨 எச்சரிக்கை! அனைத்து கணக்குகளையும் நீக்க விரும்புகிறீர்களா? (நீக்குவதற்கு முன் ஆட்டோமேட்டிக்காக பேக்கப் ஃபைல் டவுன்லோடு செய்யப்படும்)")) {
+        // முதலில் தானாக எக்ஸ்போர்ட் செய்கிறது
+        exportData();
+        
+        // பின் மெமரியை காலி செய்கிறது
+        setTimeout(() => {
+            users = [];
+            generalEntries = [];
+            saveLocal();
+            renderDashboardOnly();
+            alert("அனைத்து டேட்டாக்களும் பாதுகாப்பாக எக்ஸ்போர்ட் செய்யப்பட்டு, மென்பொருளில் இருந்து முழுமையாக நீக்கப்பட்டுவிட்டன!");
+        }, 1000);
+    }
 }
 
 function openSettings() {
@@ -1200,7 +1302,7 @@ function applySavedToggleSettings() {
     let generalActiveCount = 0; let redActiveCount = 0;
 
     keys.forEach(k => {
-        let isChecked = config[k] !== undefined ? config[k] : false; // ஆரம்பத்தில் அனைத்தும் OFF ஆக்கப்பட்டுள்ளது
+        let isChecked = config[k] !== undefined ? config[k] : false; 
         let boxElement = document.getElementById("box_" + k);
         if(boxElement) {
             if(isChecked) {
