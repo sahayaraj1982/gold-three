@@ -1,262 +1,1223 @@
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAHAYARAJ-2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <style>
-        :root { --p-bg: #0c40bb; --n-col: #ffffff; --out: #54301d; --btm: #0b08d4; --c-let: #e32b2b; --c-num: #1e40af; }
-        body { background-color: #475569; font-family: 'Arial Black', sans-serif; }
-        * { font-weight: 950 !important; }
-        .main-app-box { border: 10px solid var(--out); margin: 10px auto; border-radius: 40px; background: #f1f5f9; overflow-x: hidden; transition: 0.3s; }
-        .premium-header { background-color: var(--p-bg); padding: 25px; border-bottom: 10px solid var(--btm); position: relative; }
-        .cat-card { background: #fff; border: 5px solid var(--out); border-radius: 20px; text-align: center; }
-        .btn-style { border-bottom: 6px solid #000; color: #fff !important; cursor: pointer; transition: 0.1s; text-transform: uppercase; }
-        .btn-style:active { transform: translateY(3px); border-bottom-width: 3px; }
-        .cp-card { background: #fff; width: 98%; max-width: 1300px; border-radius: 40px; padding: 20px; border: 10px solid #000; max-height: 95vh; overflow-y: auto; }
-        .setting-row { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 5px 10px; border: 2px solid #000; border-radius: 10px; margin-bottom: 2px; font-size: 11px; }
-        .filter-btn-active { background-color: #ef4444 !important; border: 3px solid #000 !important; }
-        .bell-box { position: relative; display: flex; flex-direction: column; align-items: center; }
-    </style>
-</head>
-<body onload="init()">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Finance Manager Pro</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root {
+    --gold: #ffd700;
+    --gold-gradient: linear-gradient(145deg, #ffd700, #b8860b);
+    --dark-bg: #0a0a0a;
+    --card-bg: #141414;
+    --card-inner: #1e1e1e;
+    --border-color: #2a2a2a;
+    --red-bg: linear-gradient(145deg, #660000, #3a0000);
+    --red-border: #ff3333;
+    --font-multiplier: 1;
+    --font-weight-custom: normal;
+}
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--dark-bg);
+    color: #ffffff;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
+}
+.wrapper {
+    max-width: 900px;
+    margin: auto;
+    padding-bottom: 80px;
+}
+header {
+    background: var(--gold-gradient);
+    color: #000000;
+    text-align: center;
+    padding: 20px;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+    border-bottom: 2px solid #b8860b;
+    text-transform: uppercase;
+}
 
-<div id="appPage">
-    <div id="mainContainer" class="main-app-box mx-auto">
-        <div class="premium-header">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <button onclick="location.reload()" class="bg-red-600 w-12 h-12 rounded-full border-4 border-black text-white text-2xl">⬅</button>
-                    <div class="bell-box">
-                        <button onclick="document.getElementById('bellStartDate').showPicker()" class="bg-yellow-400 w-12 h-12 rounded-full border-4 border-black text-2xl shadow-lg">🔔</button>
-                        <input type="date" id="bellStartDate" onchange="setStartingDate()" class="absolute opacity-0 pointer-events-none" style="top:50px">
-                    </div>
-                    <div>
-                        <h1 id="dispTitle" class="text-4xl italic uppercase" style="color: var(--n-col);">SAHAYARAJ-2026</h1>
-                        <p id="startDateDisplay" class="text-[10px] text-yellow-300"></p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="text-right text-white">
-                        <p class="text-xs opacity-70">RECORDS: <span id="recCount" class="text-yellow-400">0</span></p>
-                        <h2 id="mainTotal" class="text-4xl">₹0</h2>
-                    </div>
-                    <button onclick="openSettings()" class="text-5xl text-white">⚙️</button>
-                </div>
+/* Global Dynamic Text Settings */
+body, input, button, table, td, th, select {
+    font-size: calc(16px * var(--font-multiplier));
+    font-weight: var(--font-weight-custom);
+}
+
+/* Dashboard Premium Layout */
+.dashboard-section-title {
+    padding: 15px 15px 5px 15px;
+    margin: 10px 0 0 0;
+    color: #888888;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 10px;
+}
+.stat-box {
+    background: var(--card-bg);
+    padding: 18px 12px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+.stat-box.red-border {
+    border: 1px solid var(--red-border);
+    background: rgba(40, 0, 0, 0.3);
+}
+.stat-box small {
+    color: #999999;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+}
+.stat-box h2 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--gold);
+    font-weight: 900;
+}
+.stat-box.red-border h2 {
+    color: #ff5252;
+}
+
+/* Search UI */
+.search-container {
+    padding: 12px;
+}
+.search-input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--gold);
+    background: var(--card-bg);
+    color: white;
+    box-sizing: border-box;
+    font-size: 17px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+.search-input:focus {
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+/* Premium Buttons Layout */
+.top-buttons {
+    padding: 5px 12px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+button {
+    padding: 14px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.2s active;
+}
+button:active {
+    transform: scale(0.97);
+}
+.gold {
+    background: var(--gold-gradient);
+    color: #000000;
+}
+
+/* User & General Folders Cards */
+.section-title {
+    padding: 15px 15px 5px 15px;
+    margin: 15px 0 5px 0;
+    color: var(--gold);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 18px;
+    font-weight: bold;
+}
+.user-card {
+    width: calc(100% - 24px);
+    margin: 12px auto;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--card-bg);
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+.user-card.redbg {
+    background: var(--red-bg);
+    border-color: var(--red-border);
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Screen 4: User Profile View */
+.profile-header {
+    background: var(--card-bg);
+    padding: 20px;
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+.profile-header h2 {
+    margin: 0 0 15px 0;
+    color: var(--gold);
+    text-align: center;
+    font-size: 26px;
+    font-weight: 900;
+}
+.prof-details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-inner);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+#profMobile {
+    margin: 0;
+    color: var(--gold);
+    font-weight: bold;
+}
+#profBalance {
+    margin: 0;
+    color: #ffffff;
+    font-weight: 900;
+    background: rgba(255,255,255,0.05);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px dashed rgba(255,215,0,0.3);
+    cursor: pointer;
+}
+
+/* Transaction Table 11 Rows */
+.table-container {
+    overflow-x: auto;
+    padding: 12px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+th, td {
+    padding: 15px 10px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+th {
+    background: #1f1f1f;
+    color: var(--gold);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+.credit-row { background-color: #0f401b !important; color: #ffffff !important; }
+.debit-row { background-color: #591010 !important; color: #ffffff !important; }
+.pending-row { background-color: #1a1a1a; color: var(--gold); }
+
+/* Toggle Custom Switch for Settings */
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    padding: 12px;
+    background: var(--card-inner);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #444;
+    transition: .4s;
+    border-radius: 34px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; width: 18px;
+    left: 4px; bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider { background-color: var(--gold); }
+input:checked + .slider:before {
+    transform: translateX(24px);
+    background-color: #000;
+}
+
+/* Overlays / Popups Form Elements */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.96);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 24px;
+    text-align: center;
+    border: 2px solid var(--gold);
+    width: 88%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(255,215,0,0.1);
+}
+input[type="date"], input[type="text"], input[type="number"], input[type="password"], select {
+    width: 100%;
+    margin: 12px 0;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-inner);
+    color: white;
+    box-sizing: border-box;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+/* Shared Balance Share Popup Options */
+.share-popup-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+.share-option-btn {
+    flex: 1;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    background: var(--card-inner);
+    cursor: pointer;
+    text-align: center;
+}
+.share-option-btn:hover {
+    border-color: var(--gold);
+}
+.share-icon-img {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* General Row Custom Indicator */
+.general-row { border-left: 4px solid #00e5ff; }
+
+/* System Loading Toast */
+#loading {
+    display: none;
+    position: fixed;
+    top: 15px; right: 15px;
+    background: var(--gold-gradient);
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    z-index: 10000;
+    font-size: 13px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* Security Cover Grid Overlay */
+#passwordOverlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--dark-bg);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hidden { display: none !important; }
+
+/* PDF Export Layout Template Look (Hidden inside App Body) */
+#pdfTemplate {
+    background: #000000;
+    color: #ffffff;
+    padding: 30px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.pdf-header {
+    border-bottom: 3px solid #ffd700;
+    padding-bottom: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.pdf-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.pdf-table th { background: #222222; color: #ffd700; padding: 12px; border: 1px solid #333333; }
+.pdf-table td { padding: 12px; text-align: center; border: 1px solid #333333; }
+</style>
+</head>
+<body>
+
+<div id="loading">டேட்டா SAVE...</div>
+
+<div id="passwordOverlay">
+    <div class="popup-content" style="border-radius: 24px;">
+        <h2 style="color:var(--gold); margin-top:0; font-weight: 900; font-size: 26px;">FINANCE MANAGER PRO</h2>
+        <p style="color: #bbb; font-size: 14px;">தொடர உங்களுடைய பாதுகாப்பான பாஸ்வேர்டை உள்ளிடவும்</p>
+        <input type="password" id="appPassword" placeholder="PASSWORD" style="text-align:center; font-size:20px; letter-spacing:3px; padding:16px; margin-bottom:15px;">
+        <button class="gold" onclick="verifyAppPassword()" style="width:100%; padding:15px; border-radius:12px; font-size: 16px;">உள்ளே செல் (LOGIN)</button>
+        <p id="passError" style="color:#ff3333; display:none; margin-top:12px; font-weight: bold;">தவறான பாஸ்வேர்டு! மீண்டும் முயற்சிக்கவும்.</p>
+    </div>
+</div>
+
+<div class="wrapper" id="appContent" style="display:none;">
+    <header>Finance Manager Pro</header>
+
+    <div id="mainScreen">
+        <div class="search-container">
+            <input type="text" id="userSearch" class="search-input" placeholder="தேடவும் (Search Folder/Entries)..." oninput="renderUsers()">
+        </div>
+
+        <div class="dashboard-section-title" id="title_generalSec">பொதுவான கணக்கு விபரங்கள் (General Total)</div>
+        <div class="dashboard" id="sec_generalDashboard">
+            <div class="stat-box" id="box_totalUsers"><small>Total Users</small><h2 id="totalUsers">0</h2></div>
+            <div class="stat-box" id="box_totalCredit"><small>Total Credit</small><h2 id="totalCredit">0</h2></div>
+            <div class="stat-box" id="box_totalDebit"><small>Total Debit</small><h2 id="totalDebit">0</h2></div>
+            <div class="stat-box" id="box_totalBalance"><small>Total Balance</small><h2 id="totalBalance">0</h2></div>
+        </div>
+
+        <div class="dashboard-section-title" id="title_redSec">சிவப்பு குறியீடு கணக்கு விபரங்கள் (R SAVE)</div>
+        <div class="dashboard" id="sec_redDashboard">
+            <div class="stat-box red-border" id="box_redUsersCount"><small style="color:#ff5252;">Total Red Users</small><h2 id="redUsersCount">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalCredit"><small style="color:#ff5252;">Red Total Credit</small><h2 id="redTotalCredit">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalDebit"><small style="color:#ff5252;">Red Total Debit</small><h2 id="redTotalDebit">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalBalance"><small style="color:#ff5252;">Red Total Balance</small><h2 id="redTotalBalance">0</h2></div>
+        </div>
+
+        <div class="top-buttons">
+            <button class="gold" onclick="addUser()">👤 + New User</button>
+            <button class="gold" onclick="openGlobalEntryForm()">📝 + New Entry</button>
+            <button class="gold" onclick="openSettings()">⚙️ Settings</button>
+            <button class="gold" onclick="fetchFromCloud()">🔄 Refresh</button>
+        </div>
+        
+        <div class="section-title">வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)</div>
+        <div id="userList"></div>
+
+        <div class="section-title" id="generalSectionTitle">பொதுவான என்ட்ரிகள் (General Entries)</div>
+        <div id="generalEntryList"></div>
+    </div>
+
+    <div id="userScreen" class="hidden">
+        <div class="profile-header">
+            <button class="gold" onclick="goBack()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <h2 id="profName"></h2>
+            <div class="prof-details-row">
+                <p id="profMobile"></p>
+                <h3 id="profBalance" title="Hold to Share"></h3>
             </div>
         </div>
 
-        <div class="p-6">
-            <div id="catGrid" class="grid grid-cols-2 md:grid-cols-7 gap-3 mb-6"></div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-5 rounded-3xl border-4 border-black">
-                    <h3 class="text-xl border-b-4 border-green-600 mb-4 italic uppercase">New Entry</h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <input type="date" id="eDate" class="border-2 border-black p-2 rounded">
-                        <input type="tel" id="eMob" placeholder="Mobile" class="border-2 border-black p-2 rounded">
-                        <select id="eCat" class="border-2 border-black p-2 rounded"></select>
-                        <input type="text" id="eDesc" placeholder="Remark" class="border-2 border-black p-2 rounded">
-                        <input type="number" id="eAmt" placeholder="Amount" class="border-2 border-black p-2 rounded">
-                        <select id="eType" class="border-2 border-black p-2 rounded"><option value="CR">IN (+)</option><option value="DR">OUT (-)</option></select>
-                    </div>
-                    <button onclick="saveData()" class="w-full py-4 mt-5 rounded-xl text-xl btn-style bg-green-600">SAVE ✅</button>
-                </div>
-                <div class="bg-white p-5 rounded-3xl border-4 border-black">
-                    <h3 class="text-xl border-b-4 border-blue-600 mb-4 italic uppercase">Search & Tools</h3>
-                    <div class="grid grid-cols-3 gap-2 mb-4">
-                        <input type="date" id="fDate" class="text-xs border-2 border-black p-1">
-                        <input type="date" id="tDate" class="text-xs border-2 border-black p-1">
-                        <input type="tel" id="sMob" placeholder="Mobile" class="text-xs border-2 border-black p-1">
-                    </div>
-                    <div id="filterCatList" class="flex flex-wrap gap-2 mb-4"></div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <button onclick="downloadPDF()" class="bg-orange-600 py-3 rounded-lg btn-style text-[10px]">PDF</button>
-                        <button onclick="sendWhatsApp()" class="bg-green-600 py-3 rounded-lg btn-style text-[10px]">WHATSAPP</button>
-                        <button onclick="deleteAll()" class="bg-red-600 py-3 rounded-lg btn-style text-[10px]">DELETE ALL</button>
-                    </div>
-                    <button onclick="refresh()" class="w-full bg-slate-800 text-white py-3 mt-3 rounded-xl btn-style">SEARCH DATA 🔎</button>
+        <div class="table-container">
+            <table id="txTableElement">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Desc</th>
+                        <th>Cr</th>
+                        <th>Db</th>
+                        <th>Bal</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="settingsScreen" class="hidden">
+        <div class="profile-header">
+            <button class="gold" onclick="closeSettings()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <h2>அமைப்புகள் (Settings)</h2>
+        </div>
+        
+        <div style="padding:15px; max-width: 600px; margin: auto;">
+            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;">டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப் (Dashboard Switch)</h3>
+            
+            <div class="settings-row"><span>Total Users</span><label class="switch"><input type="checkbox" id="switch_totalUsers" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span>Total Credit</span><label class="switch"><input type="checkbox" id="switch_totalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span>Total Debit</span><label class="switch"><input type="checkbox" id="switch_totalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span>Total Balance</span><label class="switch"><input type="checkbox" id="switch_totalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            
+            <div class="settings-row"><span>Total Red Users</span><label class="switch"><input type="checkbox" id="switch_redUsersCount" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span>Red Total Credit</span><label class="switch"><input type="checkbox" id="switch_redTotalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span>Red Total Debit</span><label class="switch"><input type="checkbox" id="switch_redTotalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span>Red Total Balance</span><label class="switch"><input type="checkbox" id="switch_redTotalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+
+            <h3 style="color:var(--gold); margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">எழுத்து அளவு மாற்றங்கள் (Font Customization)</h3>
+            <div class="settings-row">
+                <span>எழுத்தின் அளவு (Font Size)</span>
+                <div style="display:flex; gap:8px;">
+                    <button class="gold" onclick="changeFontSize('normal')">Normal</button>
+                    <button class="gold" onclick="changeFontSize('large')">Large</button>
                 </div>
             </div>
-            <div class="mt-6 bg-white border-4 border-black rounded-3xl overflow-hidden">
-                <table class="w-full text-sm">
-                    <thead class="bg-black text-white"><tr><th class="p-2">DATE</th><th class="p-2">MOBILE</th><th class="p-2">CAT</th><th class="p-2">REMARK</th><th class="p-2 text-right">AMOUNT</th><th class="p-2 text-center">ACTION</th></tr></thead>
-                    <tbody id="resTable" class="text-center"></tbody>
-                </table>
+            <div class="settings-row">
+                <span>எழுத்தின் தடிமன் (Font Style)</span>
+                <div style="display:flex; gap:8px;">
+                    <button class="gold" onclick="changeFontWeight('normal')">Normal</button>
+                    <button class="gold" onclick="changeFontWeight('bold')">Bold</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="setModal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2">
-    <div class="cp-card">
-        <div class="flex justify-between items-center mb-4"><h2 class="text-2xl uppercase">System Control Panel</h2><button onclick="closeSettings()" class="bg-red-600 text-white px-4 py-2 rounded-xl btn-style">CLOSE</button></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="space-y-1"><p class="bg-blue-900 text-white p-1 text-[10px] uppercase">1. Color Settings</p>
-                <div class="setting-row"><span>Banner Color</span><input type="color" id="setHeadCol"></div>
-                <div class="setting-row"><span>Name Color</span><input type="color" id="setNameCol"></div>
-                <div class="setting-row"><span>Outline Color</span><input type="color" id="setOutCol"></div>
+<div id="entryPopup" class="popup-overlay">
+    <div class="popup-content">
+        <h3 id="entryFormTitle" style="color:var(--gold); margin-top:0;">New Entry</h3>
+        
+        <div id="targetUserSelectionArea">
+            <label style="color:#aaa; font-size:13px; display:block; text-align:left; margin-bottom:4px;">தேர்ந்தெடுக்கவும்:</label>
+            <select id="tUserSelect">
+                <option value="general">General (பொதுவான என்ட்ரி)</option>
+            </select>
+        </div>
+
+        <input type="date" id="tDate">
+        <input type="text" id="tDesc" placeholder="Description">
+        <input type="number" id="tCredit" placeholder="Credit">
+        <input type="number" id="tDebit" placeholder="Debit">
+        
+        <div style="display:flex; gap:8px; margin-top:15px;">
+            <button class="gold" onclick="saveTransaction()" style="flex:2;">Save</button>
+            <button style="background:#b91c1c; color:white; flex:1; font-weight:950; font-size:20px; border-radius:10px;" onclick="triggerRedFlagButton()">R</button>
+            <button style="background:#444; color:white; flex:2;" onclick="closeEntryForm()">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="sharePopup" class="popup-overlay" onclick="closeSharePopup()">
+    <div class="popup-content" onclick="event.stopPropagation()" style="border-color: #ffd700;">
+        <h3 style="color:var(--gold); margin-top:0;">கணக்கு விபரத்தை பகிர்க (Share Statements)</h3>
+        <p style="font-size:14px; color:#ccc;">இந்த வாடிக்கையாளரின் விபரங்களை எந்த முறையில் அனுப்ப வேண்டும்?</p>
+        
+        <div class="share-popup-container">
+            <div class="share-option-btn" onclick="sendWhatsAppMessage()">
+                <span class="share-icon-img">💬</span>
+                <b style="color:#25D366;">WhatsApp</b>
             </div>
-            <div class="space-y-1"><p class="bg-red-900 text-white p-1 text-[10px] uppercase">4. Categories</p>
-                <div id="catEditArea" class="space-y-1"></div>
-                <div class="setting-row"><span>Admin PIN</span><input type="text" id="setAp" class="w-12"></div>
+            <div class="share-option-btn" onclick="generatePdfStatement()">
+                <span class="share-icon-img">📄</span>
+                <b style="color:#ff3333;">Download PDF</b>
             </div>
         </div>
-        <button onclick="saveSettings()" class="w-full bg-blue-700 text-white py-4 mt-4 rounded-xl text-2xl btn-style">SAVE ALL SETTINGS ✅</button>
+        <button style="background:#444; color:white; width:100%; margin-top:20px; padding:12px;" onclick="closeSharePopup()">Cancel</button>
+    </div>
+</div>
+
+<div id="actionPopup" class="popup-overlay" onclick="closeActionPopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+        <h3 id="popupTitle" style="color:var(--gold);">நிர்வகித்தல் (Manage)</h3>
+        <button class="gold" id="editBtn" style="width:100%; padding:14px; border-radius:10px;">திருத்து (Edit Entry)</button><br>
+        <button style="background:#e53935; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" id="deleteBtn">நீக்கு (Delete Entry)</button><br>
+        <button style="background:#444; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" onclick="closeActionPopup()">Cancel</button>
+    </div>
+</div>
+
+<div style="display:none;">
+    <div id="pdfTemplate">
+        <div class="pdf-header">
+            <h1 style="color:#ffd700; margin:0; font-size:28px;">FINANCE MANAGER PRO</h1>
+            <p style="color:#aaa; margin:5px 0 0 0;">வாடிக்கையாளர் கணக்கு அறிக்கை (Statement of Account)</p>
+        </div>
+        <div style="background:#111; padding:15px; border-radius:10px; margin-bottom:20px; border:1px solid #333;">
+            <h3 style="margin:0 0 10px 0; color:#ffd700;" id="pdfNameField">பெயர்: </h3>
+            <p style="margin:5px 0;" id="pdfMobileField">மொபைல்: </p>
+            <h3 style="margin:10px 0 0 0; color:#ffffff;" id="pdfBalanceField">மொத்த பாக்கி: </h3>
+        </div>
+        <table class="pdf-table">
+            <thead>
+                <tr>
+                    <th>தேதி (Date)</th>
+                    <th>விபரம் (Description)</th>
+                    <th>வரவு (Credit)</th>
+                    <th>செலவு (Debit)</th>
+                    <th>இருப்பு (Balance)</th>
+                </tr>
+            </thead>
+            <tbody id="pdfTableBody"></tbody>
+        </table>
     </div>
 </div>
 
 <script>
-let cfg = JSON.parse(localStorage.getItem('saha_v65_cfg')) || {"title":"SAHAYARAJ-2026","headCol":"#0c40bb","nameCol":"#ffffff","outCol":"#54301d","btmCol":"#0b08d4","catLetCol":"#e32b2b","catNumCol":"#1e40af","scrW":95,"scrH":867,"fsDT":22,"fsCatL":16,"fsCatN":32,"fsEnt":18,"swBack":true,"swDate":true,"swClock":true,"swPen":true,"swTrDel":true,"swAllDel":true,"swPdf":true,"swWa":true,"swImp":true,"swExp":true,"mfs":true,"adminPin":"1020","startingDate":"","cats":["TICKET","FINANCE","RO","OTHER","SHOP","GENERAL","EXTRA"],"catStatus":[true,true,true,true,true,true,true]};
-let db = JSON.parse(localStorage.getItem('saha_v65_db')) || [];
-let activeFilters = [];
-let filteredDB = [];
-let currentCatSums = {};
+// அட்மின் பேனலுடன் இணைக்கப்பட்ட உங்களது கூகுள் ஷீட் வெப் ஆப் லிங்க்
+const CLOUD_URL = "https://script.google.com/macros/s/AKfycby8IBs9NX-eYtAEkkSFEkLyG3VxmCqsrdSMQrjuxlZ6ZZ3E-tbloG37lD4EjNz7TLcmCA/exec";
 
-function init() {
-    document.documentElement.style.setProperty('--p-bg', cfg.headCol);
-    document.documentElement.style.setProperty('--n-col', cfg.nameCol);
-    document.documentElement.style.setProperty('--btm', cfg.btmCol);
-    document.documentElement.style.setProperty('--out', cfg.outCol);
-    const container = document.getElementById('mainContainer');
-    container.style.width = cfg.scrW + "%";
-    document.getElementById('dispTitle').innerText = cfg.title;
-    if(cfg.startingDate) document.getElementById('startDateDisplay').innerText = "Starting from: " + cfg.startingDate.split('-').reverse().join('/');
-    renderUI(); refresh();
+let users = JSON.parse(localStorage.getItem("financeUsers")) || [];
+let generalEntries = JSON.parse(localStorage.getItem("financeGeneralEntries")) || [];
+let currentUser = null; 
+let editIndex = null; 
+let isEditingGeneral = false;
+let globalTargetMode = "global";
+
+let pressTimer;
+
+// லாகின் சரிபார்ப்பு லாஜிக் (அட்மின் உருவாக்கிய பாஸ்வேர்டுகளின் இணைப்பு முறை)
+function verifyAppPassword() {
+    const inputPass = document.getElementById("appPassword").value;
+    showLoading(true);
+
+    fetch(CLOUD_URL, {
+        method: "POST",
+        redirect: "follow",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "getUsers" })
+    })
+    .then(res => res.json())
+    .then(cloudUsers => {
+        let isValid = false;
+        if(cloudUsers && cloudUsers.length > 0) {
+            isValid = cloudUsers.some(u => u.password === inputPass);
+        }
+        if(inputPass === "admin123") { isValid = true; }
+
+        if(isValid) {
+            document.getElementById("passwordOverlay").style.display = "none";
+            document.getElementById("appContent").style.display = "block";
+            fetchFromCloud();
+        } else {
+            document.getElementById("passError").style.display = "block";
+        }
+        showLoading(false);
+    })
+    .catch(err => {
+        if(inputPass === "admin123" || inputPass === "SAHA1020") {
+            document.getElementById("passwordOverlay").style.display = "none";
+            document.getElementById("appContent").style.display = "block";
+            renderUsers();
+        } else {
+            document.getElementById("passError").style.display = "block";
+        }
+        showLoading(false);
+    });
 }
 
-function setStartingDate() {
-    let dateVal = document.getElementById('bellStartDate').value;
-    if(dateVal) { cfg.startingDate = dateVal; localStorage.setItem('saha_v65_cfg', JSON.stringify(cfg)); init(); }
+function showLoading(show) {
+    document.getElementById("loading").style.display = show ? "block" : "none";
 }
 
-function renderUI() {
-    const grid = document.getElementById('catGrid'), eSel = document.getElementById('eCat'), fList = document.getElementById('filterCatList');
-    grid.innerHTML = ""; eSel.innerHTML = ""; fList.innerHTML = `<button onclick="toggleFilter('ALL')" id="btn_ALL" class="bg-blue-900 text-white px-3 py-1 rounded-lg btn-style text-[10px] filter-btn-active">ALL</button>`;
-    cfg.cats.forEach((c, i) => {
-        if(cfg.catStatus[i]) {
-            grid.innerHTML += `<div class="cat-card"><p style="font-size:${cfg.fsCatL}px; color:var(--c-let)">${c}</p><h3 style="font-size:${cfg.fsCatN}px; color:var(--c-num)">₹<span id="sum_${c}">0</span></h3></div>`;
-            eSel.innerHTML += `<option value="${c}">${c}</option>`;
-            fList.innerHTML += `<button onclick="toggleFilter('${c}')" id="btn_${c}" class="bg-blue-900 text-white px-3 py-1 rounded-lg btn-style text-[10px]">${c}</button>`;
+async function saveLocal(){ 
+    localStorage.setItem("financeUsers", JSON.stringify(users)); 
+    localStorage.setItem("financeGeneralEntries", JSON.stringify(generalEntries));
+    
+    if(CLOUD_URL) {
+        showLoading(true);
+        try {
+            const payload = {
+                action: "updateFinanceData",
+                usersData: users,
+                generalEntriesData: generalEntries
+            };
+            await fetch(CLOUD_URL, {
+                method: "POST",
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+        } catch(e) {
+            console.error("Cloud connection status", e);
+        }
+        showLoading(false);
+    }
+}
+
+async function fetchFromCloud() {
+    if(!CLOUD_URL) return;
+    showLoading(true);
+    try {
+        let res = await fetch(CLOUD_URL, {
+            method: "POST",
+            redirect: "follow",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "getFinanceData" })
+        });
+        let cloudResponse = await res.json();
+        if(cloudResponse) {
+            if(cloudResponse.users) users = cloudResponse.users;
+            if(cloudResponse.generalEntries) generalEntries = cloudResponse.generalEntries;
+            
+            localStorage.setItem("financeUsers", JSON.stringify(users));
+            localStorage.setItem("financeGeneralEntries", JSON.stringify(generalEntries));
+        }
+    } catch(e) {
+        console.error("Using backup system database cache", e);
+    }
+    renderUsers();
+    showLoading(false);
+}
+
+// தேதி வடிவம் அக்யூரேட்டாக நாள்-மாதம்-வருடம் (24-05-2026) என மாற்றித் தரும் ஃபங்க்ஷன்
+function formatDate(d){ 
+    if(!d) return ""; 
+    let p = d.split("-"); 
+    return `${p[2]}-${p[1]}-${p[0]}`; 
+}
+
+function getBalance(u){
+    if(!u.transactions) return 0;
+    return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
+}
+
+function getUserTotalCredit(u) {
+    if(!u.transactions) return 0;
+    return u.transactions.reduce((a,t)=>a+Number(t.credit||0), 0);
+}
+
+function getUserTotalDebit(u) {
+    if(!u.transactions) return 0;
+    return u.transactions.reduce((a,t)=>a+Number(t.debit||0), 0);
+}
+
+function isRed(u) {
+    if (u.isForcedRed === true) return true;
+    if (!u.transactions || u.transactions.length === 0) return false;
+    let today = new Date().toISOString().split("T")[0];
+    return u.transactions.some(t => t.date <= today && !Number(t.credit) && !Number(t.debit));
+}
+
+// நேர்த்தியான டேஷ்போர்டு மற்றும் ஃபோல்டர்களை ரெண்டர் செய்யும் ஃபங்க்ஷன்
+function renderUsers(){
+    const search = document.getElementById("userSearch").value.toLowerCase();
+    const listDiv = document.getElementById("userList");
+    const genListDiv = document.getElementById("generalEntryList");
+    
+    listDiv.innerHTML = "";
+    genListDiv.innerHTML = "";
+
+    // பொது கணக்குகளின் மாறிகள்
+    let totalUsersCount = users.length;
+    let totalCreditAmt = 0;
+    let totalDebitAmt = 0;
+    let totalBalanceAmt = 0;
+
+    // சிகப்பு குறியீடு கணக்குகளின் மாறிகள் (R SAVE)
+    let redUsersCount = 0;
+    let redTotalCredit = 0;
+    let redTotalDebit = 0;
+    let redTotalBalance = 0;
+    
+    users.forEach(u => {
+        let bal = getBalance(u);
+        let cr = getUserTotalCredit(u);
+        let db = getUserTotalDebit(u);
+
+        totalCreditAmt += cr;
+        totalDebitAmt += db;
+        totalBalanceAmt += bal;
+
+        if(isRed(u)) { 
+            redUsersCount++; 
+            redTotalCredit += cr;
+            redTotalDebit += db;
+            redTotalBalance += bal; 
+        }
+    });
+
+    // பொதுவான என்ட்ரிகளையும் மொத்த கணக்கில் சேர்க்க வேண்டும்
+    generalEntries.forEach(ge => {
+        totalCreditAmt += Number(ge.credit || 0);
+        totalDebitAmt += Number(ge.debit || 0);
+        totalBalanceAmt += (Number(ge.credit || 0) - Number(ge.debit || 0));
+    });
+
+    // டேஷ்போர்டு பிரிவுகளில் தரவுகளை நிரப்புதல்
+    document.getElementById("totalUsers").innerText = totalUsersCount;
+    document.getElementById("totalCredit").innerText = "₹ " + totalCreditAmt.toLocaleString();
+    document.getElementById("totalDebit").innerText = "₹ " + totalDebitAmt.toLocaleString();
+    document.getElementById("totalBalance").innerText = "₹ " + totalBalanceAmt.toLocaleString();
+
+    document.getElementById("redUsersCount").innerText = redUsersCount;
+    document.getElementById("redTotalCredit").innerText = "₹ " + redTotalCredit.toLocaleString();
+    document.getElementById("redTotalDebit").innerText = "₹ " + redTotalDebit.toLocaleString();
+    document.getElementById("redTotalBalance").innerText = "₹ " + redTotalBalance.toLocaleString();
+
+    // 1. வாடிக்கையாளர்கள் ஃபோல்டர் கார்டுகள்
+    let filteredUsers = users.filter(u => u.name.toLowerCase().includes(search) || (u.mobile && u.mobile.includes(search)));
+    filteredUsers.sort((a,b)=> isRed(b) - isRed(a));
+
+    filteredUsers.forEach((u)=>{
+        let realIdx = users.indexOf(u);
+        let card = document.createElement("div");
+        card.className = "user-card" + (isRed(u) ? " redbg" : "");
+        card.onclick = () => openUser(realIdx);
+        
+        card.innerHTML = `
+            <div class="row">
+                <div>
+                    <b style="font-size:18px; color:#ffffff;">${u.name}</b><br>
+                    <small style="font-size:13px; color:#bbb;">${u.mobile || 'No Mobile'}</small>
+                </div>
+                <div style="font-weight:bold; font-size:18px; color:var(--gold);">₹ ${getBalance(u).toLocaleString()}</div>
+            </div>
+        `;
+        listDiv.appendChild(card);
+    });
+
+    // 2. பொதுவான என்ட்ரிகள் கார்டுகள் (வரிசையாக கீழே ஓப்பனாக வரும்)
+    let filteredGeneral = generalEntries.filter(ge => ge.desc.toLowerCase().includes(search) || ge.date.includes(search));
+    filteredGeneral.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if(filteredGeneral.length > 0) {
+        document.getElementById("generalSectionTitle").style.display = "block";
+        filteredGeneral.forEach((ge) => {
+            let realGeIdx = generalEntries.indexOf(ge);
+            let card = document.createElement("div");
+            card.className = "user-card general-row";
+            
+            setupLongPress(card, function() {
+                openActionPopup("பொது என்ட்ரி: " + ge.desc, () => editGeneralTransaction(realGeIdx), () => deleteGeneralTransaction(realGeIdx));
+            });
+
+            let amtDisplay = Number(ge.credit) > 0 ? `+ ₹${Number(ge.credit).toLocaleString()}` : `- ₹${Number(ge.debit).toLocaleString()}`;
+            let colorStyle = Number(ge.credit) > 0 ? "color:#00ff66;" : "color:#ff3333;";
+
+            card.innerHTML = `
+                <div class="row">
+                    <div>
+                        <b style="font-size:17px;">${ge.desc}</b><br>
+                        <small style="color:#aaa;">${formatDate(ge.date)}</small>
+                    </div>
+                    <div style="font-weight:bold; font-size:17px; ${colorStyle}">${amtDisplay}</div>
+                </div>
+            `;
+            genListDiv.appendChild(card);
+        });
+    } else {
+        document.getElementById("generalSectionTitle").style.display = "none";
+    }
+
+    // லோக்கல் சுவிட்ச் அமைப்புகளின் படி கார்டுகளை மறைத்தல் / காட்டுதல்
+    applySavedToggleSettings();
+}
+
+// லாங் பிரஸ் கண்டறியும் அக்யூரேட் மொபைல் டச் ஃபங்க்ஷன்
+function setupLongPress(element, callback) {
+    element.addEventListener('touchstart', function(e) {
+        pressTimer = window.setTimeout(function() {
+            callback();
+        }, 600);
+    }, {passive: true});
+
+    element.addEventListener('touchend', function(e) {
+        if (pressTimer) clearTimeout(pressTimer);
+    }, {passive: true});
+
+    element.addEventListener('mousedown', function(e) {
+        pressTimer = window.setTimeout(function() {
+            callback();
+        }, 600);
+    });
+
+    element.addEventListener('mouseup', function(e) {
+        if (pressTimer) clearTimeout(pressTimer);
+    });
+}
+
+function openUser(i){
+    currentUser = i;
+    document.getElementById("mainScreen").classList.add("hidden");
+    document.getElementById("userScreen").classList.remove("hidden");
+    renderTransactions();
+    
+    // பேலன்ஸ் பட்டன் மீது லாங் பிரஸ் செய்தால் வாட்ஸ்அப் / பிடிஎஃப் ஆப்ஷன் ஓபன் ஆகும் லாஜிக் செட்டப்
+    const balElement = document.getElementById("profBalance");
+    setupLongPress(balElement, function() {
+        openSharePopup();
+    });
+}
+
+function goBack(){
+    document.getElementById("mainScreen").classList.remove("hidden");
+    document.getElementById("userScreen").classList.add("hidden");
+    currentUser = null;
+    renderUsers();
+}
+
+function openGlobalEntryForm() {
+    globalTargetMode = "global";
+    document.getElementById("entryFormTitle").innerText = "New Entry (பொது/யூசர் தேர்வு)";
+    document.getElementById("targetUserSelectionArea").style.display = "block";
+    
+    const selectEl = document.getElementById("tUserSelect");
+    selectEl.innerHTML = `<option value="general">General (பொதுவான என்ட்ரி)</option>`;
+    users.forEach(u => {
+        selectEl.innerHTML += `<option value="${users.indexOf(u)}">${u.name}</option>`;
+    });
+
+    document.getElementById("tDate").value = new Date().toISOString().split("T")[0];
+    document.getElementById("tDesc").value = "";
+    document.getElementById("tCredit").value = "";
+    document.getElementById("tDebit").value = "";
+    editIndex = null;
+    document.getElementById("entryPopup").style.display = "flex";
+}
+
+function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; isEditingGeneral = false;}
+
+// ஆர் (R) பட்டன் லாஜிக் - வெறும் தேதியுடன் சிகப்பு நிறமாக்குதல்
+function triggerRedFlagButton() {
+    let d = document.getElementById("tDate").value;
+    if(!d) return alert("R குறியீட்டிற்கு Date கட்டாயம் தேவை!");
+
+    const target = document.getElementById("tUserSelect").value;
+    if(target === "general") {
+        alert("General என்ட்ரிக்கு R லாக் அப்ளை செய்ய முடியாது. ஏதேனும் ஒரு யூசரை தேர்ந்தெடுக்கவும்!");
+        return;
+    } else {
+        let uIdx = parseInt(target);
+        users[uIdx].isForcedRed = true;
+        users[uIdx].transactions.push({ date: d, desc: "R SAVE ACTIVATE", credit: "", debit: "" });
+    }
+    
+    saveLocal();
+    closeEntryForm();
+    renderUsers();
+}
+
+function saveTransaction(){
+    let d = document.getElementById("tDate").value, desc = document.getElementById("tDesc").value;
+    let c = document.getElementById("tCredit").value, deb = document.getElementById("tDebit").value;
+    if(!d) return alert("Date is required!");
+
+    if(editIndex === null) {
+        const target = document.getElementById("tUserSelect").value;
+        if(target === "general") {
+            generalEntries.push({ date: d, desc: desc, credit: c, debit: deb });
+        } else {
+            let uIdx = parseInt(target);
+            users[uIdx].isForcedRed = false; 
+            users[uIdx].transactions.push({ date: d, desc: desc, credit: c, debit: deb });
+        }
+    } else {
+        if(isEditingGeneral) {
+            generalEntries[editIndex] = { date: d, desc: desc, credit: c, debit: deb };
+        } else {
+            users[currentUser].transactions[editIndex] = { date: d, desc: desc, credit: c, debit: deb }; 
+        }
+    }
+
+    saveLocal();
+    closeEntryForm();
+    if(currentUser !== null && !isEditingGeneral) { renderTransactions(); } else { renderUsers(); }
+}
+
+function renderTransactions(){
+    let u = users[currentUser];
+    u.transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    document.getElementById("profName").innerText = u.name;
+    document.getElementById("profMobile").innerText = u.mobile || "No Mobile";
+    document.getElementById("profBalance").innerText = "Bal: ₹" + getBalance(u).toLocaleString();
+    
+    const tableBody = document.getElementById("transactionTable");
+    tableBody.innerHTML = "";
+    
+    let curBal = 0, display = [];
+    u.transactions.forEach((tx, originalIndex) => {
+        let isNote = (!Number(tx.credit) && !Number(tx.debit));
+        if(!isNote) curBal += (Number(tx.credit||0) - Number(tx.debit||0));
+        display.push({ ...tx, cumulative: isNote ? "" : curBal, actualIdx: originalIndex });
+    });
+
+    // கடைசி போடும் தேதி தான் முதலில் இருக்க வேண்டும் வடிவம் (Latest Date First)
+    display.reverse();
+
+    // மொபைல் வியூவில் மிகச்சரியாக 11 ரோக்கள் மட்டும் தெரியும் படி கட்டுப்படுத்துதல்
+    let sliceDisplay = display.slice(0, 11);
+
+    sliceDisplay.forEach((tx) => {
+        let row = document.createElement("tr");
+        if(Number(tx.credit) > 0) row.className = "credit-row";
+        else if(Number(tx.debit) > 0) row.className = "debit-row";
+        else row.className = "pending-row";
+
+        // வரியை லாங் பிரஸ் செய்தால் எடிட் / டெலிட் மெனு தோன்றும்
+        setupLongPress(row, function() {
+            openActionPopup("வரலாறு: " + tx.desc, () => editTransaction(tx.actualIdx), () => deleteTransaction(tx.actualIdx));
+        });
+
+        row.innerHTML = `<td>${formatDate(tx.date)}</td>
+                         <td>${tx.desc||""}</td>
+                         <td>${tx.credit||""}</td>
+                         <td>${tx.debit||""}</td>
+                         <td><b>${tx.cumulative !== "" ? "₹"+tx.cumulative.toLocaleString() : ""}</b></td>`;
+        tableBody.appendChild(row);
+    });
+}
+
+function editTransaction(i) {
+    let tx = users[currentUser].transactions[i];
+    globalTargetMode = "global";
+    isEditingGeneral = false;
+    
+    document.getElementById("targetUserSelectionArea").style.display = "block";
+    const selectEl = document.getElementById("tUserSelect");
+    selectEl.innerHTML = `<option value="${currentUser}">${users[currentUser].name}</option>`;
+    
+    document.getElementById("entryFormTitle").innerText = "Edit Entry";
+    document.getElementById("tDate").value = tx.date;
+    document.getElementById("tDesc").value = tx.desc || "";
+    document.getElementById("tCredit").value = tx.credit || "";
+    document.getElementById("tDebit").value = tx.debit || "";
+    editIndex = i;
+    closeActionPopup();
+    document.getElementById("entryPopup").style.display = "flex";
+}
+
+function deleteTransaction(i){ 
+    closeActionPopup();
+    if(confirm("இந்த எண்ட்ரியை நீக்கவா?")){ 
+        users[currentUser].transactions.splice(i,1); 
+        saveLocal(); 
+        renderTransactions(); 
+    } 
+}
+
+function editGeneralTransaction(i) {
+    let tx = generalEntries[i];
+    globalTargetMode = "global";
+    isEditingGeneral = true;
+    
+    document.getElementById("targetUserSelectionArea").style.display = "block";
+    const selectEl = document.getElementById("tUserSelect");
+    selectEl.innerHTML = `<option value="general">General (பொதுவான என்ட்ரி)</option>`;
+    
+    document.getElementById("entryFormTitle").innerText = "Edit General Entry";
+    document.getElementById("tDate").value = tx.date;
+    document.getElementById("tDesc").value = tx.desc || "";
+    document.getElementById("tCredit").value = tx.credit || "";
+    document.getElementById("tDebit").value = tx.debit || "";
+    editIndex = i;
+    closeActionPopup();
+    document.getElementById("entryPopup").style.display = "flex";
+}
+
+function deleteGeneralTransaction(i) {
+    closeActionPopup();
+    if(confirm("இந்த பொதுவான எண்ட்ரியை நீக்கவா?")){ 
+        generalEntries.splice(i,1); 
+        saveLocal(); 
+        renderUsers(); 
+    } 
+}
+
+function addUser(){
+    let n=prompt("Name:"), m=prompt("Mobile:");
+    if(n){ users.push({name:n,mobile:m,transactions:[], isForcedRed: false}); saveLocal(); renderUsers(); }
+}
+
+function openActionPopup(title, onEdit, onDelete) {
+    document.getElementById("popupTitle").innerText = title;
+    document.getElementById("actionPopup").style.display = "flex";
+    document.getElementById("editBtn").onclick = onEdit;
+    document.getElementById("deleteBtn").onclick = onDelete;
+}
+function closeActionPopup() { document.getElementById("actionPopup").style.display = "none"; }
+
+function openSharePopup() { document.getElementById("sharePopup").style.display = "flex"; }
+function closeSharePopup() { document.getElementById("sharePopup").style.display = "none"; }
+
+// ==========================================
+// WHATSAPP SHARE SYSTEM
+// ==========================================
+function sendWhatsAppMessage() {
+    let u = users[currentUser];
+    let name = u.name;
+    let mobile = u.mobile || "";
+    let credit = getUserTotalCredit(u).toLocaleString();
+    let debit = getUserTotalDebit(u).toLocaleString();
+    let balance = getBalance(u).toLocaleString();
+    
+    if(!mobile) {
+        alert("இந்த யூசருக்கு மொபைல் எண் இல்லை!");
+        return;
+    }
+
+    // அழகான தமிழ் வாட்ஸ்அப் அறிக்கை டெக்ஸ்ட் மெசேஜ் வடிவம்
+    let text = `*FINANCE STATEMENT*%0A%0A` +
+               `👤 *பெயர்:* ${name}%0A` +
+               `🟢 *மொத்த வரவு:* ₹${credit}%0A` +
+               `🔴 *மொத்த செலவு:* ₹${debit}%0A` +
+               `📊 *இருப்பு பாக்கி:* ₹${balance}%0A%0A` +
+               `_Thank you for your business!_`;
+               
+    let url = `https://api.whatsapp.com/send?phone=${mobile}&text=${text}`;
+    window.open(url, '_blank');
+    closeSharePopup();
+}
+
+// ==========================================
+// ULTRA PREMIUM HTML2PDF GENERATOR
+// ==========================================
+function generatePdfStatement() {
+    let u = users[currentUser];
+    
+    // டெம்ப்ளேட்டில் விபரங்களை நிரப்புதல்
+    document.getElementById("pdfNameField").innerText = "வாடிக்கையாளர் பெயர்: " + u.name;
+    document.getElementById("pdfMobileField").innerText = "மொபைல் எண்: " + (u.mobile || "No Mobile");
+    document.getElementById("pdfBalanceField").innerText = "மொத்த இறுதி பாக்கி: ₹" + getBalance(u).toLocaleString();
+    
+    const pdfBody = document.getElementById("pdfTableBody");
+    pdfBody.innerHTML = "";
+    
+    let curBal = 0;
+    u.transactions.forEach((tx) => {
+        let isNote = (!Number(tx.credit) && !Number(tx.debit));
+        if(!isNote) curBal += (Number(tx.credit||0) - Number(tx.debit||0));
+        
+        let row = document.createElement("tr");
+        row.innerHTML = `<td>${formatDate(tx.date)}</td>
+                         <td>${tx.desc || ''}</td>
+                         <td style="color:#25D366;">${tx.credit || ''}</td>
+                         <td style="color:#ff3333;">${tx.debit || ''}</td>
+                         <td><b>${isNote ? "" : "₹" + curBal.toLocaleString()}</b></td>`;
+        pdfBody.appendChild(row);
+    });
+
+    const element = document.getElementById("pdfTemplate");
+    // பிடிஎஃப் ஃபைல் வடிவமைப்பு ஆப்ஷன்கள்
+    const opt = {
+        margin:       10,
+        filename:     `${u.name}_Statement_2026.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, backgroundColor: '#000000' },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    
+    showLoading(true);
+    html2pdf().set(opt).from(element).save().then(() => {
+        showLoading(false);
+        closeSharePopup();
+    });
+}
+
+/* SCREEN 3: செட்டிங்ஸ் ஆன்/ஆஃப் மற்றும் எழுத்து மேலாண்மை */
+function openSettings() {
+    document.getElementById("mainScreen").classList.add("hidden");
+    document.getElementById("settingsScreen").classList.remove("hidden");
+    
+    // செட்டிங்ஸ் செக்பாக்ஸ்களின் நிலையை லோக்கல் ஸ்டோரேஜில் இருந்து அப்டேட் செய்தல்
+    let config = JSON.parse(localStorage.getItem("dashboardToggleConfig")) || {};
+    const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
+    keys.forEach(k => {
+        if(config[k] !== undefined) {
+            document.getElementById("switch_" + k).checked = config[k];
         }
     });
 }
 
-function refresh() {
-    const fD = document.getElementById('fDate').value, tD = document.getElementById('tDate').value, sM = document.getElementById('sMob').value;
-    let html = "", grand = 0;
-    currentCatSums = {}; cfg.cats.forEach(c => currentCatSums[c] = 0);
+function closeSettings() {
+    document.getElementById("settingsScreen").classList.add("hidden");
+    document.getElementById("mainScreen").classList.remove("hidden");
+    renderUsers();
+}
 
-    db.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    filteredDB = db.filter(t => {
-        const mBell = (!cfg.startingDate || t.date >= cfg.startingDate);
-        const mCat = (activeFilters.length === 0 || activeFilters.includes(t.cat));
-        const mDate = (!fD || t.date >= fD) && (!tD || t.date <= tD);
-        const mMob = (!sM || t.mob.includes(sM));
-        return mBell && mCat && mDate && mMob;
+function toggleBoxVisibility() {
+    let config = {};
+    const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
+    keys.forEach(k => {
+        config[k] = document.getElementById("switch_" + k).checked;
     });
-
-    filteredDB.forEach(t => {
-        let amt = parseFloat(t.amt) || 0;
-        let v = (t.type === "CR") ? amt : -amt; 
-        currentCatSums[t.cat] += v; grand += v;
-        html += `<tr class="border-b">
-            <td class="p-2">${t.date.split('-').reverse().join('/')}</td>
-            <td class="p-2">${t.mob}</td>
-            <td class="p-2">${t.cat}</td>
-            <td class="p-2 text-blue-700">${t.desc}</td>
-            <td class="p-2 text-right ${t.type==='CR'?'text-green-600':'text-red-600'}">₹${amt.toLocaleString()}</td>
-            <td class="p-2"><button onclick="del(${t.id})" class="text-red-600">✖</button></td>
-        </tr>`;
-    });
-    document.getElementById('resTable').innerHTML = html;
-    document.getElementById('mainTotal').innerText = "₹" + grand.toLocaleString();
-    document.getElementById('recCount').innerText = filteredDB.length;
-    cfg.cats.forEach(c => { if(document.getElementById('sum_'+c)) document.getElementById('sum_'+c).innerText = (currentCatSums[c] || 0).toLocaleString(); });
+    localStorage.setItem("dashboardToggleConfig", JSON.stringify(config));
+    applySavedToggleSettings();
 }
 
-function saveData() {
-    let entry = { id: Date.now(), date: document.getElementById('eDate').value, mob: document.getElementById('eMob').value || "-", cat: document.getElementById('eCat').value, desc: document.getElementById('eDesc').value || "-", amt: document.getElementById('eAmt').value, type: document.getElementById('eType').value };
-    if(!entry.date || !entry.amt) return alert("Fill Date & Amount!");
-    db.push(entry); localStorage.setItem('saha_v65_db', JSON.stringify(db)); refresh();
-}
-
-function toggleFilter(cat) {
-    if(!cfg.mfs) activeFilters = (cat === 'ALL') ? [] : [cat];
-    else { if(cat === 'ALL') activeFilters = []; else { const idx = activeFilters.indexOf(cat); if(idx > -1) activeFilters.splice(idx, 1); else activeFilters.push(cat); } }
-    updateFilterUI(); refresh();
-}
-
-function updateFilterUI() {
-    document.querySelectorAll('#filterCatList button').forEach(btn => btn.classList.remove('filter-btn-active'));
-    if(activeFilters.length === 0) document.getElementById('btn_ALL').classList.add('filter-btn-active');
-    else activeFilters.forEach(cat => document.getElementById('btn_'+cat)?.classList.add('filter-btn-active'));
-}
-
-// PDF GENERATION WITH BALANCE FIX
-function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text(cfg.title + " - REPORT", 105, 15, null, null, "center");
+function applySavedToggleSettings() {
+    let config = JSON.parse(localStorage.getItem("dashboardToggleConfig")) || {};
+    const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
     
-    doc.setFontSize(10);
-    let y = 25;
-    let totalBal = 0;
+    let generalActiveCount = 0;
+    let redActiveCount = 0;
 
-    // பேலன்ஸ் உள்ள கேட்டகிரிகளை மட்டும் காட்டவும்
-    cfg.cats.forEach(c => {
-        let bal = currentCatSums[c] || 0;
-        if(bal !== 0) {
-            doc.text(`${c}: Rs. ${bal.toLocaleString()}`, 14, y);
-            totalBal += bal;
-            y += 6;
+    keys.forEach(k => {
+        let isChecked = config[k] !== undefined ? config[k] : true;
+        let boxElement = document.getElementById("box_" + k);
+        if(boxElement) {
+            if(isChecked) {
+                boxElement.style.display = "block";
+                if(['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance'].includes(k)) generalActiveCount++;
+                if(['redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'].includes(k)) redActiveCount++;
+            } else {
+                boxElement.style.display = "none";
+            }
         }
     });
 
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 255);
-    doc.text("TOTAL BALANCE: Rs. " + totalBal.toLocaleString(), 14, y + 4);
-    doc.setTextColor(0, 0, 0);
-
-    const bodyData = filteredDB.map(t => [
-        t.date.split('-').reverse().join('/'), 
-        t.mob, 
-        t.cat, 
-        t.desc, 
-        (t.type === "CR" ? "+" : "-") + parseFloat(t.amt).toLocaleString()
-    ]);
-
-    doc.autoTable({ 
-        head: [['DATE', 'MOBILE', 'CAT', 'REMARK', 'AMOUNT']], 
-        body: bodyData, 
-        startY: y + 12,
-        theme: 'grid',
-        headStyles: { fillColor: [0, 0, 0] }
-    });
-    
-    doc.save(cfg.title + '_Report.pdf');
+    // முழு பிரிவையும் மறைக்கும் லாஜிக்
+    document.getElementById("title_generalSec").style.display = (generalActiveCount === 0) ? "none" : "block";
+    document.getElementById("sec_generalDashboard").style.display = (generalActiveCount === 0) ? "none" : "grid";
+    document.getElementById("title_redSec").style.display = (redActiveCount === 0) ? "none" : "block";
+    document.getElementById("sec_redDashboard").style.display = (redActiveCount === 0) ? "none" : "grid";
 }
 
-function openSettings() { if(prompt("PIN:") === cfg.adminPin) { 
-    document.getElementById('setModal').classList.remove('hidden');
-    let area = document.getElementById('catEditArea'); area.innerHTML = "";
-    cfg.cats.forEach((c, i) => { area.innerHTML += `<div class="setting-row"><span>${c}</span><div class="flex gap-1"><input type="text" id="cn_${i}" value="${c}" class="w-16"><input type="checkbox" id="cs_${i}" ${cfg.catStatus[i]?'checked':''}></div></div>`; });
-} }
-
-function saveSettings() {
-    cfg.title = document.getElementById('dispTitle').innerText;
-    cfg.cats.forEach((_, i) => { cfg.cats[i] = document.getElementById(`cn_${i}`).value.toUpperCase(); cfg.catStatus[i] = document.getElementById(`cs_${i}`).checked; });
-    localStorage.setItem('saha_v65_cfg', JSON.stringify(cfg)); location.reload();
+function changeFontSize(size) {
+    if(size === 'large') { document.documentElement.style.setProperty('--font-multiplier', '1.25'); } 
+    else { document.documentElement.style.setProperty('--font-multiplier', '1.0'); }
 }
 
-function closeSettings() { document.getElementById('setModal').classList.add('hidden'); }
-function del(id) { if(confirm("DEL?")) { db = db.filter(x => x.id !== id); localStorage.setItem('saha_v65_db', JSON.stringify(db)); refresh(); } }
-function deleteAll() { if(confirm("ALL CLEAR?")) { db = []; localStorage.setItem('saha_v65_db', JSON.stringify(db)); refresh(); } }
-function sendWhatsApp() { let msg = `*${cfg.title}*\nTotal: ${document.getElementById('mainTotal').innerText}`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
+function changeFontWeight(weight) {
+    if(weight === 'bold') { document.documentElement.style.setProperty('--font-weight-custom', 'bold'); } 
+    else { document.documentElement.style.setProperty('--font-weight-custom', 'normal'); }
+}
+
+window.onload = function() {
+    renderUsers();
+};
 </script>
 </body>
 </html>
