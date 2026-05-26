@@ -13,8 +13,11 @@
     --card-bg: #141414;
     --card-inner: #1e1e1e;
     --border-color: #2a2a2a;
-    --red-bg: linear-gradient(145deg, #660000, #3a0000);
-    --red-border: #ff3333;
+    
+    /* புதிய துடிப்பான பிரீமியம் நிறங்கள் - உங்கள் ஸ்கிரிப்ட் முறைப்படி */
+    --premium-green: #2ecc71;
+    --premium-red: #e74c3c;
+    
     --font-multiplier: 1;
     --font-weight-custom: normal;
 }
@@ -57,15 +60,14 @@ header {
     font-size: 12px;
     font-weight: bold;
     border: 1px solid var(--gold);
+    cursor: pointer;
 }
 
-/* Global Text Settings */
 body, input, button, table, td, th, select {
     font-size: calc(16px * var(--font-multiplier));
     font-weight: var(--font-weight-custom);
 }
 
-/* Dashboard Premium Layout */
 .dashboard-section-title {
     padding: 15px 15px 5px 15px;
     margin: 10px 0 0 0;
@@ -90,8 +92,8 @@ body, input, button, table, td, th, select {
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 .stat-box.red-border {
-    border: 1px solid var(--red-border);
-    background: rgba(40, 0, 0, 0.3);
+    border: 1px solid var(--premium-red);
+    background: rgba(231, 76, 60, 0.1);
 }
 .stat-box small {
     color: #999999;
@@ -107,9 +109,8 @@ body, input, button, table, td, th, select {
     color: var(--gold);
     font-weight: 900;
 }
-.stat-box.red-border h2 { color: #ff5252; }
+.stat-box.red-border h2 { color: var(--premium-red); }
 
-/* Search UI */
 .search-container { padding: 12px; }
 .search-input {
     width: 100%;
@@ -122,7 +123,6 @@ body, input, button, table, td, th, select {
     font-size: 16px;
 }
 
-/* Buttons Layout */
 .top-buttons {
     padding: 5px 12px;
     display: grid;
@@ -163,10 +163,10 @@ button {
     box-sizing: border-box;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-.user-card.redbg { background: var(--red-bg); border-color: var(--red-border); }
+/* அலர்ட் சிவப்பு பின்னணி */
+.user-card.redbg { background: rgba(231, 76, 60, 0.25); border-color: var(--premium-red); }
 .row { display: flex; justify-content: space-between; align-items: center; }
 
-/* Screen 4: User Profile View Header */
 .profile-header {
     background: var(--card-bg);
     padding: 20px;
@@ -195,7 +195,6 @@ button {
     cursor: pointer;
 }
 
-/* Transaction Table 11 Rows Style */
 .table-container { overflow-x: auto; padding: 12px; }
 table {
     width: 100%; border-collapse: collapse;
@@ -204,11 +203,12 @@ table {
 }
 th, td { padding: 15px 10px; text-align: center; border-bottom: 1px solid var(--border-color); }
 th { background: #1f1f1f; color: var(--gold); font-size: 13px; }
-.credit-row { background-color: #0f401b !important; color: #ffffff !important; }
-.debit-row { background-color: #591010 !important; color: #ffffff !important; }
-.pending-row { background-color: #1a1a1a; color: var(--gold); }
 
-/* Toggle Custom Switch */
+/* துல்லியமான புதிய பச்சை மற்றும் சிவப்பு ரோ நிறங்கள் */
+.credit-row { background-color: var(--premium-green) !important; color: #000000 !important; font-weight: bold; }
+.debit-row { background-color: var(--premium-red) !important; color: #ffffff !important; font-weight: bold; }
+.pending-row { background-color: #332200; color: var(--gold); font-weight: bold; }
+
 .settings-row {
     display: flex; justify-content: space-between; align-items: center;
     margin: 12px 0; padding: 12px;
@@ -229,7 +229,11 @@ th { background: #1f1f1f; color: var(--gold); font-size: 13px; }
 input:checked + .slider { background-color: var(--gold); }
 input:checked + .slider:before { transform: translateX(24px); background-color: #000; }
 
-/* Overlays Popups Form Elements */
+/* சிம்பிள் லாங்குவேஜ் பட்டன்கள் */
+.lang-btn-group { display: flex; gap: 10px; margin: 10px 0; }
+.lang-btn { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: #222; color: white; font-weight: bold; }
+.lang-btn.active { background: var(--gold-gradient); color: black; border-color: var(--gold); }
+
 .popup-overlay {
     display: none; position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -258,7 +262,6 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
     padding: 10px 20px; border-radius: 30px; font-weight: bold; z-index: 10000; font-size: 13px;
 }
 
-/* Security Cover Grid Overlay */
 #passwordOverlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--dark-bg); z-index: 2000;
@@ -289,7 +292,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
         <p id="passError" style="color:#ff3333; display:none; margin-top:12px; font-weight: bold;">Invalid Password! Please try again.</p>
         
         <a id="adminWhatsAppLink" href="https://wa.me/919361203202" target="_blank" style="text-decoration:none; display:inline-block; margin-top:25px; color:#25D366; font-size:13px; font-weight:bold; background:rgba(37,211,102,0.1); padding:8px 16px; border-radius:20px; border:1px solid rgba(37,211,102,0.3);">
-            💬 ADMIN - 91 9361203202 WHATS APP
+            💬 ADMIN - 91 - 9361203202 WHATSAPP SIMPLE
         </a>
     </div>
 </div>
@@ -302,7 +305,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
     <div id="mainScreen">
         <div class="search-container">
-            <input type="text" id="userSearch" class="search-input" placeholder="தேடவும்..." oninput="renderUsers()">
+            <input type="text" id="userSearch" class="search-input" placeholder="தேடவும்..." oninput="renderDashboardOnly()">
         </div>
 
         <div class="dashboard-section-title" id="title_generalSec">பொதுவான கணக்கு விபரங்கள் (General Total)</div>
@@ -315,31 +318,43 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
         <div class="dashboard-section-title" id="title_redSec">சிவப்பு குறியீடு கணக்கு விபரங்கள் (R SAVE)</div>
         <div class="dashboard" id="sec_redDashboard">
-            <div class="stat-box red-border" id="box_redUsersCount"><small style="color:#ff5252;" class="lbl-redUsers">Total Red Users</small><h2 id="redUsersCount">0</h2></div>
-            <div class="stat-box red-border" id="box_redTotalCredit"><small style="color:#ff5252;" class="lbl-redCredit">Red Total Credit</small><h2 id="redTotalCredit">0</h2></div>
-            <div class="stat-box red-border" id="box_redTotalDebit"><small style="color:#ff5252;" class="lbl-redDebit">Red Total Debit</small><h2 id="redTotalDebit">0</h2></div>
-            <div class="stat-box red-border" id="box_redTotalBalance"><small style="color:#ff5252;" class="lbl-redBalance">Red Total Balance</small><h2 id="redTotalBalance">0</h2></div>
+            <div class="stat-box red-border" id="box_redUsersCount"><small class="lbl-redUsers">Total Red Users</small><h2 id="redUsersCount">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalCredit"><small class="lbl-redCredit">Red Total Credit</small><h2 id="redTotalCredit">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalDebit"><small class="lbl-redDebit">Red Total Debit</small><h2 id="redTotalDebit">0</h2></div>
+            <div class="stat-box red-border" id="box_redTotalBalance"><small class="lbl-redBalance">Red Total Balance</small><h2 id="redTotalBalance">0</h2></div>
         </div>
 
         <div class="top-buttons">
             <button class="gold" onclick="addUser()">👤 <span class="btn-newUser">+ New User</span></button>
             <button class="gold" onclick="openGlobalEntryForm()">📝 <span class="btn-newEntry">+ New Entry</span></button>
+            <button class="gold" onclick="openUserListScreen()">📋 <span class="btn-userList">User List</span></button>
             <button class="gold" onclick="openAllTransactionsScreen()">📊 <span class="btn-totalTx">Total Transaction</span></button>
+        </div>
+        <div class="top-buttons" style="grid-template-columns: 1fr;">
             <button class="gold" onclick="openSettings()">⚙️ <span class="btn-settings">Settings</span></button>
         </div>
         
-        <div class="section-title lbl-secUsers">வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)</div>
-        <div id="userList"></div>
-
         <div class="section-title id-secGeneralTitle" id="generalSectionTitle">பொதுவான என்ட்ரிகள் (General Entries)</div>
         <div id="generalEntryList"></div>
+    </div>
+
+    <div id="userListScreen" class="hidden">
+        <div class="profile-header">
+            <button class="gold" onclick="closeUserListScreen()" style="float:left; padding: 6px 14px; margin-top: -5px;">← Back</button>
+            <h2 class="btn-userList">வாடிக்கையாளர்கள் பட்டியல் (User List)</h2>
+        </div>
+        <div class="search-container">
+            <input type="text" id="userListSearch" class="search-input" placeholder="பயனரைத் தேடவும்..." oninput="renderUserListOnly()">
+        </div>
+        <div class="section-title lbl-secUsers">வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)</div>
+        <div id="explicitUserList"></div>
     </div>
 
     <div id="userScreen" class="hidden">
         <div class="profile-header">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                 <button class="gold" onclick="goBack()" style="padding: 6px 14px;">← Back</button>
-                <button class="gold" onclick="openUserFolderPlusEntry()" style="padding: 6px 16px; background:var(--gold-gradient); font-size:18px; font-weight:900;">+ New Entry</button>
+                <button class="gold" onclick="openUserFolderPlusEntry()" style="padding: 6px 16px; font-size:18px; font-weight:900;">+ New Entry</button>
             </div>
             <h2 id="profName"></h2>
             <div class="prof-details-row">
@@ -392,16 +407,13 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
         </div>
         
         <div style="padding:15px; max-width: 600px; margin: auto;">
-            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மொழி அமைப்பு / Language Switch</h3>
-            <div class="settings-row">
-                <span>தமிழ் வடிவம் (ON = தமிழ் / OFF = English)</span>
-                <label class="switch">
-                    <input type="checkbox" id="switch_languageTamil" checked onchange="toggleLanguageSetting()">
-                    <span class="slider"></span>
-                </label>
+            <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;">Language / மொழி</h3>
+            <div class="lang-btn-group">
+                <button id="langBtnEn" class="lang-btn" onclick="setLanguage('en')">English</button>
+                <button id="langBtnTa" class="lang-btn" onclick="setLanguage('ta')">தமிழ்</button>
             </div>
 
-            <h3 style="color:var(--gold); margin-top:20px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மென்பொருள் பெயர் மாற்றுதல் (App Title Editing)</h3>
+            <h3 style="color:var(--gold); margin-top:20px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;">மென்பொருள் பெயர் (App Title)</h3>
             <div style="background:var(--card-inner); padding:12px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:20px;">
                 <input type="text" id="customAppTitleInput" placeholder="Enter App Name...">
                 <button class="gold" onclick="saveCustomAppTitle()" style="width:100%; padding:10px; margin-top:5px;">Change Name</button>
@@ -409,29 +421,22 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
             <h3 style="color:var(--gold); margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-dashTitle">டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப்</h3>
             
-            <div class="settings-row"><span class="lbl-totalUsers">Total Users</span><label class="switch"><input type="checkbox" id="switch_totalUsers" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span class="lbl-totalCredit">Total Credit</span><label class="switch"><input type="checkbox" id="switch_totalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span class="lbl-totalDebit">Total Debit</span><label class="switch"><input type="checkbox" id="switch_totalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span class="lbl-totalBalance">Total Balance</span><label class="switch"><input type="checkbox" id="switch_totalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalUsers">Total Users</span><label class="switch"><input type="checkbox" id="switch_totalUsers" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalCredit">Total Credit</span><label class="switch"><input type="checkbox" id="switch_totalCredit" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalDebit">Total Debit</span><label class="switch"><input type="checkbox" id="switch_totalDebit" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-totalBalance">Total Balance</span><label class="switch"><input type="checkbox" id="switch_totalBalance" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
             
-            <div class="settings-row"><span class="lbl-redUsers">Total Red Users</span><label class="switch"><input type="checkbox" id="switch_redUsersCount" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span class="lbl-redCredit">Red Total Credit</span><label class="switch"><input type="checkbox" id="switch_redTotalCredit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span class="lbl-redDebit">Red Total Debit</span><label class="switch"><input type="checkbox" id="switch_redTotalDebit" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
-            <div class="settings-row"><span class="lbl-redBalance">Red Total Balance</span><label class="switch"><input type="checkbox" id="switch_redTotalBalance" checked onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redUsers">Total Red Users</span><label class="switch"><input type="checkbox" id="switch_redUsersCount" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redCredit">Red Total Credit</span><label class="switch"><input type="checkbox" id="switch_redTotalCredit" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redDebit">Red Total Debit</span><label class="switch"><input type="checkbox" id="switch_redTotalDebit" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
+            <div class="settings-row"><span class="lbl-redBalance">Red Total Balance</span><label class="switch"><input type="checkbox" id="switch_redTotalBalance" onchange="toggleBoxVisibility()"><span class="slider"></span></label></div>
 
-            <h3 style="color:var(--gold); margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-fontTitle">எழுத்து அளவு மாற்றங்கள்</h3>
+            <h3 style="color:var(--gold); margin-top:25px; margin-bottom: 5px; text-transform: uppercase; font-size:14px;" class="set-fontTitle">எழுத்து அளவு</h3>
             <div class="settings-row">
-                <span class="set-fontSize">எழுத்தின் அளவு (Font Size)</span>
+                <span class="set-fontSize">Font Size</span>
                 <div style="display:flex; gap:8px;">
                     <button class="gold" onclick="changeFontSize('normal')">Normal</button>
                     <button class="gold" onclick="changeFontSize('large')">Large</button>
-                </div>
-            </div>
-            <div class="settings-row">
-                <span class="set-fontWeight">எழுத்தின் தடிமன் (Font Style)</span>
-                <div style="display:flex; gap:8px;">
-                    <button class="gold" onclick="changeFontWeight('normal')">Normal</button>
-                    <button class="gold" onclick="changeFontWeight('bold')">Bold</button>
                 </div>
             </div>
         </div>
@@ -455,18 +460,15 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
         <input type="number" id="tDebit" placeholder="Debit">
         
         <div style="display:flex; gap:8px; margin-top:15px;">
-            <button class="gold" onclick="saveTransaction()" style="flex:2;">Save</button>
-            <button style="background:#b91c1c; color:white; flex:1; font-weight:950; font-size:20px; border-radius:10px;" onclick="triggerRedFlagButton()">R</button>
-            <button style="background:#444; color:white; flex:2;" onclick="closeEntryForm()">Close</button>
+            <button class="gold" onclick="saveTransaction()" style="width:100%;">Save</button>
+            <button style="background:#444; color:white; width:100%;" onclick="closeEntryForm()">Close</button>
         </div>
     </div>
 </div>
 
 <div id="sharePopup" class="popup-overlay" onclick="closeSharePopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
-        <h3 style="color:var(--gold); margin-top:0;" class="pop-shareTitle">கணக்கு விபரத்தை பகிர்க (Share Statements)</h3>
-        <p style="font-size:14px; color:#ccc;" class="pop-shareSub">இந்த வாடிக்கையாளரின் விபரங்களை எந்த முறையில் அனுப்ப வேண்டும்?</p>
-        
+        <h3 style="color:var(--gold); margin-top:0;" class="pop-shareTitle">Share Statement</h3>
         <div class="share-popup-container">
             <div class="share-option-btn" onclick="sendWhatsAppMessage()">
                 <span class="share-icon-img">💬</span>
@@ -474,7 +476,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
             </div>
             <div class="share-option-btn" onclick="generatePdfStatement()">
                 <span class="share-icon-img">📄</span>
-                <b style="color:#ff3333;">Download PDF</b>
+                <b style="color:#ff3333;">PDF</b>
             </div>
         </div>
         <button style="background:#444; color:white; width:100%; margin-top:20px; padding:12px;" onclick="closeSharePopup()">Cancel</button>
@@ -486,6 +488,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
         <h3 id="popupTitle" style="color:var(--gold);">Manage</h3>
         <button class="gold" id="editBtn" style="width:100%; padding:14px; border-radius:10px;">Edit Entry</button><br>
         <button style="background:#e53935; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" id="deleteBtn">Delete Entry</button><br>
+        <button style="background:#c0392b; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px; display:none;" id="deleteUserBtn">❌ Delete Complete User Folder</button><br>
         <button style="background:#444; color:white; width:100%; margin-top:12px; padding:14px; border-radius:10px;" onclick="closeActionPopup()">Cancel</button>
     </div>
 </div>
@@ -524,12 +527,9 @@ let generalEntries = JSON.parse(localStorage.getItem("financeGeneralEntries")) |
 let currentUser = null; 
 let editIndex = null; 
 let isEditingGeneral = false;
-let globalTargetMode = "global";
-let folderPlusMode = false; // யூசர் ஃபோல்டருக்குள் பிளஸ் பட்டன் லாஜிக் அறிய
-
+let folderPlusMode = false;
 let pressTimer;
 
-// மொழிகளுக்கான டிக்ஸ்னரி அகராதி
 const languageData = {
     ta: {
         title_generalSec: "பொதுவான கணக்கு விபரங்கள் (General Total)",
@@ -544,6 +544,7 @@ const languageData = {
         lbl_redBalance: "சிவப்பு மொத்த இருப்பு (Red Balance)",
         btn_newUser: "+ புதிய பயனர்",
         btn_newEntry: "+ புதிய பதிவு",
+        btn_userList: "பயனர்கள் பட்டியல்",
         btn_totalTx: "மொத்த பதிவுகள்",
         btn_settings: "அமைப்புகள் (Settings)",
         lbl_secUsers: "வாடிக்கையாளர்கள் ஃபோல்டர்கள் (Users Folders)",
@@ -556,12 +557,10 @@ const languageData = {
         th_user: "பயனர் / வகை",
         lbl_totalTxTitle: "அனைத்து கணக்கு பதிவுகள் (Total Transactions)",
         set_dashTitle: "டேஷ்போர்டு கார்டுகள் ஆன்/ஆஃப்",
-        set_fontTitle: "எழுத்து அளவு மாற்றங்கள்",
-        set_fontSize: "எழுத்தின் அளவு (Font Size)",
-        set_fontWeight: "எழுத்தின் தடிமன் (Font Style)",
+        set_fontTitle: "எழுத்து அளவு",
+        set_fontSize: "Font Size",
         pop_selectLbl: "தேர்ந்தெடுக்கவும்:",
-        pop_shareTitle: "கணக்கு விபரத்தை பகிர்க (Share Statements)",
-        pop_shareSub: "இந்த வாடிக்கையாளரின் விபரங்களை எந்த முறையில் அனுப்ப வேண்டும்?"
+        pop_shareTitle: "Share Statement"
     },
     en: {
         title_generalSec: "General Total Section",
@@ -576,6 +575,7 @@ const languageData = {
         lbl_redBalance: "Red Total Balance",
         btn_newUser: "+ New User",
         btn_newEntry: "+ New Entry",
+        btn_userList: "User List",
         btn_totalTx: "Total Transaction",
         btn_settings: "Settings",
         lbl_secUsers: "Users Folders",
@@ -590,10 +590,8 @@ const languageData = {
         set_dashTitle: "Dashboard Cards Visibility Switch",
         set_fontTitle: "Font Customizations",
         set_fontSize: "Font Size",
-        set_fontWeight: "Font Style/Weight",
         pop_selectLbl: "Select Target Area:",
-        pop_shareTitle: "Share Account Statements",
-        pop_shareSub: "Choose preferred option to export data"
+        pop_shareTitle: "Share Account Statements"
     }
 };
 
@@ -613,7 +611,7 @@ function verifyAppPassword() {
         if(cloudUsers && cloudUsers.length > 0) {
             isValid = cloudUsers.some(u => u.password === inputPass);
         }
-        if(inputPass === "admin123") { isValid = true; }
+        if(inputPass === "admin123" || inputPass === "SAHA1020" || inputPass === "9361") { isValid = true; }
 
         if(isValid) {
             document.getElementById("passwordOverlay").style.display = "none";
@@ -629,7 +627,7 @@ function verifyAppPassword() {
             document.getElementById("passwordOverlay").style.display = "none";
             document.getElementById("appContent").style.display = "block";
             initAppLayoutSettings();
-            renderUsers();
+            renderDashboardOnly();
         } else {
             document.getElementById("passError").style.display = "block";
         }
@@ -643,37 +641,29 @@ function appSignOut() {
     document.getElementById("passwordOverlay").style.display = "flex";
     document.getElementById("passError").style.display = "none";
     currentUser = null;
+    
     document.getElementById("userScreen").classList.add("hidden");
     document.getElementById("settingsScreen").classList.add("hidden");
     document.getElementById("allTransactionsScreen").classList.add("hidden");
+    document.getElementById("userListScreen").classList.add("hidden");
     document.getElementById("mainScreen").classList.remove("hidden");
 }
 
-function showLoading(show) {
-    document.getElementById("loading").style.display = show ? "block" : "none";
-}
+function showLoading(show) { document.getElementById("loading").style.display = show ? "block" : "none"; }
 
 async function saveLocal(){ 
     localStorage.setItem("financeUsers", JSON.stringify(users)); 
     localStorage.setItem("financeGeneralEntries", JSON.stringify(generalEntries));
-    
     if(CLOUD_URL) {
         showLoading(true);
         try {
-            const payload = {
-                action: "updateFinanceData",
-                usersData: users,
-                generalEntriesData: generalEntries
-            };
             await fetch(CLOUD_URL, {
                 method: "POST",
                 redirect: "follow",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ action: "updateFinanceData", usersData: users, generalEntriesData: generalEntries })
             });
-        } catch(e) {
-            console.error("Cloud status error", e);
-        }
+        } catch(e) { console.error(e); }
         showLoading(false);
     }
 }
@@ -692,19 +682,15 @@ async function fetchFromCloud() {
         if(cloudResponse) {
             if(cloudResponse.users) users = cloudResponse.users;
             if(cloudResponse.generalEntries) generalEntries = cloudResponse.generalEntries;
-            
             localStorage.setItem("financeUsers", JSON.stringify(users));
             localStorage.setItem("financeGeneralEntries", JSON.stringify(generalEntries));
         }
-    } catch(e) {
-        console.error("Using local store copy", e);
-    }
+    } catch(e) { console.error(e); }
     initAppLayoutSettings();
-    renderUsers();
+    renderDashboardOnly();
     showLoading(false);
 }
 
-// அக்யூரேட் தேதி வடிவம்: நாள்-மாதம்-வருடம் (26-05-2026)
 function formatDate(d){ 
     if(!d) return ""; 
     let p = d.split("-"); 
@@ -716,21 +702,14 @@ function getBalance(u){
     return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
 }
 
-function getUserTotalCredit(u) {
-    if(!u.transactions) return 0;
-    return u.transactions.reduce((a,t)=>a+Number(t.credit||0), 0);
-}
-
-function getUserTotalDebit(u) {
-    if(!u.transactions) return 0;
-    return u.transactions.reduce((a,t)=>a+Number(t.debit||0), 0);
-}
-
+// ஆட்டோ ரெட் மார்க்கிங் லாஜிக்: தேதி வந்து வரவு/செலவு இல்லாத போது சிகப்பாக மாறும்
 function isRed(u) {
-    if (u.isForcedRed === true) return true;
     if (!u.transactions || u.transactions.length === 0) return false;
-    let today = new Date().toISOString().split("T")[0];
-    return u.transactions.some(t => t.date <= today && !Number(t.credit) && !Number(t.debit));
+    let todayStr = new Date().toISOString().split("T")[0];
+    return u.transactions.some(t => {
+        let isEmptyAmount = (!t.credit || t.credit.toString().trim() === "") && (!t.debit || t.debit.toString().trim() === "");
+        return (t.date <= todayStr && isEmptyAmount);
+    });
 }
 
 function initAppLayoutSettings() {
@@ -740,8 +719,22 @@ function initAppLayoutSettings() {
     document.getElementById("customAppTitleInput").value = savedTitle;
     
     let lang = localStorage.getItem("appLanguagePreference") || "ta";
-    document.getElementById("switch_languageTamil").checked = (lang === "ta");
-    applyLanguageLabels(lang);
+    setLanguage(lang);
+    
+    if(localStorage.getItem("dashboardToggleConfig") === null) {
+        let initialOffConfig = {
+            totalUsers: false, totalCredit: false, totalDebit: false, totalBalance: false,
+            redUsersCount: false, redTotalCredit: false, redTotalDebit: false, redTotalBalance: false
+        };
+        localStorage.setItem("dashboardToggleConfig", JSON.stringify(initialOffConfig));
+    }
+    
+    let config = JSON.parse(localStorage.getItem("dashboardToggleConfig"));
+    const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
+    keys.forEach(k => {
+        document.getElementById("switch_" + k).checked = !!config[k];
+    });
+    applySavedToggleSettings();
 }
 
 function saveCustomAppTitle() {
@@ -750,20 +743,24 @@ function saveCustomAppTitle() {
         localStorage.setItem("customAppTitleText", txt);
         document.getElementById("appHeaderTitle").innerText = txt;
         document.getElementById("pdfAppTitle").innerText = txt;
-        alert("பெயர் வெற்றிகரமாக மாற்றப்பட்டது!");
+        alert("பெயர் மாற்றப்பட்டது!");
     }
 }
 
-function toggleLanguageSetting() {
-    let isTamil = document.getElementById("switch_languageTamil").checked;
-    let chosen = isTamil ? "ta" : "en";
-    localStorage.setItem("appLanguagePreference", chosen);
-    applyLanguageLabels(chosen);
+function setLanguage(lang) {
+    localStorage.setItem("appLanguagePreference", lang);
+    if(lang === 'ta') {
+        document.getElementById("langBtnTa").classList.add("active");
+        document.getElementById("langBtnEn").classList.remove("active");
+    } else {
+        document.getElementById("langBtnEn").classList.add("active");
+        document.getElementById("langBtnTa").classList.remove("active");
+    }
+    applyLanguageLabels(lang);
 }
 
 function applyLanguageLabels(lang) {
     let dict = languageData[lang];
-    
     document.getElementById("title_generalSec").innerText = dict.title_generalSec;
     document.getElementById("title_redSec").innerText = dict.title_redSec;
     
@@ -771,7 +768,6 @@ function applyLanguageLabels(lang) {
     document.querySelectorAll(".lbl-totalCredit").forEach(el => el.innerText = dict.lbl_totalCredit);
     document.querySelectorAll(".lbl-totalDebit").forEach(el => el.innerText = dict.lbl_totalDebit);
     document.querySelectorAll(".lbl-totalBalance").forEach(el => el.innerText = dict.lbl_totalBalance);
-    
     document.querySelectorAll(".lbl-redUsers").forEach(el => el.innerText = dict.lbl_redUsers);
     document.querySelectorAll(".lbl-redCredit").forEach(el => el.innerText = dict.lbl_redCredit);
     document.querySelectorAll(".lbl-redDebit").forEach(el => el.innerText = dict.lbl_redDebit);
@@ -779,9 +775,9 @@ function applyLanguageLabels(lang) {
     
     document.querySelector(".btn-newUser").innerText = dict.btn_newUser;
     document.querySelector(".btn-newEntry").innerText = dict.btn_newEntry;
+    document.querySelector(".btn-userList").innerText = dict.btn_userList;
     document.querySelector(".btn-totalTx").innerText = dict.btn_totalTx;
     document.querySelectorAll(".btn-settings").forEach(el => el.innerText = dict.btn_settings);
-    
     document.querySelector(".lbl-secUsers").innerText = dict.lbl_secUsers;
     document.querySelector(".id-secGeneralTitle").innerText = dict.id_secGeneralTitle;
     
@@ -796,44 +792,28 @@ function applyLanguageLabels(lang) {
     document.querySelector(".set-dashTitle").innerText = dict.set_dashTitle;
     document.querySelector(".set-fontTitle").innerText = dict.set_fontTitle;
     document.querySelector(".set-fontSize").innerText = dict.set_fontSize;
-    document.querySelector(".set-fontWeight").innerText = dict.set_fontWeight;
     document.querySelector(".pop-selectLbl").innerText = dict.pop_selectLbl;
     document.querySelector(".pop-shareTitle").innerText = dict.pop_shareTitle;
-    document.querySelector(".pop-shareSub").innerText = dict.pop_shareSub;
 }
 
-function renderUsers(){
+// SCREEN 2: மெயின் டேஷ்போர்டு என்ட்ரிகள் மட்டும் லோடு செய்யும்
+function renderDashboardOnly() {
     const search = document.getElementById("userSearch").value.toLowerCase();
-    const listDiv = document.getElementById("userList");
     const genListDiv = document.getElementById("generalEntryList");
-    
-    listDiv.innerHTML = "";
     genListDiv.innerHTML = "";
 
     let totalUsersCount = users.length;
-    let totalCreditAmt = 0;
-    let totalDebitAmt = 0;
-    let totalBalanceAmt = 0;
-
-    let redUsersCount = 0;
-    let redTotalCredit = 0;
-    let redTotalDebit = 0;
-    let redTotalBalance = 0;
+    let totalCreditAmt = 0; let totalDebitAmt = 0; let totalBalanceAmt = 0;
+    let redUsersCount = 0; let redTotalCredit = 0; let redTotalDebit = 0; let redTotalBalance = 0;
     
     users.forEach(u => {
         let bal = getBalance(u);
-        let cr = getUserTotalCredit(u);
-        let db = getUserTotalDebit(u);
-
-        totalCreditAmt += cr;
-        totalDebitAmt += db;
-        totalBalanceAmt += bal;
+        let cr = u.transactions ? u.transactions.reduce((a,t)=>a+Number(t.credit||0), 0) : 0;
+        let db = u.transactions ? u.transactions.reduce((a,t)=>a+Number(t.debit||0), 0) : 0;
+        totalCreditAmt += cr; totalDebitAmt += db; totalBalanceAmt += bal;
 
         if(isRed(u)) { 
-            redUsersCount++; 
-            redTotalCredit += cr;
-            redTotalDebit += db;
-            redTotalBalance += bal; 
+            redUsersCount++; redTotalCredit += cr; redTotalDebit += db; redTotalBalance += bal; 
         }
     });
 
@@ -853,27 +833,6 @@ function renderUsers(){
     document.getElementById("redTotalDebit").innerText = "₹ " + redTotalDebit.toLocaleString();
     document.getElementById("redTotalBalance").innerText = "₹ " + redTotalBalance.toLocaleString();
 
-    let filteredUsers = users.filter(u => u.name.toLowerCase().includes(search) || (u.mobile && u.mobile.includes(search)));
-    filteredUsers.sort((a,b)=> isRed(b) - isRed(a));
-
-    filteredUsers.forEach((u)=>{
-        let realIdx = users.indexOf(u);
-        let card = document.createElement("div");
-        card.className = "user-card" + (isRed(u) ? " redbg" : "");
-        card.onclick = () => openUser(realIdx);
-        
-        card.innerHTML = `
-            <div class="row">
-                <div>
-                    <b style="font-size:18px; color:#ffffff;">${u.name}</b><br>
-                    <small style="font-size:13px; color:#bbb;">${u.mobile || 'No Mobile'}</small>
-                </div>
-                <div style="font-weight:bold; font-size:18px; color:var(--gold);">₹ ${getBalance(u).toLocaleString()}</div>
-            </div>
-        `;
-        listDiv.appendChild(card);
-    });
-
     let filteredGeneral = generalEntries.filter(ge => ge.desc.toLowerCase().includes(search) || ge.date.includes(search));
     filteredGeneral.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -885,34 +844,82 @@ function renderUsers(){
             card.className = "user-card general-row";
             
             setupLongPress(card, function() {
-                openActionPopup("General Entry: " + ge.desc, () => editGeneralTransaction(realGeIdx), () => deleteGeneralTransaction(realGeIdx));
+                openActionPopup("General Entry: " + ge.desc, () => editGeneralTransaction(realGeIdx), () => deleteGeneralTransaction(realGeIdx), false);
             });
 
             let amtDisplay = Number(ge.credit) > 0 ? `+ ₹${Number(ge.credit).toLocaleString()}` : `- ₹${Number(ge.debit).toLocaleString()}`;
-            let colorStyle = Number(ge.credit) > 0 ? "color:#00ff66;" : "color:#ff3333;";
+            let colorStyle = Number(ge.credit) > 0 ? "color:var(--premium-green);" : "color:var(--premium-red);";
 
             card.innerHTML = `
                 <div class="row">
-                    <div>
-                        <b style="font-size:17px;">${ge.desc}</b><br>
-                        <small style="color:#aaa;">${formatDate(ge.date)}</small>
-                    </div>
+                    <div><b style="font-size:17px;">${ge.desc}</b><br><small style="color:#aaa;">${formatDate(ge.date)}</small></div>
                     <div style="font-weight:bold; font-size:17px; ${colorStyle}">${amtDisplay}</div>
-                </div>
-            `;
+                </div>`;
             genListDiv.appendChild(card);
         });
     } else {
         document.getElementById("generalSectionTitle").style.display = "none";
     }
-
     applySavedToggleSettings();
 }
 
+// SCREEN 6: USER LIST தனி திரை லோடு செய்யும் வசதி
+function renderUserListOnly() {
+    const search = document.getElementById("userListSearch").value.toLowerCase();
+    const listDiv = document.getElementById("explicitUserList");
+    listDiv.innerHTML = "";
+
+    let filteredUsers = users.filter(u => u.name.toLowerCase().includes(search) || (u.mobile && u.mobile.includes(search)));
+    filteredUsers.sort((a,b)=> isRed(b) - isRed(a));
+
+    filteredUsers.forEach((u)=>{
+        let realIdx = users.indexOf(u);
+        let card = document.createElement("div");
+        card.className = "user-card" + (isRed(u) ? " redbg" : "");
+        
+        card.onclick = () => openUser(realIdx);
+        
+        // யூசர் ஃபோல்டரையே முழுமையாக நீக்க லாங் பிரஸ் செய்யும் வசதி
+        setupLongPress(card, function() {
+            openActionPopup("User Folder: " + u.name, null, null, true, () => deleteUserFolderCompletely(realIdx));
+        });
+        
+        card.innerHTML = `
+            <div class="row">
+                <div>
+                    <b style="font-size:18px; color:#ffffff;">${u.name}</b><br>
+                    <small style="font-size:13px; color:#bbb;">${u.mobile || 'No Mobile'}</small>
+                </div>
+                <div style="font-weight:bold; font-size:18px; color:var(--gold);">₹ ${getBalance(u).toLocaleString()}</div>
+            </div>`;
+        listDiv.appendChild(card);
+    });
+}
+
+function openUserListScreen() {
+    document.getElementById("mainScreen").classList.add("hidden");
+    document.getElementById("userListScreen").classList.remove("hidden");
+    document.getElementById("userListSearch").value = "";
+    renderUserListOnly();
+}
+
+function closeUserListScreen() {
+    document.getElementById("userListScreen").classList.add("hidden");
+    document.getElementById("mainScreen").classList.remove("hidden");
+    renderDashboardOnly();
+}
+
+function deleteUserFolderCompletely(realIdx) {
+    closeActionPopup();
+    if(confirm(`Are you absolutely sure you want to DELETE "${users[realIdx].name}" and all their history?`)) {
+        users.splice(realIdx, 1);
+        saveLocal();
+        renderUserListOnly();
+    }
+}
+
 function setupLongPress(element, callback) {
-    element.addEventListener('touchstart', function(e) {
-        pressTimer = window.setTimeout(function() { callback(); }, 600);
-    }, {passive: true});
+    element.addEventListener('touchstart', function(e) { pressTimer = window.setTimeout(function() { callback(); }, 600); }, {passive: true});
     element.addEventListener('touchend', function(e) { if (pressTimer) clearTimeout(pressTimer); }, {passive: true});
     element.addEventListener('mousedown', function(e) { pressTimer = window.setTimeout(function() { callback(); }, 600); });
     element.addEventListener('mouseup', function(e) { if (pressTimer) clearTimeout(pressTimer); });
@@ -920,33 +927,28 @@ function setupLongPress(element, callback) {
 
 function openUser(i){
     currentUser = i;
+    document.getElementById("userListScreen").classList.add("hidden");
     document.getElementById("mainScreen").classList.add("hidden");
     document.getElementById("userScreen").classList.remove("hidden");
     renderTransactions();
-    
-    const balElement = document.getElementById("profBalance");
-    setupLongPress(balElement, function() { openSharePopup(); });
+    setupLongPress(document.getElementById("profBalance"), function() { openSharePopup(); });
 }
 
-// யூசர் ஃபோல்டருக்குள் இருக்கும் பிளஸ் நியூ என்ட்ரி பட்டன் செயல்பாடு
 function openUserFolderPlusEntry() {
     folderPlusMode = true; 
     document.getElementById("entryFormTitle").innerText = "New Entry -> " + users[currentUser].name;
     document.getElementById("targetUserSelectionArea").style.display = "none";
-    
     document.getElementById("tDate").value = new Date().toISOString().split("T")[0];
-    document.getElementById("tDesc").value = "";
-    document.getElementById("tCredit").value = "";
-    document.getElementById("tDebit").value = "";
+    document.getElementById("tDesc").value = ""; document.getElementById("tCredit").value = ""; document.getElementById("tDebit").value = "";
     editIndex = null;
     document.getElementById("entryPopup").style.display = "flex";
 }
 
 function goBack(){
-    document.getElementById("mainScreen").classList.remove("hidden");
     document.getElementById("userScreen").classList.add("hidden");
+    document.getElementById("userListScreen").classList.remove("hidden");
     currentUser = null;
-    renderUsers();
+    renderUserListOnly();
 }
 
 function openGlobalEntryForm() {
@@ -956,38 +958,15 @@ function openGlobalEntryForm() {
     
     const selectEl = document.getElementById("tUserSelect");
     selectEl.innerHTML = `<option value="general">General (பொதுவான என்ட்ரி)</option>`;
-    users.forEach(u => {
-        selectEl.innerHTML += `<option value="${users.indexOf(u)}">${u.name}</option>`;
-    });
+    users.forEach(u => { selectEl.innerHTML += `<option value="${users.indexOf(u)}">${u.name}</option>`; });
 
     document.getElementById("tDate").value = new Date().toISOString().split("T")[0];
-    document.getElementById("tDesc").value = "";
-    document.getElementById("tCredit").value = "";
-    document.getElementById("tDebit").value = "";
+    document.getElementById("tDesc").value = ""; document.getElementById("tCredit").value = ""; document.getElementById("tDebit").value = "";
     editIndex = null;
     document.getElementById("entryPopup").style.display = "flex";
 }
 
 function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; isEditingGeneral = false; folderPlusMode = false;}
-
-function triggerRedFlagButton() {
-    let d = document.getElementById("tDate").value;
-    if(!d) return alert("R Line requires a valid Date!");
-
-    let uIdx = folderPlusMode ? currentUser : document.getElementById("tUserSelect").value;
-    if(uIdx === "general") {
-        alert("R flag can only be used on Users, not general entries!");
-        return;
-    }
-    
-    let targetIndex = parseInt(uIdx);
-    users[targetIndex].isForcedRed = true;
-    users[targetIndex].transactions.push({ date: d, desc: "R SAVE ACTIVATE", credit: "", debit: "" });
-    
-    saveLocal();
-    closeEntryForm();
-    if(currentUser !== null) { renderTransactions(); } else { renderUsers(); }
-}
 
 function saveTransaction(){
     let d = document.getElementById("tDate").value, desc = document.getElementById("tDesc").value;
@@ -996,7 +975,6 @@ function saveTransaction(){
 
     if(editIndex === null) {
         if(folderPlusMode) {
-            users[currentUser].isForcedRed = false;
             users[currentUser].transactions.push({ date: d, desc: desc, credit: c, debit: deb });
         } else {
             const target = document.getElementById("tUserSelect").value;
@@ -1004,7 +982,6 @@ function saveTransaction(){
                 generalEntries.push({ date: d, desc: desc, credit: c, debit: deb });
             } else {
                 let uIdx = parseInt(target);
-                users[uIdx].isForcedRed = false; 
                 users[uIdx].transactions.push({ date: d, desc: desc, credit: c, debit: deb });
             }
         }
@@ -1018,7 +995,7 @@ function saveTransaction(){
 
     saveLocal();
     closeEntryForm();
-    if(currentUser !== null) { renderTransactions(); } else { renderUsers(); }
+    if(currentUser !== null) { renderTransactions(); } else { renderDashboardOnly(); }
 }
 
 function renderTransactions(){
@@ -1034,13 +1011,13 @@ function renderTransactions(){
     
     let curBal = 0, display = [];
     u.transactions.forEach((tx, originalIndex) => {
-        let isNote = (!Number(tx.credit) && !Number(tx.debit));
+        let isNote = (!tx.credit && !tx.debit);
         if(!isNote) curBal += (Number(tx.credit||0) - Number(tx.debit||0));
         display.push({ ...tx, cumulative: isNote ? "" : curBal, actualIdx: originalIndex });
     });
 
     display.reverse();
-    let sliceDisplay = display.slice(0, 11); // 11 வரிகள் கட்டுப்பாடு
+    let sliceDisplay = display.slice(0, 11);
 
     sliceDisplay.forEach((tx) => {
         let row = document.createElement("tr");
@@ -1049,7 +1026,7 @@ function renderTransactions(){
         else row.className = "pending-row";
 
         setupLongPress(row, function() {
-            openActionPopup("History: " + tx.desc, () => editTransaction(tx.actualIdx), () => deleteTransaction(tx.actualIdx));
+            openActionPopup("History: " + tx.desc, () => editTransaction(tx.actualIdx), () => deleteTransaction(tx.actualIdx), false);
         });
 
         row.innerHTML = `<td>${formatDate(tx.date)}</td>
@@ -1061,29 +1038,19 @@ function renderTransactions(){
     });
 }
 
-/* SCREEN 5: மொத்த டிரான்ஸாக்ஷன் திரை மேலாண்மை (All Transactions) */
 function openAllTransactionsScreen() {
     document.getElementById("mainScreen").classList.add("hidden");
     document.getElementById("allTransactionsScreen").classList.remove("hidden");
     
     const tableBody = document.getElementById("allTransactionsTableBody");
     tableBody.innerHTML = "";
-    
     let combinedList = [];
     
     users.forEach(u => {
-        if(u.transactions) {
-            u.transactions.forEach(tx => {
-                combinedList.push({ ...tx, origin: u.name });
-            });
-        }
+        if(u.transactions) { u.transactions.forEach(tx => { combinedList.push({ ...tx, origin: u.name }); }); }
     });
+    generalEntries.forEach(ge => { combinedList.push({ ...ge, origin: "General Entry" }); });
     
-    generalEntries.forEach(ge => {
-        combinedList.push({ ...ge, origin: "General Entry" });
-    });
-    
-    // புதிய தேதிகள் முதலில் வரும்படி அடுக்குதல்
     combinedList.sort((a,b) => new Date(b.date) - new Date(a.date));
     
     combinedList.forEach(tx => {
@@ -1104,14 +1071,12 @@ function openAllTransactionsScreen() {
 function closeAllTransactionsScreen() {
     document.getElementById("allTransactionsScreen").classList.add("hidden");
     document.getElementById("mainScreen").classList.remove("hidden");
-    renderUsers();
+    renderDashboardOnly();
 }
 
 function editTransaction(i) {
     let tx = users[currentUser].transactions[i];
-    folderPlusMode = true; 
-    isEditingGeneral = false;
-    
+    folderPlusMode = true; isEditingGeneral = false;
     document.getElementById("targetUserSelectionArea").style.display = "none";
     document.getElementById("entryFormTitle").innerText = "Edit Entry";
     document.getElementById("tDate").value = tx.date;
@@ -1126,21 +1091,15 @@ function editTransaction(i) {
 function deleteTransaction(i){ 
     closeActionPopup();
     if(confirm("Delete this entry?")){ 
-        users[currentUser].transactions.splice(i,1); 
-        saveLocal(); 
-        renderTransactions(); 
+        users[currentUser].transactions.splice(i,1); saveLocal(); renderTransactions(); 
     } 
 }
 
 function editGeneralTransaction(i) {
     let tx = generalEntries[i];
-    folderPlusMode = false;
-    isEditingGeneral = true;
-    
+    folderPlusMode = false; isEditingGeneral = true;
     document.getElementById("targetUserSelectionArea").style.display = "block";
-    const selectEl = document.getElementById("tUserSelect");
-    selectEl.innerHTML = `<option value="general">General (பொதுவான என்ட்ரி)</option>`;
-    
+    document.getElementById("tUserSelect").innerHTML = `<option value="general">General (பொதுவான என்ட்ரி)</option>`;
     document.getElementById("entryFormTitle").innerText = "Edit General Entry";
     document.getElementById("tDate").value = tx.date;
     document.getElementById("tDesc").value = tx.desc || "";
@@ -1154,118 +1113,82 @@ function editGeneralTransaction(i) {
 function deleteGeneralTransaction(i) {
     closeActionPopup();
     if(confirm("Delete this general entry?")){ 
-        generalEntries.splice(i,1); 
-        saveLocal(); 
-        renderUsers(); 
+        generalEntries.splice(i,1); saveLocal(); renderDashboardOnly(); 
     } 
 }
 
 function addUser(){
     let n=prompt("Name:"), m=prompt("Mobile:");
-    if(n){ users.push({name:n,mobile:m,transactions:[], isForcedRed: false}); saveLocal(); renderUsers(); }
+    if(n){ users.push({name:n,mobile:m,transactions:[]}); saveLocal(); renderDashboardOnly(); }
 }
 
-function openActionPopup(title, onEdit, onDelete) {
+function openActionPopup(title, onEdit, onDelete, isUserMode, onDeleteUser) {
     document.getElementById("popupTitle").innerText = title;
     document.getElementById("actionPopup").style.display = "flex";
-    document.getElementById("editBtn").onclick = onEdit;
-    document.getElementById("deleteBtn").onclick = onDelete;
+    
+    if(isUserMode) {
+        document.getElementById("editBtn").style.display = "none";
+        document.getElementById("deleteBtn").style.display = "none";
+        document.getElementById("deleteUserBtn").style.display = "block";
+        document.getElementById("deleteUserBtn").onclick = onDeleteUser;
+    } else {
+        document.getElementById("editBtn").style.display = "block";
+        document.getElementById("deleteBtn").style.display = "block";
+        document.getElementById("deleteUserBtn").style.display = "none";
+        document.getElementById("editBtn").onclick = onEdit;
+        document.getElementById("deleteBtn").onclick = onDelete;
+    }
 }
 function closeActionPopup() { document.getElementById("actionPopup").style.display = "none"; }
-
 function openSharePopup() { document.getElementById("sharePopup").style.display = "flex"; }
 function closeSharePopup() { document.getElementById("sharePopup").style.display = "none"; }
 
 function sendWhatsAppMessage() {
     let u = users[currentUser];
-    let name = u.name;
-    let mobile = u.mobile || "";
-    let credit = getUserTotalCredit(u).toLocaleString();
-    let debit = getUserTotalDebit(u).toLocaleString();
-    let balance = getBalance(u).toLocaleString();
-    
-    if(!mobile) {
-        alert("மொபைல் எண் இல்லை!");
-        return;
-    }
-
-    let text = `*STATEMENT OF ACCOUNT*%0A%0A` +
-               `👤 *Name:* ${name}%0A` +
-               ` green *Total Credit:* ₹${credit}%0A` +
-               ` red *Total Debit:* ₹${debit}%0A` +
-               `📊 *Total Balance:* ₹${balance}%0A%0A` +
-               `_Generated via Finance Pro_`;
-               
-    let url = `https://api.whatsapp.com/send?phone=${mobile}&text=${text}`;
-    window.open(url, '_blank');
+    if(!u.mobile) return alert("மொபைல் எண் இல்லை!");
+    let text = `*STATEMENT OF ACCOUNT*%0A%0A👤 *Name:* ${u.name}%0A📊 *Total Balance:* ₹${getBalance(u).toLocaleString()}`;
+    window.open(`https://api.whatsapp.com/send?phone=${u.mobile}&text=${text}`, '_blank');
     closeSharePopup();
 }
 
 function generatePdfStatement() {
     let u = users[currentUser];
-    
     document.getElementById("pdfNameField").innerText = "Name: " + u.name;
     document.getElementById("pdfMobileField").innerText = "Mobile: " + (u.mobile || "No Mobile");
     document.getElementById("pdfBalanceField").innerText = "Final Balance: ₹" + getBalance(u).toLocaleString();
     
     const pdfBody = document.getElementById("pdfTableBody");
     pdfBody.innerHTML = "";
-    
     let curBal = 0;
     u.transactions.forEach((tx) => {
-        let isNote = (!Number(tx.credit) && !Number(tx.debit));
+        let isNote = (!tx.credit && !tx.debit);
         if(!isNote) curBal += (Number(tx.credit||0) - Number(tx.debit||0));
-        
         let row = document.createElement("tr");
-        row.innerHTML = `<td>${formatDate(tx.date)}</td>
-                         <td>${tx.desc || ''}</td>
-                         <td style="color:#25D366;">${tx.credit || ''}</td>
-                         <td style="color:#ff3333;">${tx.debit || ''}</td>
-                         <td><b>${isNote ? "" : "₹" + curBal.toLocaleString()}</b></td>`;
+        row.innerHTML = `<td>${formatDate(tx.date)}</td><td>${tx.desc || ''}</td><td>${tx.credit || ''}</td><td>${tx.debit || ''}</td><td><b>${isNote ? "" : "₹" + curBal.toLocaleString()}</b></td>`;
         pdfBody.appendChild(row);
     });
 
-    const element = document.getElementById("pdfTemplate");
-    const opt = {
-        margin:       10,
-        filename:     `${u.name}_Statement.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, backgroundColor: '#000000' },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-    
     showLoading(true);
-    html2pdf().set(opt).from(element).save().then(() => {
-        showLoading(false);
-        closeSharePopup();
+    html2pdf().set({ margin: 10, filename: `${u.name}_Statement.pdf`, html2canvas: { scale: 2, backgroundColor: '#000000' }, jsPDF: { format: 'a4', orientation: 'portrait' } }).from(document.getElementById("pdfTemplate")).save().then(() => {
+        showLoading(false); closeSharePopup();
     });
 }
 
 function openSettings() {
     document.getElementById("mainScreen").classList.add("hidden");
     document.getElementById("settingsScreen").classList.remove("hidden");
-    
-    let config = JSON.parse(localStorage.getItem("dashboardToggleConfig")) || {};
-    const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
-    keys.forEach(k => {
-        if(config[k] !== undefined) {
-            document.getElementById("switch_" + k).checked = config[k];
-        }
-    });
 }
 
 function closeSettings() {
     document.getElementById("settingsScreen").classList.add("hidden");
     document.getElementById("mainScreen").classList.remove("hidden");
-    renderUsers();
+    renderDashboardOnly();
 }
 
 function toggleBoxVisibility() {
     let config = {};
     const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
-    keys.forEach(k => {
-        config[k] = document.getElementById("switch_" + k).checked;
-    });
+    keys.forEach(k => { config[k] = document.getElementById("switch_" + k).checked; });
     localStorage.setItem("dashboardToggleConfig", JSON.stringify(config));
     applySavedToggleSettings();
 }
@@ -1274,20 +1197,17 @@ function applySavedToggleSettings() {
     let config = JSON.parse(localStorage.getItem("dashboardToggleConfig")) || {};
     const keys = ['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance', 'redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'];
     
-    let generalActiveCount = 0;
-    let redActiveCount = 0;
+    let generalActiveCount = 0; let redActiveCount = 0;
 
     keys.forEach(k => {
-        let isChecked = config[k] !== undefined ? config[k] : true;
+        let isChecked = config[k] !== undefined ? config[k] : false; // ஆரம்பத்தில் அனைத்தும் OFF ஆக்கப்பட்டுள்ளது
         let boxElement = document.getElementById("box_" + k);
         if(boxElement) {
             if(isChecked) {
                 boxElement.style.display = "block";
                 if(['totalUsers', 'totalCredit', 'totalDebit', 'totalBalance'].includes(k)) generalActiveCount++;
                 if(['redUsersCount', 'redTotalCredit', 'redTotalDebit', 'redTotalBalance'].includes(k)) redActiveCount++;
-            } else {
-                boxElement.style.display = "none";
-            }
+            } else { boxElement.style.display = "none"; }
         }
     });
 
@@ -1298,18 +1218,10 @@ function applySavedToggleSettings() {
 }
 
 function changeFontSize(size) {
-    if(size === 'large') { document.documentElement.style.setProperty('--font-multiplier', '1.25'); } 
-    else { document.documentElement.style.setProperty('--font-multiplier', '1.0'); }
+    document.documentElement.style.setProperty('--font-multiplier', size === 'large' ? '1.25' : '1.0');
 }
 
-function changeFontWeight(weight) {
-    if(weight === 'bold') { document.documentElement.style.setProperty('--font-weight-custom', 'bold'); } 
-    else { document.documentElement.style.setProperty('--font-weight-custom', 'normal'); }
-}
-
-window.onload = function() {
-    renderUsers();
-};
+window.onload = function() { renderDashboardOnly(); };
 </script>
 </body>
 </html>
