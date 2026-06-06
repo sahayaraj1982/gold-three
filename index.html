@@ -468,14 +468,16 @@ function getBalance(u){
     return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
 }
 
-// கிரெடிட் அல்லது டெபிட்டில் 00 என்று கொடுத்தால் கூட சிவப்பு நிறம் வராது. வெற்றுப் பதிவாக (Empty String) இருந்தால் மட்டுமே சிவப்பு நிறம் வரும்.
 function isRed(u) {
     if (!u.transactions || u.transactions.length === 0) return false;
-    let today = new Date().toISOString().split("T")[0];
+    let today = new Date();
+    let offset = today.getTimezoneOffset();
+    let localTodayStr = new Date(today.getTime() - (offset * 60 * 1000)).toISOString().split("T")[0];
+    
     return u.transactions.some(t => {
         let hasNoCredit = (t.credit === null || t.credit === undefined || String(t.credit).trim() === "");
         let hasNoDebit = (t.debit === null || t.debit === undefined || String(t.debit).trim() === "");
-        return t.date <= today && hasNoCredit && hasNoDebit;
+        return t.date <= localTodayStr && hasNoCredit && hasNoDebit;
     });
 }
 
@@ -581,8 +583,13 @@ function goBack(){
     renderUsers();
 }
 
+// ஆப்ஸிற்குள் புதிய தேதி துல்லியமான இந்திய நேரப்படி (IST) விழச் செய்ய மாற்றப்பட்ட பகுதி
 function openEntryForm(){ 
-    document.getElementById("tDate").value = new Date().toISOString().split("T")[0];
+    let today = new Date();
+    let offset = today.getTimezoneOffset();
+    today = new Date(today.getTime() - (offset * 60 * 1000));
+    
+    document.getElementById("tDate").value = today.toISOString().split("T")[0];
     document.getElementById("tDesc").value = "";
     document.getElementById("tCredit").value = "";
     document.getElementById("tDebit").value = "";
@@ -591,6 +598,7 @@ function openEntryForm(){
 }
 function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; }
 
+// டபுள் என்ட்ரி விழுவதைத் தடுக்க மாற்றியமைக்கப்பட்ட பகுதி
 async function saveTransaction(){
     let d = document.getElementById("tDate").value, desc = document.getElementById("tDesc").value;
     let c = document.getElementById("tCredit").value, deb = document.getElementById("tDebit").value;
@@ -605,8 +613,8 @@ async function saveTransaction(){
     }
 
     closeEntryForm();
-    await saveToCloudOnly();
-    renderTransactions();
+    renderTransactions(); // முதலில் லோக்கலாக UI-ஐ ரெண்டர் செய்கிறது
+    await saveToCloudOnly(); // அதன் பின் கூகுள் சீட்டில் நிதானமாகச் சேமிக்கிறது (டபுள் என்ட்ரி பிழை வராது)
 }
 
 function renderTransactions(){
@@ -653,7 +661,13 @@ function closeTxActionPopup() { document.getElementById("txActionPopup").style.d
 
 function editTransaction(i){
     let tx = users[currentUser].transactions[i];
-    document.getElementById("tDate").value = tx.date;
+    
+    // எடிட் செய்யும் போதும் துல்லியமான தேதியை உள்ளீடு பாக்ஸிற்குள் கொண்டு வர
+    let cleanDate = tx.date;
+    if(cleanDate.includes("T")) {
+        cleanDate = cleanDate.split("T")[0];
+    }
+    document.getElementById("tDate").value = cleanDate;
     document.getElementById("tDesc").value = tx.desc || "";
     document.getElementById("tCredit").value = tx.credit;
     document.getElementById("tDebit").value = tx.debit;
@@ -664,8 +678,8 @@ function editTransaction(i){
 async function deleteTransaction(i){ 
     if(confirm("இந்த எண்ட்ரியை நீக்கவா?")){ 
         users[currentUser].transactions.splice(i,1); 
-        await saveToCloudOnly(); 
         renderTransactions(); 
+        await saveToCloudOnly(); 
     } 
 }
 
@@ -673,8 +687,8 @@ async function addUser(){
     let n=prompt("Name:"), m=prompt("Mobile:");
     if(n){ 
         users.push({name:n,mobile:m,transactions:[]}); 
+        renderUsers();
         await saveToCloudOnly(); 
-        renderUsers(); 
     }
 }
 async function editUser(i){
@@ -683,15 +697,15 @@ async function editUser(i){
     if(newName !== null && newName.trim() !== "") users[i].name = newName;
     if(newMobile !== null) users[i].mobile = newMobile;
     closeActionPopup();
-    await saveToCloudOnly(); 
     renderUsers();
+    await saveToCloudOnly(); 
 }
 async function deleteUser(i){ 
     if(confirm("இந்த யூசரை ஆப்பிலிருந்து நிரந்தரமாக நீக்கவா?")){ 
         users.splice(i,1); 
         closeActionPopup(); 
-        await saveToCloudOnly(); 
         renderUsers(); 
+        await saveToCloudOnly(); 
     } 
 }
 
@@ -745,8 +759,8 @@ async function importData(event){
     let r=new FileReader();
     r.onload=async function(e){ 
         users=JSON.parse(e.target.result); 
-        await saveToCloudOnly(); 
         renderUsers(); 
+        await saveToCloudOnly(); 
     };
     r.readAsText(f);
 }
