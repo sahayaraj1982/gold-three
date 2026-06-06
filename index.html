@@ -86,28 +86,6 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
 }
 .gold{background: var(--theme-color); color:#111;}
 
-.storage-setting-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-top: 5px;
-}
-.storage-btn {
-    padding: 10px;
-    border: 1px solid #444;
-    background: #333;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.storage-btn.active-storage {
-    background: #1f7a1f;
-    border-color: #00ff00;
-    color: white;
-}
-
 .user-card{width:calc(100% - 20px);margin:10px auto;padding:15px;border-radius:15px;background:#222;cursor:pointer;border: 1px solid #333;box-sizing: border-box; position: relative;}
 .user-card.redbg{background:linear-gradient(145deg, #8b0000, #5a0000); border-color: #ff4444;}
 .row{display:flex;justify-content:space-between; align-items:center; font-size: var(--app-font-size); padding-right: 35px;}
@@ -169,7 +147,7 @@ input:checked + .slider:before { transform: translateX(22px); }
     <header>
         <span id="headerTitleText">Finance Manager Pro</span>
         <div class="indicator-container">
-            <div id="ledLight" class="g-led">G</div>
+            <div id="ledLight" class="g-led connected">G</div>
         </div>
     </header>
 
@@ -249,14 +227,6 @@ input:checked + .slider:before { transform: translateX(22px); }
                 <option value="normal">Normal (லேசான எழுத்து)</option>
                 <option value="bold">Bold (கனமான எழுத்து)</option>
             </select>
-        </div>
-
-        <div style="text-align:left; margin-bottom:15px;">
-            <label style="font-size:14px; color:#aaa;">டேட்டா சேமிப்பு முறை (Storage Mode):</label>
-            <div class="storage-setting-container">
-                <button id="popBtnLocal" class="storage-btn" onclick="switchStorageMode('local')">📱 Local</button>
-                <button id="popBtnGSheet" class="storage-btn" onclick="switchStorageMode('cloud')">📊 G-Sheet</button>
-            </div>
         </div>
 
         <div style="text-align:left; margin-bottom:15px;">
@@ -352,29 +322,16 @@ let appConfig = JSON.parse(localStorage.getItem("financeConfig")) || {
     fontWeight: "normal",
     color: "#ffd700",
     showDash: true,
-    showSearch: true,
-    storageMode: "local"
+    showSearch: true
 };
 
 let currentUser = null;
 let editIndex = null;
 
-// லோடிங் காட்டும் வசதி
 function showLoading(show) {
     document.getElementById("loading").style.display = show ? "block" : "none";
 }
 
-// LED லைட் நிலையை அப்டேட் செய்யும் வசதி
-function updateLedStatus() {
-    const light = document.getElementById("ledLight");
-    if(appConfig.storageMode === "cloud" && CLOUD_URL && CLOUD_URL.trim() !== "") {
-        light.classList.add("connected");
-    } else {
-        light.classList.remove("connected");
-    }
-}
-
-// ஆரம்ப கட்ட செட்டிங்ஸ் அமைப்பு
 function initConfig() {
     document.getElementById("setAppTitle").value = appConfig.title;
     document.getElementById("setAppWidth").value = appConfig.width;
@@ -385,16 +342,13 @@ function initConfig() {
     document.getElementById("switchDash").checked = appConfig.showDash;
     document.getElementById("switchSearch").checked = appConfig.showSearch;
     applyConfigUI();
-    updateStorageButtonsUI();
 }
 
-// முன்பே அமைக்கப்பட்ட வண்ணங்களை மாற்றுவது
 function setPresetColor(colorCode) {
     document.getElementById("setThemeColor").value = colorCode;
     applySettings();
 }
 
-// செட்டிங்ஸை சேமிப்பது
 function applySettings() {
     appConfig.title = document.getElementById("setAppTitle").value || "Finance Manager Pro";
     appConfig.width = document.getElementById("setAppWidth").value;
@@ -409,7 +363,6 @@ function applySettings() {
     applyConfigUI();
 }
 
-// ஸ்கிரீன் அளவுகளை மாற்றுவது
 function applyConfigUI() {
     document.getElementById("headerTitleText").innerText = appConfig.title;
     document.getElementById("widthVal").innerText = appConfig.width;
@@ -432,105 +385,63 @@ function applyConfigUI() {
     document.getElementById("searchBoxWrapper").style.display = appConfig.showSearch ? "block" : "none";
 }
 
-// சேமிப்பு முறையை மாற்றுவது (Local / Cloud)
-function switchStorageMode(mode) {
-    appConfig.storageMode = mode;
-    localStorage.setItem("financeConfig", JSON.stringify(appConfig));
-    updateStorageButtonsUI();
-    updateLedStatus();
-    loadDataBasedOnMode();
-}
-
-function updateStorageButtonsUI() {
-    let mode = appConfig.storageMode || "local";
-    document.getElementById("popBtnLocal").classList.remove("active-storage");
-    document.getElementById("popBtnGSheet").classList.remove("active-storage");
-    
-    if(mode === "cloud") {
-        document.getElementById("popBtnGSheet").classList.add("active-storage");
-    } else {
-        document.getElementById("popBtnLocal").classList.add("active-storage");
-    }
-}
-
-function loadDataBasedOnMode() {
-    if(appConfig.storageMode === "cloud") {
-        fetchFromCloud();
-    } else {
-        users = JSON.parse(localStorage.getItem("financeUsers")) || [];
-        renderUsers();
-    }
-}
-
 function openSettingsPopup() { document.getElementById("settingsPopup").style.display = "flex"; }
 function closeSettingsPopup() { document.getElementById("settingsPopup").style.display = "none"; }
 
-async function saveLocal(){ 
-    localStorage.setItem("financeUsers", JSON.stringify(users)); 
-    if(appConfig.storageMode === "cloud" && CLOUD_URL) {
-        showLoading(true);
-        try {
-            await fetch(CLOUD_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "data=" + encodeURIComponent(JSON.stringify(users))
-            });
-        } catch(e) { console.error(e); }
-        showLoading(false);
-    }
+async function saveToCloudOnly(){ 
+    showLoading(true);
+    try {
+        await fetch(CLOUD_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "data=" + encodeURIComponent(JSON.stringify(users))
+        });
+    } catch(e) { console.error(e); }
+    showLoading(false);
 }
 
 async function fetchFromCloud() {
-    if(!CLOUD_URL || appConfig.storageMode !== "cloud") return;
     showLoading(true);
     try {
         let res = await fetch(CLOUD_URL);
         let cloudData = await res.json();
-        if(cloudData && cloudData.length > 0) {
+        if(cloudData && Array.isArray(cloudData)) {
             users = cloudData;
-            localStorage.setItem("financeUsers", JSON.stringify(users));
             renderUsers();
         }
     } catch(e) { console.error(e); }
     showLoading(false);
 }
 
-// தேதி வடிவத்தை 1-5-26 அல்லது 5-6-26 என மாற்றும் மிக முக்கிய பகுதி
 function formatDate(d){ 
     if(!d) return ""; 
     let dateStr = String(d).trim();
     
-    // புதிய வடிவம்: 2026-5-T1 அல்லது 2026-05-T1 என வந்தால்
     if (dateStr.includes('-T') || (dateStr.includes('-') && dateStr.toUpperCase().includes('T'))) {
-        // முதலில் T என்ற எழுத்துக்குப் பின் இருக்கும் பகுதியை மட்டும் தனியாக எடுக்கவும்
         let upperStr = dateStr.toUpperCase();
         let tIndex = upperStr.indexOf('T');
-        let datePart = dateStr.substring(0, tIndex); // "2026-5-"
-        let dayPart = dateStr.substring(tIndex + 1);  // "1" அல்லது "18:30:00..."
+        let datePart = dateStr.substring(0, tIndex);
+        let dayPart = dateStr.substring(tIndex + 1);
         
-        // ஒருவேளை முழு ISO நேரமாக இருந்தால் வெறும் நாளை மட்டும் பிரிக்க
         if(dayPart.includes(':')) {
             dayPart = dayPart.split(':')[0];
-            // முந்தைய எண்களை மட்டும் எடுக்க (உம்: 29T18...)
             let cleanPart = dateStr.split('T')[0];
             if(cleanPart.includes('-')) {
                 let p = cleanPart.split('-');
-                // ஒருவேளை தலைகீழாக இருந்தால் சரிசெய்ய
                 if(p[0].length === 4) return `${parseInt(p[2],10)}-${parseInt(p[1],10)}-${p[0].substring(2,4)}`;
             }
         }
         
         let parts = datePart.split('-');
         if(parts.length >= 2) {
-            let year = parts[0].substring(2, 4); // "26"
-            let month = parseInt(parts[1], 10); // "5"
-            let day = parseInt(dayPart, 10);   // "1"
+            let year = parts[0].substring(2, 4);
+            let month = parseInt(parts[1], 10);
+            let day = parseInt(dayPart, 10);
             return `${day}-${month}-${year}`;
         }
     }
     
-    // முந்தைய பழைய நீண்ட ISO Format (29T18:30:00.000Z-05-2026) ஆக இருந்தால்
     if (dateStr.includes('T') && dateStr.includes('-')) {
         let parts = dateStr.split('-');
         if (parts.length === 3) {
@@ -541,12 +452,11 @@ function formatDate(d){
         }
     }
     
-    // சாதாரண வடிவமாக (2026-06-05) இருந்தால்
     if (dateStr.includes('-')) {
         let parts = dateStr.split("-");
-        if (parts[0].length === 4) { // YYYY-MM-DD
+        if (parts[0].length === 4) {
             return `${parseInt(parts[2], 10)}-${parseInt(parts[1], 10)}-${parts[0].substring(2, 4)}`;
-        } else if (parts[2].length === 4) { // DD-MM-YYYY
+        } else if (parts[2].length === 4) {
             return `${parseInt(parts[0], 10)}-${parseInt(parts[1], 10)}-${parts[2].substring(2, 4)}`;
         }
     }
@@ -558,10 +468,15 @@ function getBalance(u){
     return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
 }
 
+// கிரெடிட் அல்லது டெபிட்டில் 00 என்று கொடுத்தால் கூட சிவப்பு நிறம் வராது. வெற்றுப் பதிவாக (Empty String) இருந்தால் மட்டுமே சிவப்பு நிறம் வரும்.
 function isRed(u) {
     if (!u.transactions || u.transactions.length === 0) return false;
     let today = new Date().toISOString().split("T")[0];
-    return u.transactions.some(t => t.date <= today && !Number(t.credit) && !Number(t.debit));
+    return u.transactions.some(t => {
+        let hasNoCredit = (t.credit === null || t.credit === undefined || String(t.credit).trim() === "");
+        let hasNoDebit = (t.debit === null || t.debit === undefined || String(t.debit).trim() === "");
+        return t.date <= today && hasNoCredit && hasNoDebit;
+    });
 }
 
 function getTenPercent(u) {
@@ -570,7 +485,6 @@ function getTenPercent(u) {
     return loan ? (Number(loan.debit) * 0.10) : 0;
 }
 
-// சரிசெய்யப்பட்ட மெயின் renderUsers ஃபங்க்ஷன் (சர்ச் பிழைகள் முழுமையாக நீக்கப்பட்டது)
 function renderUsers(){
     const searchInput = document.getElementById("userSearch");
     const search = searchInput ? searchInput.value.toLowerCase().trim() : "";
@@ -588,7 +502,6 @@ function renderUsers(){
     document.getElementById("redUsersCount").innerText = redCount;
     document.getElementById("tenPercentTotal").innerText = "₹ " + tenTotal.toLocaleString();
 
-    // மொபைல் எண்கள் மற்றும் பெயர்கள் String வடிவில் இருப்பதை உறுதி செய்து வடிகட்டுதல்
     let filtered = users.filter(u => {
         let nameMatch = u.name ? String(u.name).toLowerCase().includes(search) : false;
         let mobileMatch = u.mobile ? String(u.mobile).toLowerCase().includes(search) : false;
@@ -678,7 +591,7 @@ function openEntryForm(){
 }
 function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; }
 
-function saveTransaction(){
+async function saveTransaction(){
     let d = document.getElementById("tDate").value, desc = document.getElementById("tDesc").value;
     let c = document.getElementById("tCredit").value, deb = document.getElementById("tDebit").value;
     if(!d) return alert("Date is required!");
@@ -691,8 +604,8 @@ function saveTransaction(){
         editIndex = null; 
     }
 
-    saveLocal();
     closeEntryForm();
+    await saveToCloudOnly();
     renderTransactions();
 }
 
@@ -709,15 +622,15 @@ function renderTransactions(){
     
     let curBal = 0, display = [];
     u.transactions.forEach((tx, originalIndex) => {
-        let isNote = (!Number(tx.credit) && !Number(tx.debit));
+        let isNote = (String(tx.credit).trim() === "" && String(tx.debit).trim() === "");
         if(!isNote) curBal += (Number(tx.credit||0) - Number(tx.debit||0));
         display.push({ ...tx, cumulative: isNote ? "" : curBal, actualIdx: originalIndex });
     });
 
     display.reverse().forEach((tx) => {
         let row = document.createElement("tr");
-        if(Number(tx.credit) > 0) row.className = "credit-row";
-        else if(Number(tx.debit) > 0) row.className = "debit-row";
+        if(Number(tx.credit) > 0 || tx.credit === "0" || tx.credit === 0) row.className = "credit-row";
+        else if(Number(tx.debit) > 0 || tx.debit === "0" || tx.debit === 0) row.className = "debit-row";
         else row.className = "pending-row";
 
         row.innerHTML = `<td>${formatDate(tx.date)}</td>
@@ -742,37 +655,43 @@ function editTransaction(i){
     let tx = users[currentUser].transactions[i];
     document.getElementById("tDate").value = tx.date;
     document.getElementById("tDesc").value = tx.desc || "";
-    document.getElementById("tCredit").value = tx.credit || "";
-    document.getElementById("tDebit").value = tx.debit || "";
+    document.getElementById("tCredit").value = tx.credit;
+    document.getElementById("tDebit").value = tx.debit;
     editIndex = i;
     document.getElementById("entryPopup").style.display = "flex";
 }
 
-function deleteTransaction(i){ 
+async function deleteTransaction(i){ 
     if(confirm("இந்த எண்ட்ரியை நீக்கவா?")){ 
         users[currentUser].transactions.splice(i,1); 
-        saveLocal(); 
+        await saveToCloudOnly(); 
         renderTransactions(); 
     } 
 }
 
-function addUser(){
+async function addUser(){
     let n=prompt("Name:"), m=prompt("Mobile:");
-    if(n){ users.push({name:n,mobile:m,transactions:[]}); saveLocal(); renderUsers(); }
+    if(n){ 
+        users.push({name:n,mobile:m,transactions:[]}); 
+        await saveToCloudOnly(); 
+        renderUsers(); 
+    }
 }
-function editUser(i){
+async function editUser(i){
     let currentName = users[i].name; let currentMobile = users[i].mobile;
     let newName = prompt("Name:", currentName); let newMobile = prompt("Mobile:", currentMobile);
     if(newName !== null && newName.trim() !== "") users[i].name = newName;
     if(newMobile !== null) users[i].mobile = newMobile;
-    saveLocal(); closeActionPopup(); renderUsers();
+    closeActionPopup();
+    await saveToCloudOnly(); 
+    renderUsers();
 }
-function deleteUser(i){ 
+async function deleteUser(i){ 
     if(confirm("இந்த யூசரை ஆப்பிலிருந்து நிரந்தரமாக நீக்கவா?")){ 
         users.splice(i,1); 
-        saveLocal(); 
-        renderUsers(); 
         closeActionPopup(); 
+        await saveToCloudOnly(); 
+        renderUsers(); 
     } 
 }
 
@@ -804,19 +723,16 @@ function allDeleteWithExport() {
         
         setTimeout(async () => {
             users = [];
-            localStorage.removeItem("financeUsers");
-            if (appConfig.storageMode === "cloud" && CLOUD_URL) {
-                showLoading(true);
-                try {
-                    await fetch(CLOUD_URL, {
-                        method: "POST",
-                        mode: "no-cors",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: "data=" + encodeURIComponent(JSON.stringify([]))
-                    });
-                } catch(e) { console.error(e); }
-                showLoading(false);
-            }
+            showLoading(true);
+            try {
+                await fetch(CLOUD_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "data=" + encodeURIComponent(JSON.stringify([]))
+                });
+            } catch(e) { console.error(e); }
+            showLoading(false);
             renderUsers();
             closeSettingsPopup();
             alert("அனைத்து டேட்டாக்களும் வெற்றிகரமாக எக்ஸ்போர்ட் செய்யப்பட்டு ஆப்பிலிருந்து நீக்கப்பட்டது!");
@@ -824,17 +740,20 @@ function allDeleteWithExport() {
     }
 }
 
-function importData(event){
+async function importData(event){
     let f=event.target.files[0]; if(!f) return;
     let r=new FileReader();
-    r.onload=function(e){ users=JSON.parse(e.target.result); saveLocal(); renderUsers(); };
+    r.onload=async function(e){ 
+        users=JSON.parse(e.target.result); 
+        await saveToCloudOnly(); 
+        renderUsers(); 
+    };
     r.readAsText(f);
 }
 
 window.onload = function() {
     initConfig();
-    updateLedStatus();
-    loadDataBasedOnMode();
+    fetchFromCloud();
 };
 </script>
 </body>
