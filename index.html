@@ -87,7 +87,7 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
 .gold{background: var(--theme-color); color:#111;}
 
 .user-card{width:calc(100% - 20px);margin:10px auto;padding:15px;border-radius:15px;background:#222;cursor:pointer;border: 1px solid #333;box-sizing: border-box; position: relative;}
-.user-card.redbg{background:linear-gradient(145deg, #8b0000, #5a0000); border-color: #ff4444;}
+.user-card.redbg{background:linear-gradient(145deg, #8b0000, #5a0000) !important; border-color: #ff4444 !important;}
 .row{display:flex;justify-content:space-between; align-items:center; font-size: var(--app-font-size); padding-right: 35px;}
 
 .menu-dot-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; color: var(--theme-color); font-size: 24px; border: none; padding: 5px; cursor: pointer; z-index: 10;}
@@ -202,7 +202,7 @@ input:checked + .slider:before { transform: translateX(22px); }
         <h3 style="color:var(--theme-color); margin-top:0;">⚙️ App Settings</h3>
         
         <div style="text-align:left; margin-bottom:12px;">
-            <label style="font-size:14px; color:#aaa;">பேனர் பெயர்:</label>
+            <label style="font-size:14px; color:#aaa;">பேнер பெயர்:</label>
             <input type="text" id="setAppTitle" oninput="applySettings()">
         </div>
 
@@ -311,7 +311,6 @@ input:checked + .slider:before { transform: translateX(22px); }
 </div>
 
 <script>
-// உங்களது புதிய வெப் ஆப் URL மிகச் சரியாக இணைக்கப்பட்டுள்ளது
 const CLOUD_URL = "https://script.google.com/macros/s/AKfycbwm5J50g7Es2NsBVJMrcD1R_XILao3ZFU_IgybdtU28p1xhNP89YbRc_tHtedfNSVW1xA/exec";
 
 let users = [];
@@ -415,7 +414,6 @@ async function fetchFromCloud() {
     showLoading(false);
 }
 
-// ஆங்கிலத் தேதி (Full GMT String) ஆப் ஸ்கிரீனில் நீளமாக விழுவதைத் தடுத்து 30-5-26 என மாற்றும் பகுதி
 function formatDate(d) {
     if (!d) return "";
     let dateObj = new Date(d);
@@ -436,16 +434,18 @@ function getBalance(u){
     return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
 }
 
+// 100% துல்லியமாக மாற்றியமைக்கப்பட்ட isRed லாஜிக் ஃபங்க்ஷன்
 function isRed(u) {
     if (!u.transactions || u.transactions.length === 0) return false;
-    let today = new Date();
-    let offset = today.getTimezoneOffset();
-    let localTodayStr = new Date(today.getTime() - (offset * 60 * 1000)).toISOString().split("T")[0];
     
     return u.transactions.some(t => {
-        let hasNoCredit = (t.credit === null || t.credit === undefined || String(t.credit).trim() === "");
-        let hasNoDebit = (t.debit === null || t.debit === undefined || String(t.debit).trim() === "");
-        return t.date <= localTodayStr && hasNoCredit && hasNoDebit;
+        let creditVal = t.credit !== null && t.credit !== undefined ? String(t.credit).trim() : "";
+        let debitVal = t.debit !== null && t.debit !== undefined ? String(t.debit).trim() : "";
+        
+        let hasNoCredit = creditVal === "" || Number(creditVal) === 0;
+        let hasNoDebit = debitVal === "" || Number(debitVal) === 0;
+        
+        return hasNoCredit && hasNoDebit;
     });
 }
 
@@ -488,6 +488,8 @@ function renderUsers(){
     filtered.forEach((u)=>{
         let realIdx = users.indexOf(u);
         let card = document.createElement("div");
+        
+        // இங்கு சிவப்பு நிற போல்டருக்கான CSS கிளாஸ் மிகச் சரியாக இணைக்கப்படுகிறது
         card.className = "user-card" + (isRed(u) ? " redbg" : "");
         card.onclick = () => openUser(realIdx);
         
