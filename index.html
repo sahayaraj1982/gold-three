@@ -23,7 +23,6 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:#111;color:whit
     min-height: var(--app-height); 
     height: var(--app-height);
     overflow-y: auto;
-    transition: max-width 0.3s, min-height 0.3s, height 0.3s;
     border: 1px solid #222;
 }
 
@@ -35,6 +34,7 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
     top: 50%;
     transform: translateY(-50%);
 }
+
 .g-led {
     width: 28px;
     height: 28px;
@@ -48,13 +48,35 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
     justify-content: center;
     font-size: 14px;
     font-weight: 900;
-    transition: 0.3s;
 }
 .g-led.connected {
-    color: #00ff00;
-    border-color: #00ff00;
-    box-shadow: 0 0 15px #00ff00, inset 0 0 5px #00ff00, 0 0 5px #fff;
+    color: #00ff00 !important;
+    border-color: #00ff00 !important;
+    background: #052e16 !important;
+    box-shadow: 0 0 15px #00ff00, inset 0 0 5px #00ff00;
 }
+
+.g-led.saving.m1 { animation: m1Blink 0.4s infinite alternate; }
+.g-led.saving.m2 { animation: m2Sharp 0.15s infinite; }
+.g-led.saving.m3 { animation: m3Pulse 0.5s infinite alternate; }
+.g-led.saving.m4 { animation: m4Rotate 0.7s infinite linear; }
+.g-led.saving.m5 { animation: m5Heartbeat 0.3s infinite ease-in-out; }
+.g-led.saving.m6 { animation: m6ColorShift 0.4s infinite; }
+.g-led.saving.m7 { animation: m7Vibrate 0.08s infinite; }
+.g-led.saving.m8 { animation: m8Flip 0.6s infinite linear; }
+.g-led.saving.m9 { animation: m9Radar 0.6s infinite ease-out; }
+.g-led.saving.m10 { animation: m10Strobe 0.1s infinite steps(2); }
+
+@keyframes m1Blink { 0% { opacity: 0.3; } 100% { opacity: 1; background: #22c55e; } }
+@keyframes m2Sharp { 0%, 49% { background: #222; border-color: #ff4444; color: #ff4444; } 50%, 100% { background: #00ff00; border-color: #fff; color: #000; } }
+@keyframes m3Pulse { 0% { box-shadow: 0 0 5px #00ff00; } 100% { box-shadow: 0 0 25px #00ff00, 0 0 10px #fff; } }
+@keyframes m4Rotate { 100% { transform: rotate(360deg); } }
+@keyframes m5Heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+@keyframes m6ColorShift { 0% { background:#00ff00; border-color:#00ff00;} 50% { background:#ffc400; border-color:#ffc400;} 100% { background:#00e5ff; border-color:#00e5ff;} }
+@keyframes m7Vibrate { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-2px, 2px); } 66% { transform: translate(2px, -2px); } }
+@keyframes m8Flip { 100% { transform: rotateY(360deg); } }
+@keyframes m9Radar { 0% { box-shadow: 0 0 0 0px rgba(0,255,0,0.8); } 100% { box-shadow: 0 0 0 15px rgba(0,255,0,0); } }
+@keyframes m10Strobe { 0% { visibility: hidden; } 50% { visibility: visible; } }
 
 .dashboard{display:grid;grid-template-columns: repeat(2, 1fr);gap:10px;padding:10px;}
 .stat-box{background:#222;padding:15px 10px;border-radius:10px;text-align:center;border:1px solid #333;}
@@ -63,7 +85,7 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
 .stat-box h2{margin:0; font-size: calc(var(--app-font-size) + 4px); color: var(--theme-color); font-weight: 900;}
 
 .search-container{padding:10px;}
-.search-input{width:100%; padding:12px; border-radius:10px; border:1px solid var(--theme-color); background:#222; color:white; box-sizing: border-box; font-size: var(--app-font-size); font-weight: var(--app-font-weight);}
+.search-input{width:100%; padding:12px; border-radius:10px; border:1px solid var(--theme-color); background:#222; color:white; box-sizing: border-box; font-size: var(--app-font-size);}
 
 .top-buttons {
     display: grid;
@@ -79,21 +101,19 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
     cursor: pointer;
     font-weight: bold;
     font-size: calc(var(--app-font-size) - 4px);
-    transition: 0.3s;
     text-align: center;
-    box-sizing: border-box;
     white-space: nowrap;
 }
-.gold{background: var(--theme-color); color:#111;}
+.gold {background: var(--theme-color); color:#111;}
 
 .user-card{width:calc(100% - 20px);margin:10px auto;padding:15px;border-radius:15px;background:#222;cursor:pointer;border: 1px solid #333;box-sizing: border-box; position: relative;}
 .user-card.redbg{background:linear-gradient(145deg, #8b0000, #5a0000) !important; border-color: #ff4444 !important;}
 .row{display:flex;justify-content:space-between; align-items:center; font-size: var(--app-font-size); padding-right: 35px;}
 
-.menu-dot-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; color: var(--theme-color); font-size: 24px; border: none; padding: 5px; cursor: pointer; z-index: 10;}
+.menu-dot-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; color: var(--theme-color); font-size: 24px; border: none; cursor: pointer; z-index: 10;}
 
 .profile-header{background:#222; padding:15px 20px; border-bottom: 2px solid var(--theme-color); margin-bottom: 5px; position: relative;}
-.profile-header h2{margin:0 0 15px 0; color: var(--theme-color); text-align: center; font-size: calc(var(--app-font-size) + 8px); padding-top: 5px;}
+.profile-header h2{margin:0 0 15px 0; color: var(--theme-color); text-align: center;}
 .prof-header-buttons{display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px;}
 .prof-details-row{display: flex; justify-content: space-between; align-items: center; margin-top: 10px;}
 
@@ -102,7 +122,7 @@ header{background: var(--theme-gradient); color:#111; text-align:center; padding
 
 .table-container{overflow-x:auto; padding:10px;}
 table{width:100%;border-collapse:collapse; background: #1a1a1a; border-radius: 10px;}
-th,td{padding:10px 4px;text-align:center; border-bottom: 1px solid #444; font-size: calc(var(--app-font-size) - 2px); font-weight: var(--app-font-weight);}
+th,td{padding:10px 4px;text-align:center; border-bottom: 1px solid #444; font-size: calc(var(--app-font-size) - 2px);}
 th{background:#333; color: var(--theme-color); font-weight: bold;}
 
 .credit-row{background-color: #1f7a1f !important; color: white !important;}
@@ -110,10 +130,7 @@ th{background:#333; color: var(--theme-color); font-weight: bold;}
 .pending-row{background-color: #2c2c2c; color: var(--theme-color);}
 
 .popup-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;justify-content:center;align-items:center;}
-.popup-content{background:#222;padding:22px;border-radius:20px;text-align:center;border:2px solid var(--theme-color);width:90%; max-width: 380px; max-height: 85vh; overflow-y: auto; color: white;}
-
-input[type="date"], input[type="text"], input[type="number"], select{width:100%;margin:8px 0;padding:12px;border:none;border-radius:8px;background:#333;color:white; box-sizing: border-box; font-size: var(--app-font-size);}
-.hidden{display:none;}
+.popup-content{background:#222;padding:22px;border-radius:20px;text-align:center;border:2px solid var(--theme-color);width:90%; max-width: 380px; max-height: 85vh; overflow-y: auto;}
 
 .setting-row { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; text-align: left; font-size: calc(var(--app-font-size) - 1px); }
 .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
@@ -123,25 +140,19 @@ input[type="date"], input[type="text"], input[type="number"], select{width:100%;
 input:checked + .slider { background-color: #1f7a1f; }
 input:checked + .slider:before { transform: translateX(22px); }
 
-.color-presets { 
-    display: grid; 
-    grid-template-columns: repeat(6, 1fr); 
-    gap: 8px; 
-    margin-top: 8px; 
-    background: #1a1a1a;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid #333;
-}
-.color-dot { width: 100%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); cursor: pointer; transition: 0.2s; box-sizing: border-box;}
-.color-dot:hover { transform: scale(1.15); border-color: #fff; box-shadow: 0 0 8px rgba(255,255,255,0.8); }
+.color-presets { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 8px; background: #1a1a1a; padding: 10px; border-radius: 12px; }
+.color-dot { width: 100%; aspect-ratio: 1; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: transform 0.1s; }
+.color-dot:active { transform: scale(0.9); }
+
+input[type="date"], input[type="text"], input[type="number"], select{width:100%;margin:8px 0;padding:12px;border:none;border-radius:8px;background:#333;color:white; box-sizing: border-box;}
+.hidden{display:none;}
 
 #loading { display:none; position: fixed; top: 10px; right: 10px; background: var(--theme-color); color: #111; padding: 8px 15px; border-radius: 20px; font-weight: bold; z-index: 10000; font-size: 13px;}
 </style>
 </head>
 <body>
 
-<div id="loading">SAVE...</div>
+<div id="loading">CONNECTING...</div>
 
 <div class="wrapper">
     <header>
@@ -224,57 +235,70 @@ input:checked + .slider:before { transform: translateX(22px); }
         <div style="text-align:left; margin-bottom:12px;">
             <label style="font-size:14px; color:#aaa;">எழுத்து வடிவம் (Style):</label>
             <select id="setAppFontWeight" onchange="applySettings()" style="margin-top:5px;">
-                <option value="normal">Normal (லேசான எழுத்து)</option>
-                <option value="bold">Bold (கனமான எழுத்து)</option>
+                <option value="normal">Normal</option>
+                <option value="bold">Bold</option>
+            </select>
+        </div>
+
+        <div style="text-align:left; margin-bottom:12px;">
+            <label style="font-size:14px; color:#aaa;">G-LED அனிமேஷன் ஸ்டைல்:</label>
+            <select id="setLedStyle" onchange="applySettings()" style="margin-top:5px;">
+                <option value="m1">m1: Smooth Fade Blink</option>
+                <option value="m2">m2: Fast Sharp Blink</option>
+                <option value="m3">m3: Pulse Glow Light</option>
+                <option value="m4">m4: Clockwise Rotation</option>
+                <option value="m5">m5: Heartbeat Zoom</option>
+                <option value="m6">m6: Traffic Color Shift</option>
+                <option value="m7">m7: Vibration Shaker</option>
+                <option value="m8">m8: 3D Flip Spin</option>
+                <option value="m9">m9: Radar Wave Radial</option>
+                <option value="m10">m10: Laser Strobe Effect</option>
             </select>
         </div>
 
         <div style="text-align:left; margin-bottom:15px;">
             <label style="font-size:14px; color:#aaa;">தீம் கலர் மாற்றம் (25+ வண்ணங்கள்):</label>
             <div class="color-presets">
-                <div class="color-dot" style="background:#ffd700;" onclick="setPresetColor('#ffd700')" title="Gold"></div>
-                <div class="color-dot" style="background:#ffb300;" onclick="setPresetColor('#ffb300')" title="Amber"></div>
-                <div class="color-dot" style="background:#ff9100;" onclick="setPresetColor('#ff9100')" title="Orange"></div>
-                <div class="color-dot" style="background:#ff3d00;" onclick="setPresetColor('#ff3d00')" title="Deep Orange"></div>
-                <div class="color-dot" style="background:#e53935;" onclick="setPresetColor('#e53935')" title="Red"></div>
-                <div class="color-dot" style="background:#d81b60;" onclick="setPresetColor('#d81b60')" title="Pink"></div>
-                <div class="color-dot" style="background:#8e24aa;" onclick="setPresetColor('#8e24aa')" title="Purple"></div>
-                <div class="color-dot" style="background:#5e35b1;" onclick="setPresetColor('#5e35b1')" title="Deep Purple"></div>
-                <div class="color-dot" style="background:#3949ab;" onclick="setPresetColor('#3949ab')" title="Indigo"></div>
-                <div class="color-dot" style="background:#1e88e5;" onclick="setPresetColor('#1e88e5')" title="Blue"></div>
-                <div class="color-dot" style="background:#00b0ff;" onclick="setPresetColor('#00b0ff')" title="Light Blue"></div>
-                <div class="color-dot" style="background:#00e5ff;" onclick="setPresetColor('#00e5ff')" title="Cyan"></div>
-                <div class="color-dot" style="background:#00edd6;" onclick="setPresetColor('#00edd6')" title="Teal"></div>
-                <div class="color-dot" style="background:#00a86b;" onclick="setPresetColor('#00a86b')" title="Jade Green"></div>
-                <div class="color-dot" style="background:#4caf50;" onclick="setPresetColor('#4caf50')" title="Green"></div>
-                <div class="color-dot" style="background:#7cb342;" onclick="setPresetColor('#7cb342')" title="Light Green"></div>
-                <div class="color-dot" style="background:#c0ca33;" onclick="setPresetColor('#c0ca33')" title="Lime"></div>
-                <div class="color-dot" style="background:#d4af37;" onclick="setPresetColor('#d4af37')" title="Metallic Gold"></div>
-                <div class="color-dot" style="background:#b8860b;" onclick="setPresetColor('#b8860b')" title="Dark Golden"></div>
-                <div class="color-dot" style="background:#a0522d;" onclick="setPresetColor('#a0522d')" title="Sienna"></div>
-                <div class="color-dot" style="background:#808080;" onclick="setPresetColor('#808080')" title="Grey"></div>
-                <div class="color-dot" style="background:#90a4ae;" onclick="setPresetColor('#90a4ae')" title="Blue Grey"></div>
-                <div class="color-dot" style="background:#78909c;" onclick="setPresetColor('#78909c')" title="Slate"></div>
-                <input type="color" id="setThemeColor" style="width:100%; height:100%; border:none; background:transparent; cursor:pointer; grid-column: span 1;" oninput="applySettings()" title="Custom Color">
+                <div class="color-dot" style="background:#ffd700;" onclick="setPresetColor('#ffd700')"></div>
+                <div class="color-dot" style="background:#ff9100;" onclick="setPresetColor('#ff9100')"></div>
+                <div class="color-dot" style="background:#ff5252;" onclick="setPresetColor('#ff5252')"></div>
+                <div class="color-dot" style="background:#e53935;" onclick="setPresetColor('#e53935')"></div>
+                <div class="color-dot" style="background:#b71c1c;" onclick="setPresetColor('#b71c1c')"></div>
+                <div class="color-dot" style="background:#8e24aa;" onclick="setPresetColor('#8e24aa')"></div>
+                <div class="color-dot" style="background:#4a148c;" onclick="setPresetColor('#4a148c')"></div>
+                <div class="color-dot" style="background:#3f51b5;" onclick="setPresetColor('#3f51b5')"></div>
+                <div class="color-dot" style="background:#1e88e5;" onclick="setPresetColor('#1e88e5')"></div>
+                <div class="color-dot" style="background:#0097a7;" onclick="setPresetColor('#0097a7')"></div>
+                <div class="color-dot" style="background:#00796b;" onclick="setPresetColor('#00796b')"></div>
+                <div class="color-dot" style="background:#4caf50;" onclick="setPresetColor('#4caf50')"></div>
+                <div class="color-dot" style="background:#2e7d32;" onclick="setPresetColor('#2e7d32')"></div>
+                <div class="color-dot" style="background:#689f38;" onclick="setPresetColor('#689f38')"></div>
+                <div class="color-dot" style="background:#827717;" onclick="setPresetColor('#827717')"></div>
+                <div class="color-dot" style="background:#fbc02d;" onclick="setPresetColor('#fbc02d')"></div>
+                <div class="color-dot" style="background:#f57c00;" onclick="setPresetColor('#f57c00')"></div>
+                <div class="color-dot" style="background:#e64a19;" onclick="setPresetColor('#e64a19')"></div>
+                <div class="color-dot" style="background:#5d4037;" onclick="setPresetColor('#5d4037')"></div>
+                <div class="color-dot" style="background:#78909c;" onclick="setPresetColor('#78909c')"></div>
+                <div class="color-dot" style="background:#455a64;" onclick="setPresetColor('#455a64')"></div>
+                <div class="color-dot" style="background:#00e5ff;" onclick="setPresetColor('#00e5ff')"></div>
+                <div class="color-dot" style="background:#ff4081;" onclick="setPresetColor('#ff4081')"></div>
+                <div class="color-dot" style="background:#00ff88;" onclick="setPresetColor('#00ff88')"></div>
+                <input type="color" id="setThemeColor" style="grid-column: span 6; width:100%; height:30px; border:1px solid #444; border-radius:6px; background:#333; cursor:pointer; margin-top:5px;" oninput="applySettings()">
             </div>
         </div>
 
         <hr style="border-color:#333;">
-
         <div class="setting-row">
             <span>Dashboard பாக்ஸ் காட்டு</span>
             <label class="switch"><input type="checkbox" id="switchDash" checked onchange="applySettings()"><span class="slider"></span></label>
         </div>
-
         <div class="setting-row">
             <span>Search பார் காட்டு</span>
             <label class="switch"><input type="checkbox" id="switchSearch" checked onchange="applySettings()"><span class="slider"></span></label>
         </div>
-
         <hr style="border-color:#333;">
-        
-        <button style="background:#e53935; color:white; width:100%; margin-top:5px; padding:12px; font-weight:bold; border:none; border-radius:10px; cursor:pointer;" onclick="allDeleteWithExport()">⚠️ All Delete</button>
-        <button class="gold" style="width:100%; margin-top:12px; padding:12px;" onclick="closeSettingsPopup()">Done</button>
+        <button style="background:#e53935; color:white; width:100%; padding:10px; border-radius:8px; border:none; font-weight:bold; cursor:pointer; margin-bottom:10px;" onclick="allDeleteWithExport()">⚠️ All Delete App Data</button>
+        <button class="gold" style="width:100%; padding:12px;" onclick="closeSettingsPopup()">Done</button>
     </div>
 </div>
 
@@ -311,25 +335,27 @@ input:checked + .slider:before { transform: translateX(22px); }
 </div>
 
 <script>
-const CLOUD_URL = "https://script.google.com/macros/s/AKfycbwm5J50g7Es2NsBVJMrcD1R_XILao3ZFU_IgybdtU28p1xhNP89YbRc_tHtedfNSVW1xA/exec";
+// 🔗 உங்கள் புதிய Web App URL-ஐ கீழே உள்ள வரியில் மட்டும் ஒட்டவும் அண்ணா!
+const CLOUD_URL = "https://script.google.com/macros/s/AKfycbwGmP7euoPNkl6Foa1nQzvVKcQxz_IEnZhPBPMonjQQ2_SzB2R_oVToSU91QdjaIUiy/exec";
 
 let users = [];
-let appConfig = JSON.parse(localStorage.getItem("financeConfig")) || {
-    title: "Finance Manager Pro",
-    width: 500,
-    height: 100,
-    fontSize: 16,
-    fontWeight: "normal",
-    color: "#ffd700",
-    showDash: true,
-    showSearch: true
-};
-
 let currentUser = null;
 let editIndex = null;
 
+let appConfig = JSON.parse(localStorage.getItem("financeConfig")) || {
+    title: "Finance Manager Pro", width: 500, height: 100, fontSize: 16, fontWeight: "normal", color: "#ffd700", showDash: true, showSearch: true, ledStyle: "m1"
+};
+
+function setLedIndicatorStatus(status) {
+    const led = document.getElementById("ledLight");
+    led.className = "g-led"; 
+    if (status === "CONNECTED") led.classList.add("connected");
+    else if (status === "SAVING") led.classList.add("connected", "saving", appConfig.ledStyle || "m1");
+}
+
 function showLoading(show) {
     document.getElementById("loading").style.display = show ? "block" : "none";
+    setLedIndicatorStatus(show ? "SAVING" : "CONNECTED");
 }
 
 function initConfig() {
@@ -341,13 +367,11 @@ function initConfig() {
     document.getElementById("setThemeColor").value = appConfig.color;
     document.getElementById("switchDash").checked = appConfig.showDash;
     document.getElementById("switchSearch").checked = appConfig.showSearch;
+    document.getElementById("setLedStyle").value = appConfig.ledStyle || "m1";
     applyConfigUI();
 }
 
-function setPresetColor(colorCode) {
-    document.getElementById("setThemeColor").value = colorCode;
-    applySettings();
-}
+function setPresetColor(colorCode) { document.getElementById("setThemeColor").value = colorCode; applySettings(); }
 
 function applySettings() {
     appConfig.title = document.getElementById("setAppTitle").value || "Finance Manager Pro";
@@ -358,7 +382,7 @@ function applySettings() {
     appConfig.color = document.getElementById("setThemeColor").value;
     appConfig.showDash = document.getElementById("switchDash").checked;
     appConfig.showSearch = document.getElementById("switchSearch").checked;
-    
+    appConfig.ledStyle = document.getElementById("setLedStyle").value || "m1";
     localStorage.setItem("financeConfig", JSON.stringify(appConfig));
     applyConfigUI();
 }
@@ -368,19 +392,12 @@ function applyConfigUI() {
     document.getElementById("widthVal").innerText = appConfig.width;
     document.getElementById("heightVal").innerText = appConfig.height || 100;
     document.getElementById("fontSizeVal").innerText = appConfig.fontSize || 16;
-    
     document.documentElement.style.setProperty('--app-width', appConfig.width + 'px');
-    
-    let hVal = appConfig.height || 100;
-    document.documentElement.style.setProperty('--app-height', hVal + 'vh');
-    
+    document.documentElement.style.setProperty('--app-height', (appConfig.height || 100) + 'vh');
     document.documentElement.style.setProperty('--app-font-size', (appConfig.fontSize || 16) + 'px');
     document.documentElement.style.setProperty('--app-font-weight', appConfig.fontWeight || 'normal');
     document.documentElement.style.setProperty('--theme-color', appConfig.color);
-    
-    let hex = appConfig.color;
-    document.documentElement.style.setProperty('--theme-gradient', `linear-gradient(145deg, ${hex}, #333333)`);
-
+    document.documentElement.style.setProperty('--theme-gradient', `linear-gradient(145deg, ${appConfig.color}, #333333)`);
     document.getElementById("dashboardWrapper").style.display = appConfig.showDash ? "grid" : "none";
     document.getElementById("searchBoxWrapper").style.display = appConfig.showSearch ? "block" : "none";
 }
@@ -389,6 +406,7 @@ function openSettingsPopup() { document.getElementById("settingsPopup").style.di
 function closeSettingsPopup() { document.getElementById("settingsPopup").style.display = "none"; }
 
 async function saveToCloudOnly(){ 
+    if(CLOUD_URL === "YOUR_GOOGLE_SHEET_WEB_APP_URL_HERE") return;
     showLoading(true);
     try {
         await fetch(CLOUD_URL, {
@@ -402,354 +420,196 @@ async function saveToCloudOnly(){
 }
 
 async function fetchFromCloud() {
+    if(CLOUD_URL === "YOUR_GOOGLE_SHEET_WEB_APP_URL_HERE") return;
     showLoading(true);
     try {
         let res = await fetch(CLOUD_URL);
         let cloudData = await res.json();
-        if(cloudData && Array.isArray(cloudData)) {
-            users = cloudData;
-            renderUsers();
-        }
-    } catch(e) { console.error(e); }
+        users = (cloudData && Array.isArray(cloudData)) ? cloudData : [];
+        renderUsers();
+    } catch(e) { console.error(e); users = []; renderUsers(); }
     showLoading(false);
 }
 
 function formatDate(d) {
     if (!d) return "";
     let dateObj = new Date(d);
-    
-    if (isNaN(dateObj.getTime())) {
-        return String(d).trim();
-    }
-    
-    let day = dateObj.getDate();
-    let month = dateObj.getMonth() + 1;
-    let year = String(dateObj.getFullYear()).substring(2, 4);
-    
-    return `${day}-${month}-${year}`;
+    if (isNaN(dateObj.getTime())) return String(d).trim();
+    return `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${String(dateObj.getFullYear()).substring(2, 4)}`;
 }
 
-function getBalance(u){
-    if(!u.transactions) return 0;
-    return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0);
-}
+function getBalance(u){ if(!u.transactions) return 0; return u.transactions.reduce((a,t)=>a+(Number(t.credit||0)-Number(t.debit||0)), 0); }
 
-// உங்கள் நிபந்தனைகளின்படி 100% சரியாக மாற்றியமைக்கப்பட்ட புதிய isRed ஃபங்க்ஷன்
 function isRed(u) {
     if (!u.transactions || u.transactions.length === 0) return false;
-    
-    // இன்றைய நடப்பு தேதியை இந்திய நேரத்தின்படி (Local YYYY-MM-DD) எடுக்கிறது
-    let today = new Date();
-    let offset = today.getTimezoneOffset();
-    let localTodayStr = new Date(today.getTime() - (offset * 60 * 1000)).toISOString().split("T")[0];
-    
+    let localTodayStr = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60 * 1000)).toISOString().split("T")[0];
     return u.transactions.some(t => {
-        // ஒருவேளை முழு ISO Date வடிவம் வந்தால், ஒப்பீடு செய்ய YYYY-MM-DD ஆக மட்டும் பிரிக்கிறது
         let cleanTxDate = t.date ? String(t.date).split("T")[0] : "";
-        
-        // 1. அந்த என்ட்ரி தேதி இன்று அல்லது அதற்கு முந்தைய தேதியாக இருக்க வேண்டும் (எதிர்காலத் தேதி சிவப்பு நிறமாக மாறாது)
-        if (cleanTxDate && cleanTxDate <= localTodayStr) {
-            let creditRaw = t.credit !== null && t.credit !== undefined ? String(t.credit).trim() : "";
-            let debitRaw = t.debit !== null && t.debit !== undefined ? String(t.debit).trim() : "";
-            
-            // 2. கிரெடிட் மற்றும் டெபிட் பாக்ஸ்கள் முற்றிலும் காலியாக (வெற்று என்ட்ரியாக) இருக்க வேண்டும்.
-            // 0 என்று டைப் செய்துவிட்டால் அது வெற்று என்ட்ரி இல்லை, எனவே அது சிவப்பு நிறமாக மாறாது!
-            let isCreditEmpty = creditRaw === "";
-            let isDebitEmpty = debitRaw === "";
-            
-            if (isCreditEmpty && isDebitEmpty) {
-                return true;
-            }
-        }
-        return false;
+        return (cleanTxDate && cleanTxDate <= localTodayStr && String(t.credit).trim() === "" && String(t.debit).trim() === "");
     });
 }
 
-function getTenPercent(u) {
-    if(!isRed(u)) return 0;
-    let loan = u.transactions.find(t => Number(t.debit) > 0);
-    return loan ? (Number(loan.debit) * 0.10) : 0;
-}
+function getTenPercent(u) { if(!isRed(u)) return 0; let loan = u.transactions.find(t => Number(t.debit) > 0); return loan ? (Number(loan.debit) * 0.10) : 0; }
 
 function renderUsers(){
-    const searchInput = document.getElementById("userSearch");
-    const search = searchInput ? searchInput.value.toLowerCase().trim() : "";
+    const search = document.getElementById("userSearch").value.toLowerCase().trim();
     const listDiv = document.getElementById("userList");
     listDiv.innerHTML = "";
-
     let totalBal = 0, redCount = 0, tenTotal = 0;
-    users.forEach(u => {
-        totalBal += getBalance(u);
-        if(isRed(u)) { redCount++; tenTotal += getTenPercent(u); }
-    });
-
+    users.forEach(u => { totalBal += getBalance(u); if(isRed(u)) { redCount++; tenTotal += getTenPercent(u); } });
     document.getElementById("totalUsers").innerText = users.length;
     document.getElementById("totalBalance").innerText = "₹ " + totalBal.toLocaleString();
     document.getElementById("redUsersCount").innerText = redCount;
     document.getElementById("tenPercentTotal").innerText = "₹ " + tenTotal.toLocaleString();
-
-    let filtered = users.filter(u => {
-        let nameMatch = u.name ? String(u.name).toLowerCase().includes(search) : false;
-        let mobileMatch = u.mobile ? String(u.mobile).toLowerCase().includes(search) : false;
-        return nameMatch || mobileMatch;
-    });
-    
-    filtered.sort((a, b) => {
-        let a_red = isRed(a) ? 1 : 0;
-        let b_red = isRed(b) ? 1 : 0;
-        if (a_red !== b_red) { return b_red - a_red; }
-        return Math.abs(getBalance(a)) - Math.abs(getBalance(b));
-    });
-
+    let filtered = users.filter(u => (u.name||"").toLowerCase().includes(search) || (u.mobile||"").toLowerCase().includes(search));
+    filtered.sort((a, b) => { let a_red = isRed(a) ? 1 : 0; let b_red = isRed(b) ? 1 : 0; if (a_red !== b_red) return b_red - a_red; return Math.abs(getBalance(a)) - Math.abs(getBalance(b)); });
     filtered.forEach((u)=>{
         let realIdx = users.indexOf(u);
         let card = document.createElement("div");
         card.className = "user-card" + (isRed(u) ? " redbg" : "");
         card.onclick = () => openUser(realIdx);
-        
-        card.innerHTML = `
-            <div class="row">
-                <div>
-                    <b>${u.name}</b><br>
-                    <small style="font-size:13px;">${u.mobile || ''}</small>
-                </div>
-                <div style="font-weight:bold;">₹ ${getBalance(u).toLocaleString()}</div>
-            </div>
-            <button class="menu-dot-btn" onclick="triggerActionMenu(event, ${realIdx}, '${u.name}')">&#8942;</button>
-        `;
+        card.innerHTML = `<div class="row"><div><b>${u.name}</b><br><small style="font-size:13px;">${u.mobile || ''}</small></div><div style="font-weight:bold;">₹ ${getBalance(u).toLocaleString()}</div></div><button class="menu-dot-btn" onclick="event.stopPropagation(); openActionPopup('${u.name}', ${realIdx})">&#8942;</button>`;
         listDiv.appendChild(card);
     });
 }
 
-function triggerActionMenu(event, realIdx, name) {
-    event.stopPropagation();
-    openActionPopup(name, realIdx);
-}
-
-function openActionPopup(name, realIdx) {
-    document.getElementById("popupTitle").innerText = name;
-    document.getElementById("actionPopup").style.display = "flex";
-    
-    document.getElementById("editBtn").onclick = function() {
-        editUser(realIdx);
-    };
-    document.getElementById("deleteBtn").onclick = function() {
-        deleteUser(realIdx);
-    };
-}
-
-function closeActionPopup() {
-    document.getElementById("actionPopup").style.display = "none";
-}
-
-function openUser(i){
-    currentUser = i;
-    document.getElementById("mainScreen").classList.add("hidden");
-    document.getElementById("userScreen").classList.remove("hidden");
-    renderTransactions();
-}
-
-function setupLongPress(element, callback) {
-    let pressTimer;
-    const start = (e) => { pressTimer = setTimeout(() => callback(), 800); };
-    const cancel = () => { clearTimeout(pressTimer); };
-    element.addEventListener("mousedown", start);
-    element.addEventListener("touchstart", start, { passive: true });
-    element.addEventListener("click", cancel);
-    element.addEventListener("mouseout", cancel);
-    element.addEventListener("touchend", cancel);
-    element.addEventListener("touchcancel", cancel);
-}
-
-function goBack(){
-    document.getElementById("mainScreen").classList.remove("hidden");
-    document.getElementById("userScreen").classList.add("hidden");
-    renderUsers();
-}
-
+function openActionPopup(name, realIdx) { document.getElementById("popupTitle").innerText = name; document.getElementById("actionPopup").style.display = "flex"; document.getElementById("editBtn").onclick = function() { editUser(realIdx); }; document.getElementById("deleteBtn").onclick = function() { deleteUser(realIdx); }; }
+function closeActionPopup() { document.getElementById("actionPopup").style.display = "none"; }
+function openUser(i){ currentUser = i; document.getElementById("mainScreen").classList.add("hidden"); document.getElementById("userScreen").classList.remove("hidden"); renderTransactions(); }
+function goBack(){ document.getElementById("mainScreen").classList.remove("hidden"); document.getElementById("userScreen").classList.add("hidden"); renderUsers(); }
 function openEntryForm(){ 
-    let today = new Date();
-    let offset = today.getTimezoneOffset();
-    today = new Date(today.getTime() - (offset * 60 * 1000));
-    
-    document.getElementById("tDate").value = today.toISOString().split("T")[0];
-    document.getElementById("tDesc").value = "";
-    document.getElementById("tCredit").value = "";
-    document.getElementById("tDebit").value = "";
-    editIndex = null;
-    document.getElementById("entryPopup").style.display = "flex"; 
+    let today = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60 * 1000));
+    document.getElementById("tDate").value = today.toISOString().split("T")[0]; document.getElementById("tDesc").value = ""; document.getElementById("tCredit").value = ""; document.getElementById("tDebit").value = ""; editIndex = null; document.getElementById("entryPopup").style.display = "flex"; 
 }
 function closeEntryForm(){ document.getElementById("entryPopup").style.display = "none"; editIndex = null; }
 
 async function saveTransaction(){
-    let d = document.getElementById("tDate").value, desc = document.getElementById("tDesc").value;
-    let c = document.getElementById("tCredit").value, deb = document.getElementById("tDebit").value;
+    let d = document.getElementById("tDate").value, desc = document.getElementById("tDesc").value, c = document.getElementById("tCredit").value, deb = document.getElementById("tDebit").value;
     if(!d) return alert("Date is required!");
-
     let tx = { date: d, desc: desc, credit: c, debit: deb };
-    if(editIndex === null) {
-        users[currentUser].transactions.push(tx);
-    } else {
-        users[currentUser].transactions[editIndex] = tx; 
-        editIndex = null; 
-    }
-
-    closeEntryForm();
-    renderTransactions(); 
-    await saveToCloudOnly(); 
+    if(editIndex === null) users[currentUser].transactions.push(tx);
+    else { users[currentUser].transactions[editIndex] = tx; editIndex = null; }
+    closeEntryForm(); renderTransactions(); await saveToCloudOnly(); 
 }
 
 function renderTransactions(){
-    let u = users[currentUser];
-    if(!u.transactions) u.transactions = [];
+    let u = users[currentUser]; if(!u.transactions) u.transactions = [];
     u.transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-    document.getElementById("profName").innerText = u.name;
-    document.getElementById("profMobile").innerText = u.mobile || "No Mobile";
-    document.getElementById("profBalance").innerText = "Bal: ₹" + getBalance(u).toLocaleString();
-    
-    const tableBody = document.getElementById("transactionTable");
-    tableBody.innerHTML = "";
-    
+    document.getElementById("profName").innerText = u.name; document.getElementById("profMobile").innerText = u.mobile || "No Mobile"; document.getElementById("profBalance").innerText = "Bal: ₹" + getBalance(u).toLocaleString();
+    const tableBody = document.getElementById("transactionTable"); tableBody.innerHTML = "";
     let curBal = 0, display = [];
     u.transactions.forEach((tx, originalIndex) => {
         let isNote = (String(tx.credit).trim() === "" && String(tx.debit).trim() === "");
         if(!isNote) curBal += (Number(tx.credit||0) - Number(tx.debit||0));
         display.push({ ...tx, cumulative: isNote ? "" : curBal, actualIdx: originalIndex });
     });
-
     display.reverse().forEach((tx) => {
         let row = document.createElement("tr");
         if(String(tx.credit).trim() !== "" && (Number(tx.credit) > 0 || tx.credit === "0" || tx.credit === 0)) row.className = "credit-row";
         else if(String(tx.debit).trim() !== "" && (Number(tx.debit) > 0 || tx.debit === "0" || tx.debit === 0)) row.className = "debit-row";
         else row.className = "pending-row";
-
-        row.innerHTML = `<td>${formatDate(tx.date)}</td>
-                         <td>${tx.desc||""}</td>
-                         <td>${tx.credit||""}</td>
-                         <td>${tx.debit||""}</td>
-                         <td><b>${tx.cumulative ? "₹ " + tx.cumulative.toLocaleString() : ""}</b></td>`;
-                         
-        setupLongPress(row, () => { openTxActionPopup(tx.actualIdx); });
+        row.innerHTML = `<td>${formatDate(tx.date)}</td><td>${tx.desc||""}</td><td>${tx.credit||""}</td><td>${tx.debit||""}</td><td><b>${tx.cumulative ? "₹ " + tx.cumulative.toLocaleString() : ""}</b></td>`;
+        let pressTimer;
+        row.onmousedown = () => { pressTimer = setTimeout(() => openTxActionPopup(tx.actualIdx), 800); };
+        row.ontouchstart = () => { pressTimer = setTimeout(() => openTxActionPopup(tx.actualIdx), 800); };
+        row.onmouseup = () => clearTimeout(pressTimer); row.ontouchend = () => clearTimeout(pressTimer);
         tableBody.appendChild(row);
     });
 }
 
-function openTxActionPopup(idx) {
-    document.getElementById("txActionPopup").style.display = "flex";
-    document.getElementById("txEditBtn").onclick = () => { closeTxActionPopup(); editTransaction(idx); };
-    document.getElementById("txDeleteBtn").onclick = () => { closeTxActionPopup(); deleteTransaction(idx); };
-}
+function openTxActionPopup(idx) { document.getElementById("txActionPopup").style.display = "flex"; document.getElementById("txEditBtn").onclick = () => { closeTxActionPopup(); editTransaction(idx); }; document.getElementById("txDeleteBtn").onclick = () => { closeTxActionPopup(); deleteTransaction(idx); }; }
 function closeTxActionPopup() { document.getElementById("txActionPopup").style.display = "none"; }
+function editTransaction(i){ let tx = users[currentUser].transactions[i]; document.getElementById("tDate").value = tx.date.split("T")[0]; document.getElementById("tDesc").value = tx.desc || ""; document.getElementById("tCredit").value = tx.credit; document.getElementById("tDebit").value = tx.debit; editIndex = i; document.getElementById("entryPopup").style.display = "flex"; }
+async function deleteTransaction(i){ if(confirm("இந்த எண்ட்ரியை நீக்கவா?")){ users[currentUser].transactions.splice(i,1); renderTransactions(); await saveToCloudOnly(); } }
+async function addUser(){ let n=prompt("Name:"), m=prompt("Mobile:"); if(n){ users.push({name:n,mobile:m,transactions:[]}); renderUsers(); await saveToCloudOnly(); } }
+async function editUser(i){ let newName = prompt("Name:", users[i].name); let newMobile = prompt("Mobile:", users[i].mobile); if(newName !== null && newName.trim() !== "") users[i].name = newName; if(newMobile !== null) users[i].mobile = newMobile; closeActionPopup(); renderUsers(); await saveToCloudOnly(); }
+async function deleteUser(i){ if(confirm("இந்த யூசரை நீக்கவா?")){ users.splice(i,1); closeActionPopup(); renderUsers(); await saveToCloudOnly(); } }
+function exportData(){ let a=document.createElement("a"); a.href="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(users)); a.download="Finance_Backup_2026.json"; a.click(); }
 
-function editTransaction(i){
-    let tx = users[currentUser].transactions[i];
-    let cleanDate = tx.date;
-    if(cleanDate.includes("T")) {
-        cleanDate = cleanDate.split("T")[0];
-    }
-    document.getElementById("tDate").value = cleanDate;
-    document.getElementById("tDesc").value = tx.desc || "";
-    document.getElementById("tCredit").value = tx.credit;
-    document.getElementById("tDebit").value = tx.debit;
-    editIndex = i;
-    document.getElementById("entryPopup").style.display = "flex";
-}
-
-async function deleteTransaction(i){ 
-    if(confirm("இந்த எண்ட்ரியை நீக்கவா?")){ 
-        users[currentUser].transactions.splice(i,1); 
-        renderTransactions(); 
-        await saveToCloudOnly(); 
-    } 
-}
-
-async function addUser(){
-    let n=prompt("Name:"), m=prompt("Mobile:");
-    if(n){ 
-        users.push({name:n,mobile:m,transactions:[]}); 
-        renderUsers();
-        await saveToCloudOnly(); 
-    }
-}
-async function editUser(i){
-    let currentName = users[i].name; let currentMobile = users[i].mobile;
-    let newName = prompt("Name:", currentName); let newMobile = prompt("Mobile:", currentMobile);
-    if(newName !== null && newName.trim() !== "") users[i].name = newName;
-    if(newMobile !== null) users[i].mobile = newMobile;
-    closeActionPopup();
-    renderUsers();
-    await saveToCloudOnly(); 
-}
-async function deleteUser(i){ 
-    if(confirm("இந்த யூசரை ஆப்பிலிருந்து நிரந்தரமாக நீக்கவா?")){ 
-        users.splice(i,1); 
-        closeActionPopup(); 
-        renderUsers(); 
-        await saveToCloudOnly(); 
-    } 
-}
-
-function exportData(){
-    let a=document.createElement("a");
-    a.href="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(users));
-    a.download="Finance_Backup_2026.json"; a.click();
-}
-
-function allDeleteWithExport() {
-    if (users.length === 0) {
-        alert("நீக்குவதற்கு டேட்டா எதுவும் இல்லை!");
-        return;
-    }
-    
-    if (confirm("எச்சரிக்கை! அனைத்து யூசர் விவரங்களும் நிரந்தரமாக நீக்கப்படும். நீக்குவதற்கு முன் ஆட்டோமேட்டிக்காக பேக்கப் ஃபைல் டவுன்லோட் செய்யப்படும். தொடரலாமா?")) {
-        let fileName = prompt("பேக்கப் ஃபைல் பெயர் (File Name) what do you want to keep?", "Finance_Backup_All_Delete");
-        
-        if (fileName === null) return; 
-        if (fileName.trim() === "") fileName = "Finance_Backup_All_Delete";
-        
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(users));
-        let downloadAnchor = document.createElement("a");
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", fileName + ".json");
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-        
-        setTimeout(async () => {
-            users = [];
-            showLoading(true);
-            try {
-                await fetch(CLOUD_URL, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: "data=" + encodeURIComponent(JSON.stringify([]))
-                });
-            } catch(e) { console.error(e); }
-            showLoading(false);
-            renderUsers();
-            closeSettingsPopup();
-            alert("அனைத்து டேட்டாக்களும் வெற்றிகரமாக எக்ஸ்போர்ட் செய்யப்பட்டு ஆப்பிலிருந்து நீக்கப்பட்டது!");
-        }, 1000); 
-    }
+async function allDeleteWithExport() {
+    if (users.length === 0) return alert("நீக்குவதற்கு டேட்டா எதுவும் இல்லை!");
+    let fileName = prompt("டெலிட் செய்வதற்கு முன் பேக்கப் ஃபைல் டவுன்லோட் செய்யப்படும்.", "Finance_Backup_Before_Delete");
+    if (fileName === null) return;
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(users));
+    let downloadAnchor = document.createElement("a"); downloadAnchor.setAttribute("href", dataStr); downloadAnchor.setAttribute("download", fileName + ".json"); document.body.appendChild(downloadAnchor); downloadAnchor.click(); downloadAnchor.remove();
+    setTimeout(async () => {
+        users = []; showLoading(true);
+        try { await fetch(CLOUD_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "data=" + encodeURIComponent(JSON.stringify([])) }); } catch(e) { console.error(e); }
+        showLoading(false); renderUsers(); closeSettingsPopup(); alert("அனைத்து டேட்டாக்களும் நீக்கப்பட்டது அண்ணா!");
+    }, 1000); 
 }
 
 async function importData(event){
     let f=event.target.files[0]; if(!f) return;
     let r=new FileReader();
     r.onload=async function(e){ 
-        users=JSON.parse(e.target.result); 
-        renderUsers(); 
-        await saveToCloudOnly(); 
+        try { let importedUsers = JSON.parse(e.target.result); if(Array.isArray(importedUsers)) { users = importedUsers; renderUsers(); await saveToCloudOnly(); alert("டேட்டா பதியப்பட்டது அண்ணா! 👍"); } else { alert("தவறான ஃபைல் வடிவம்!"); } } catch(err) { alert("தோல்வி!"); }
     };
     r.readAsText(f);
 }
 
-window.onload = function() {
-    initConfig();
-    fetchFromCloud();
-};
+window.onload = function() { initConfig(); fetchFromCloud(); };
 </script>
 </body>
 </html>
+
+
+
+APP
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var users = [];
+  
+  // சீட்டில் 2-வது வரியில் இருந்து டேட்டாவை எடுக்கிறது (முதல் வரி தலைப்பு)
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0]) { // பெயர் இருந்தால் மட்டும்
+      users.push({
+        name: data[i][0].toString(),
+        mobile: data[i][1].toString(),
+        transactions: data[i][2] ? JSON.parse(data[i][2]) : []
+      });
+    }
+  }
+  return ContentService.createTextOutput(JSON.stringify(users)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(15000); 
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    if (e && e.parameter && e.parameter.data) {
+      var users = JSON.parse(e.parameter.data);
+      
+      // பழைய டேட்டாவை முழுமையாகத் துடைத்துவிட்டுப் புதிதாக எழுதும்
+      sheet.clearContents();
+      
+      // முதல் வரியில் தலைப்புகள் (Headers)
+      sheet.getRange(1, 1, 1, 3).setValues([["User Name", "Mobile Number", "Transactions Data (JSON)"]]);
+      
+      if (users.length > 0) {
+        var rows = [];
+        for (var i = 0; i < users.length; i++) {
+          rows.push([
+            users[i].name,
+            users[i].mobile,
+            JSON.stringify(users[i].transactions) // டிரான்ஸாக்ஷன் மட்டும் உள்ளே இருக்கும்
+          ]);
+        }
+        // மொத்த யூசர்களையும் மேலிருந்து கீழ் நோக்கி வரிசையாகப் பதிகிறது
+        sheet.getRange(2, 1, rows.length, 3).setValues(rows);
+      }
+      
+      return ContentService.createTextOutput(JSON.stringify({"status": "SUCCESS"}))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService.createTextOutput(JSON.stringify({"status": "ERROR"})).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({"status": "ERROR", "message": error.toString()})).setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}
